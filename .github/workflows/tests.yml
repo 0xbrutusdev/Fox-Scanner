@@ -20,4 +20,5 @@ jobs:
           python-version: "3.12"
       - name: Run tests
         # Tests use a mocked chain adapter: no network, no RPC key needed.
+        working-directory: backend
         run: python -m unittest discover -s tests -v

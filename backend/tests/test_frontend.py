@@ -22,7 +22,7 @@ class TestPage(unittest.TestCase):
                 self.assertEqual(v, "?v=", path)                        # сервер подставит хэш содержимого
         scripts = re.findall(r'<script src="/static/js/([a-z]+\.js)\?v="></script>', self.html)
         self.assertEqual(scripts, ["api.js", "chart.js", "scan.js", "result.js", "recent.js", "app.js"])   # порядок важен
-        self.assertEqual(set(scripts), set(self.js))
+        self.assertEqual(set(self.js) - set(scripts), {"tokens.js", "radar.js"})
         body = server.versioned(self.html.encode())
         self.assertNotIn(b'?v="', body)
         self.assertNotIn(b"?v=0\"", body)                                # ни одного отсутствующего файла
@@ -43,7 +43,7 @@ class TestPage(unittest.TestCase):
         self.assertIn("const FOX_CA = '';", app)
         self.assertIn("Holder score", res)
         self.assertIn("This scan does not check contract owner, mint, honeypot or tax.", res)
-        self.assertIn("Contract is not published yet.", self.html)
+        self.assertIn("Contract is not published yet.", app)
         self.assertNotIn("order:-1", read("static", "css", "app.css"))
 
 

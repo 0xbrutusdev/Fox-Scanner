@@ -9,6 +9,9 @@ Read-only: скан идёт в фоне, браузер опрашивает с
   GET  /api/early?token=CA               -> {"token", "chain", "available", "buyers": [...], "summary": {...}[, "stale_at"]}
                                             первые 20 покупателей и их статус сейчас (early.py); в скан не входит
   GET  /api/recent?limit=12              -> {"items": [{"token", "chain", "launchpad", "ticker", "name", "score", "band", "rug", "ts"}]}
+  GET  /api/trending                      -> {"chain": "bnb", "items": [{"token", "symbol", "name", "image", "mcap_usd", "price_usd"}]}
+                                            топ-20 трендовых токенов BNB (GeckoTerminal), кэш 60 с
+  GET  /api/search?q=                    -> тот же список: токены BNB по адресу, имени или символу (DexScreener)
                                             лента «Recently scanned»: последние уникальные токены, новые сверху
   GET  /api/config                       -> {"solana": bool, "alerts": bool, "flap": bool, "bankr": bool, "trade": {"robinhood": шаблон, "solana": шаблон}}
                                             шаблоны ссылки Trade on Axiom ({address}), env TRADE_URL_* (trade.py)
@@ -17,6 +20,17 @@ Read-only: скан идёт в фоне, браузер опрашивает с
   GET  /api/replay                       -> {"items": [...], "stats": {...}, "since"} (REPLAY_ENABLED, иначе 404; кэш 60 с)
                                             Rug Replay: DANGER-токены, упавшие на ≥ 90% после скана, и доли за 7 дней
   GET  /replay                           -> frontend/replay.html (REPLAY_ENABLED, иначе 404)
+  GET  /tokens                           -> frontend/tokens.html
+  GET  /about                            -> frontend/about.html
+  GET  /token-management               -> frontend/token-management.html
+  GET  /api                              -> frontend/api.html (страница; /api/... по-прежнему JSON)
+  GET  /radar                            -> frontend/radar.html
+  GET  /api/radar                        -> {"window_min": 10080, "chain": "bnb", "items": [CLEAN BNB за 7 дней]}
+  GET  /api/tokens/viewed?window=24h     -> {"chain": "bnb", "window", "items": [{"token", "chain", "ticker", "name", "band", "checks", "ts", "image"}]}
+                                            сколько раз токен BNB проверяли за 5m, 30m, 1h, 6h или 24h
+  GET  /api/tokens/new                   -> {"chain": "bnb", "items": [{"token", "symbol", "name", "image", "created"}]}
+                                            7 самых новых токенов BNB: создание на four.meme и Flap, плюс пулы
+                                            GeckoTerminal; свежие сверху, кэш 15 с
   GET  /                                 -> frontend/index.html (ссылки /static/...?v= получают хэш содержимого файла)
   GET  /static/<путь>                    -> файл из frontend/static/ (css, js, шрифты, картинки); с ?v= — immutable на год
   GET  /favicon.svg, /favicon.png, /apple-touch-icon.png, /favicon.ico  -> иконки из static/
@@ -710,6 +724,15 @@ def get_recent(limit, band=None):
     try:
         store = recent_store()
         items = store.recent(limit) if not band else store.recent(limit, band)
+        addrs = [x["token"] for x in items if x.get("chain") in ("bnb", "bsc") and x.get("token")]
+        try:
+            images = market.token_images(addrs, "bsc") if addrs else {}
+        except Exception as e:
+            print(f"recent: avatars: {type(e).__name__}: {e}", flush=True)
+            images = {}
+        for x in items:
+            if x.get("chain") in ("bnb", "bsc"):
+                x["image"] = images.get((x.get("token") or "").lower(), "")
         out = {"items": items}
     except Exception as e:
         print(f"recent: not read: {type(e).__name__}: {e}", flush=True)
@@ -718,6 +741,48 @@ def get_recent(limit, band=None):
         if _RECENT_GEN[0] == gen:   # пока читали, скан записался — этот ответ уже старый, в кэш не кладём
             RECENT[key] = (now, out)
     return out
+
+
+def get_viewed(window, limit=12):
+    """Ответ /api/tokens/viewed. Сбой базы — пустой список. Картинки только у BNB, сбой аватаров ленту не стирает."""
+    try:
+        items = recent_store().viewed(window, limit)
+        addrs = [x["token"] for x in items if x.get("token")]
+        try:
+            images = market.token_images(addrs, "bsc") if addrs else {}
+        except Exception as e:
+            print(f"viewed: avatars: {type(e).__name__}: {e}", flush=True)
+            images = {}
+        for x in items:
+            x["image"] = images.get((x.get("token") or "").lower(), "")
+        return {"chain": "bnb", "window": window if window in ("5m", "30m", "1h", "6h", "24h") else "24h", "items": items}
+    except Exception as e:
+        print(f"viewed: not read: {type(e).__name__}: {e}", flush=True)
+        return {"chain": "bnb", "window": "24h", "items": []}
+
+
+RADAR_WINDOW_MIN = 7 * 24 * 60
+
+
+def get_radar():
+    """CLEAN-сканы BNB за последний час. Сбой базы — пустой список."""
+    try:
+        items = recent_store().radar(RADAR_WINDOW_MIN * 60, 24)
+        addrs = [x["token"] for x in items if x.get("token")]
+        try:
+            images = market.token_images(addrs, "bsc") if addrs else {}
+        except Exception as e:
+            print(f"radar: avatars: {type(e).__name__}: {e}", flush=True)
+            images = {}
+        for x in items:
+            img = images.get((x.get("token") or "").lower(), "")
+            if not img and x.get("launchpad") == "flap":
+                img = market.flap_image(x.get("token"))
+            x["image"] = img
+        return {"window_min": RADAR_WINDOW_MIN, "chain": "bnb", "items": items}
+    except Exception as e:
+        print(f"radar: not read: {type(e).__name__}: {e}", flush=True)
+        return {"window_min": RADAR_WINDOW_MIN, "chain": "bnb", "items": []}
 
 
 def admin_ok(header):
@@ -1018,6 +1083,21 @@ class H(BaseHTTPRequestHandler):
                 return self._send(400, {"error": str(e)})
             self._send(200, body)
             return record_early(body)
+        if u.path == "/api/search":
+            query = (q.get("q") or [""])[0]
+            try:
+                items = market.search_tokens(query, 20)
+            except Exception as e:
+                print(f"search: {type(e).__name__}: {e}", flush=True)
+                items = []
+            return self._send(200, {"chain": "bnb", "items": items}, cache="public, max-age=30")
+        if u.path == "/api/trending":
+            try:
+                items = market.trending("bsc", 20)
+            except Exception as e:
+                print(f"trending: {type(e).__name__}: {e}", flush=True)
+                items = []
+            return self._send(200, {"chain": "bnb", "items": items}, cache="public, max-age=60")
         if u.path == "/api/recent":
             try:
                 limit = min(50, max(1, int((q.get("limit") or [str(RECENT_DEFAULT)])[0])))
@@ -1026,6 +1106,33 @@ class H(BaseHTTPRequestHandler):
             raw = (q.get("band") or [""])[0].strip().upper()
             band = raw if raw in ("DANGER", "CLEAN") else None
             return self._send(200, get_recent(limit, band), cache=f"public, max-age={RECENT_TTL}")
+        if u.path == "/api/radar":
+            return self._send(200, get_radar(), cache="public, max-age=15")
+        if u.path == "/api/tokens/viewed":
+            window = (q.get("window") or ["24h"])[0].strip().lower()
+            if window not in ("5m", "30m", "1h", "6h", "24h"):
+                window = "24h"
+            return self._send(200, get_viewed(window, 12), cache="public, max-age=15")
+        if u.path == "/api/tokens/new":
+            try:
+                items = market.new_tokens("bsc", 7)
+                missing = [x["token"] for x in items if x.get("token") and not x.get("image")]
+                try:
+                    images = market.token_images(missing, "bsc") if missing else {}
+                except Exception as e:
+                    print(f"new tokens: avatars: {type(e).__name__}: {e}", flush=True)
+                    images = {}
+                for x in items:
+                    if x.get("image"):
+                        continue
+                    img = images.get((x.get("token") or "").lower(), "")
+                    if not img and bnb_flap.candidate(x.get("token")):
+                        img = market.flap_image(x.get("token"))
+                    x["image"] = img
+            except Exception as e:
+                print(f"new tokens: {type(e).__name__}: {e}", flush=True)
+                items = []
+            return self._send(200, {"chain": "bnb", "items": items}, cache="public, max-age=15")
         if u.path == "/api/events":
             job = self._job(q)
             if job is None:
@@ -1064,6 +1171,16 @@ class H(BaseHTTPRequestHandler):
                               {"x-content-type-options": "nosniff"})
         if u.path in ("/", "/index.html"):
             return self._send_page(os.path.join(FRONTEND_DIR, "index.html"))
+        if u.path == "/tokens":
+            return self._send_page(os.path.join(FRONTEND_DIR, "tokens.html"))
+        if u.path == "/about":
+            return self._send_page(os.path.join(FRONTEND_DIR, "about.html"))
+        if u.path == "/token-management":
+            return self._send_page(os.path.join(FRONTEND_DIR, "token-management.html"))
+        if u.path == "/api":
+            return self._send_page(os.path.join(FRONTEND_DIR, "api.html"))
+        if u.path == "/radar":
+            return self._send_page(os.path.join(FRONTEND_DIR, "radar.html"))
         return self._send(404, {"error": "not found"})
 
     def log_message(self, *a):

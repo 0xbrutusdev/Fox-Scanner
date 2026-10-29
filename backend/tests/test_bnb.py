@@ -169,6 +169,12 @@ class TestFourMeme(unittest.TestCase):
         for cache in (fm._STATE, fm._LAUNCH, fm._PAIR, fm._TOKEN0, fm._SCAN):
             cache.clear()
 
+    def test_by_address_accepts_ffff(self):
+        self.assertTrue(fm.by_address("0x" + "ab" * 18 + "ffff"))
+        self.assertTrue(fm.by_address("0x" + "ab" * 18 + "4444"))
+        self.assertTrue(fm.by_address("0x4444" + "ab" * 18))
+        self.assertFalse(fm.by_address("0x" + "ab" * 18 + "8888"))
+
     def test_detect_decodes_and_rejects(self):
         st = state()
         raw = data(st["version"], st["manager"], st["quote"], st["last_price"], st["fee_rate"], st["min_fee"],

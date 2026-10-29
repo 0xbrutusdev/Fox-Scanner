@@ -7,8 +7,9 @@ getReserves mainPool, если это пара V2; V3/Infinity без getReserve
 («liquidity not measured»), а не выдуманную глубину.
 История — как у four.meme: все переводы с запуска до SCAN_MAX_LOGS, общий RPC-клиент BNB.
 """
-import os, threading, time
+import json, os, threading, time, urllib.request
 from collections import defaultdict
+from concurrent.futures import ThreadPoolExecutor
 
 from foxscanner.chains import evm, fourmeme
 
@@ -59,6 +60,12 @@ INFRA = LOCKERS | ROUTERS | {
 }
 
 _STATE, _LAUNCH, _SCAN = {}, {}, {}
+_RECENT = {"ts": 0.0, "head": 0, "items": []}  # последние TokenCreated и блок, до которого дочитали
+RECENT_TTL = 15
+RECENT_LOOKBACK = 80                 # первый заход: ~1 минута. Дальше читаем только новые блоки
+RECENT_KEEP = 15 * 60                # держим найденный запуск, пока он может быть в топе ленты
+LOG_PAGE = 5                         # hi-lo. Бесплатный узел пускает eth_getLogs примерно до 10 блоков
+PINATA = "https://flap.mypinata.cloud/ipfs/"
 _lock = threading.Lock()
 
 
@@ -187,6 +194,142 @@ def drop_caches():
         _STATE.clear()
         _LAUNCH.clear()
         _SCAN.clear()
+        _RECENT["ts"] = 0.0
+        _RECENT["head"] = 0
+        _RECENT["items"] = []
+
+
+def _abi_text(data, offset):
+    """Строка ABI по байтовому смещению от начала data. Слишком длинная или за границей — ''."""
+    raw = bytes.fromhex((data or "0x")[2:])
+    if offset < 0 or offset + 32 > len(raw):
+        return ""
+    n = int.from_bytes(raw[offset:offset + 32], "big")
+    if n > 512 or offset + 32 + n > len(raw):
+        return ""
+    return raw[offset + 32:offset + 32 + n].decode("utf-8", "replace")
+
+
+def parse_token_created(data):
+    """Data лога TokenCreated → {token, symbol, name, created, meta} или None.
+    created — unix-секунды из поля ts."""
+    w = evm.words(data)
+    if len(w) < 7 or w[0] < 1_000_000_000:
+        return None
+    token = evm.word_addr(w[3])
+    if not token.startswith("0x") or len(token) != 42:
+        return None
+    return {"token": token, "name": _abi_text(data, w[4]), "symbol": _abi_text(data, w[5]),
+            "meta": _abi_text(data, w[6]).strip(), "created": int(w[0])}
+
+
+def _ipfs_url(ref):
+    ref = (ref or "").strip()
+    if ref.startswith("https://"):
+        return ref
+    if ref.startswith("ipfs://"):
+        ref = ref[7:].lstrip("/")
+    if ref and " " not in ref and "/" not in ref and len(ref) > 10:
+        return PINATA + ref
+    return ""
+
+
+def image_from_meta(meta, body=None, content_type=""):
+    """https-картинка токена Flap. content-type image — сам URL meta. Иначе поле image в JSON."""
+    url = _ipfs_url(meta)
+    if (content_type or "").split(";", 1)[0].strip().lower().startswith("image/") and url.startswith("https://"):
+        return url
+    if not body:
+        return ""
+    try:
+        data = json.loads(body)
+    except (json.JSONDecodeError, UnicodeError):
+        return ""
+    img = data.get("image") if isinstance(data, dict) else ""
+    got = _ipfs_url(img if isinstance(img, str) else "")
+    return got if got.startswith("https://") else ""
+
+
+def _meta_image(meta):
+    url = _ipfs_url(meta)
+    if not url:
+        return ""
+    try:
+        req = urllib.request.Request(url, headers={"user-agent": "foxscanner/0.1", "accept": "application/json,image/*"})
+        with urllib.request.urlopen(req, timeout=5) as r:
+            ctype = r.headers.get("content-type") or ""
+            body = r.read(30000)
+        return image_from_meta(meta, body, ctype)
+    except Exception as e:
+        print(f"flap: meta {meta[:48]} failed: {type(e).__name__}", flush=True)
+        return ""
+
+
+def _created_logs(head):
+    """Новые TokenCreated страницами, которые принимает узел. None — окно отвергнуто, список — логи."""
+    with _lock:
+        last = int(_RECENT["head"] or 0)
+    lo = last + 1 if last and 0 < head - last <= 2000 else max(0, head - RECENT_LOOKBACK)
+    if lo > head:
+        return []
+    logs, pages, scanned = [], 0, last
+    while lo <= head and pages < 20:
+        hi = min(head, lo + LOG_PAGE)
+        got = CLIENT.get_logs_once(lo, hi, address=PORTAL, topics=[TOKEN_CREATED])
+        if got is None:
+            break
+        logs.extend(got)
+        scanned = hi
+        lo = hi + 1
+        pages += 1
+    with _lock:
+        if scanned > last:
+            _RECENT["head"] = scanned
+    return None if scanned == last else logs
+
+
+def recent_created(limit=12):
+    """Токены Flap за последние 15 минут, новые сверху. Картинка — из meta CID.
+    Узел с узким eth_getLogs читается страницами; между опросами дочитываются только новые блоки.
+    Сбой RPC — прошлый кэш или []."""
+    limit = max(1, int(limit))
+    if not enabled():
+        return []
+    now = time.time()
+    with _lock:
+        if now - _RECENT["ts"] < RECENT_TTL:
+            return list(_RECENT["items"][:limit])
+        kept = [dict(x) for x in _RECENT["items"] if now - (x.get("created") or 0) < RECENT_KEEP]
+    try:
+        head = CLIENT.block_number()
+        logs = _created_logs(head)
+        if logs is None:
+            return kept[:limit]
+    except Exception as e:
+        print(f"flap: new tokens failed: {type(e).__name__}", flush=True)
+        return kept[:limit]
+    by = {x["token"]: x for x in kept}
+    fresh = []
+    for lg in logs:
+        row = parse_token_created(lg.get("data"))
+        if not row or row["token"] in by:
+            continue
+        by[row["token"]] = row
+        fresh.append(row)
+    if fresh:
+        with ThreadPoolExecutor(max_workers=6) as pool:
+            images = list(pool.map(lambda row: _meta_image(row["meta"]), fresh))
+        for row, img in zip(fresh, images):
+            row["image"] = img
+    items = [{"token": r["token"], "symbol": r.get("symbol") or "", "name": r.get("name") or "",
+              "image": r.get("image") or "", "created": r["created"]}
+             for r in by.values() if r.get("created")]
+    items.sort(key=lambda x: x["created"], reverse=True)
+    items = items[:max(limit, 24)]
+    with _lock:
+        _RECENT["ts"] = now
+        _RECENT["items"] = items
+    return items[:limit]
 
 
 def token_facts(token, launch, deadline=None):

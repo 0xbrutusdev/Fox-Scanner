@@ -4,6 +4,7 @@
   const FS = window.FS;
   const {api} = FS;
   const {esc, short} = FS.fmt;
+  const t = (s, v) => FS.i18n.t(s, v);
   const POLL_MS = 300;
 
   const STEPS = [
@@ -19,9 +20,26 @@
 
   // run(token, chain, {onEvent, onDone, onError}) -> cancel()
   function run(token, chain, ui) {
-    let stopped = false, timer = null, after = 0;
-    const stop = () => { stopped = true; clearTimeout(timer); };
+    let stopped = false, timer = null, after = 0, vis = null;
+    const stop = () => {
+      stopped = true;
+      clearTimeout(timer);
+      if (vis) { document.removeEventListener('visibilitychange', vis); vis = null; }
+    };
     const fail = msg => { if (!stopped) { stop(); ui.onError(msg); } };
+
+    function waitTick() {
+      return new Promise(r => {
+        const go = () => { vis = null; timer = setTimeout(r, POLL_MS); };
+        if (!document.hidden) return go();
+        vis = () => {
+          if (document.hidden) return;
+          document.removeEventListener('visibilitychange', vis);
+          go();
+        };
+        document.addEventListener('visibilitychange', vis);
+      });
+    }
 
     async function finish(job) {
       for (let i = 0; i < 40 && !stopped; i++) {
@@ -31,12 +49,14 @@
           stop();
           return ui.onDone(d.result);
         }
-        await new Promise(r => { timer = setTimeout(r, POLL_MS); });
+        await waitTick();
       }
       fail('scan did not finish, try again');
     }
 
     async function poll(job) {
+      if (stopped) return;
+      if (document.hidden) await waitTick();
       if (stopped) return;
       try {
         const d = await api.events(job, after);
@@ -45,7 +65,8 @@
       } catch (e) {
         if (e.status === 404) return fail('scan expired, start it again');
       }
-      timer = setTimeout(() => poll(job), POLL_MS);
+      await waitTick();
+      poll(job);
     }
 
     api.startScan(token, chain).then(job => poll(job)).catch(e => fail(e.message));
@@ -61,8 +82,8 @@
   }
   Console.prototype.reset = function (token) {
     this.at = -1;
-    this.title.innerHTML = 'Scan <span class="mono">' + esc(short(token)) + '</span>';
-    this.steps.innerHTML = STEPS.map(([k, label]) => `<li class="step" data-step="${k}"><i></i><span>${label}</span></li>`).join('');
+    this.title.innerHTML = esc(t('Scan')) + ' <span class="mono">' + esc(short(token)) + '</span>';
+    this.steps.innerHTML = STEPS.map(([k, label]) => `<li class="step" data-step="${k}"><i></i><span>${esc(t(label))}</span></li>`).join('');
     this.log.innerHTML = '';
     this.setStep(0);
   };
@@ -88,7 +109,7 @@
     switch (e.type) {
       case 'stage': {
         const i = STEPS.findIndex(s => s[0] === e.detail);
-        if (i >= 0) { this.setStep(i); this.line('› ' + esc(STEPS[i][1].toLowerCase()) + '…'); }
+        if (i >= 0) { this.setStep(i); this.line('› ' + esc(t(STEPS[i][1])) + '…'); }
         break;
       }
       case 'wallet_flag': {
@@ -110,6 +131,17 @@
       default:
         break;
     }
+  };
+  Console.prototype.labels = function () {
+    if (!this.steps) return;
+    this.steps.querySelectorAll('[data-step] span').forEach(el => {
+      const row = STEPS.find(s => s[0] === el.parentNode.dataset.step);
+      if (row) el.textContent = t(row[1]);
+    });
+    const mono = this.title && this.title.querySelector('.mono');
+    if (!this.title) return;
+    if (mono) this.title.innerHTML = esc(t('Scan')) + ' ' + mono.outerHTML;
+    else this.title.textContent = t('Scan');
   };
   Console.prototype.error = function (msg) {
     this.steps.querySelectorAll('.step.on').forEach(el => el.classList.remove('on'));

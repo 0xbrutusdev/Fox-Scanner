@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title data-i18n="Token Management · FoxScanner">Token Management · FoxScanner</title>
+<meta name="description" content="Everything you can do to a token page: check the score, get a verified badge, pin a creator message, claim a .token domain, and update token info.">
+<meta name="theme-color" content="#0B0B0B">
+<script>(function(){try{if(localStorage.getItem('fs.theme')==='light')document.documentElement.setAttribute('data-theme','light')}catch(e){}})();</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/static/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/static/fonts/orbitron-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/static/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/static/css/app.css?v=">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="FoxScanner home"><img src="/static/img/logo.png?v=" alt="" width="36" height="36"><b>FOX<span>SCANNER</span></b></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/" data-i18n="Home">Home</a>
+      <a href="/tokens" data-i18n="Tokens">Tokens</a>
+      <a href="/radar" data-i18n="Radar">Radar</a>
+      <a href="/token-management" class="on" aria-current="page" data-i18n="Manage">Manage</a>
+      <a href="/api" data-i18n="API">API</a>
+      <a href="/about" data-i18n="About">About</a>
+    </nav>
+    <div class="top-actions">
+      <div class="wallet">
+        <button type="button" class="wallet-btn" data-wallet aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18"/><circle cx="16.5" cy="14.5" r="1" fill="currentColor" stroke="none"/></g></svg>
+          <span data-wallet-label data-i18n="Connect Wallet">Connect Wallet</span>
+        </button>
+        <div class="wallet-menu" data-wallet-menu hidden role="menu">
+          <button type="button" data-disconnect role="menuitem" data-i18n="Disconnect">Disconnect</button>
+        </div>
+      </div>
+      <button type="button" class="icon-btn" data-theme-toggle aria-pressed="false" aria-label="Light mode">
+        <svg class="ico-sun" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/></g></svg>
+        <svg class="ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M20 14.5A8 8 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z"/></svg>
+      </button>
+      <div class="lang">
+        <button type="button" class="lang-btn" data-lang-toggle aria-haspopup="listbox" aria-expanded="false" data-i18n-aria="Language" aria-label="Language">
+          <span data-lang-code>EN</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <ul class="lang-menu" role="listbox" hidden>
+          <li role="none"><button type="button" role="option" data-lang="en">English</button></li>
+          <li role="none"><button type="button" role="option" data-lang="zh">中文(简体)</button></li>
+          <li role="none"><button type="button" role="option" data-lang="ja">日本語</button></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="tm">
+    <div class="wrap">
+      <h1 data-i18n="Token Management">Token Management</h1>
+      <p class="tm-lead" data-i18n="Everything you can do to a token page.">Everything you can do to a token page.</p>
+
+      <p class="tm-kicker" data-i18n="Start here (free)">Start here (free)</p>
+      <article class="tm-card">
+        <div class="tm-preview">
+          <div class="tm-token"><i>MY</i><span><b>MY TOKEN</b><small>0x0000…4444</small></span></div>
+          <ul class="tm-risks">
+            <li><span data-i18n="Low liquidity">Low liquidity</span><span class="risk medium" data-i18n="Medium risk">Medium risk</span></li>
+            <li><span data-i18n="Mutable metadata">Mutable metadata</span><span class="risk fair" data-i18n="Fair">Fair</span></li>
+          </ul>
+          <p class="tm-cap" data-i18n="Your score and every risk behind it">Your score and every risk behind it</p>
+        </div>
+        <div>
+          <h2 data-i18n="Improve your score">Improve your score</h2>
+          <p data-i18n="Find out exactly what's dragging your token's score down.">Find out exactly what's dragging your token's score down.</p>
+          <ul class="tm-points">
+            <li data-i18n="Every risk factor">Every risk factor</li>
+            <li data-i18n="A clear fix for each one">A clear fix for each one</li>
+            <li data-i18n="Just a token address, no wallet or signature.">Just a token address, no wallet or signature.</li>
+          </ul>
+          <form class="tm-form" id="tm-form" action="/" method="get">
+            <label class="sr" for="tm-ca" data-i18n="BNB token address (0x…)">BNB token address (0x…)</label>
+            <input id="tm-ca" name="ca" required pattern="0x[a-fA-F0-9]{40}" spellcheck="false" autocomplete="off" placeholder="BNB token address (0x…)" inputmode="text">
+            <input type="hidden" name="chain" value="bnb">
+            <div class="tm-actions">
+              <button class="hero-btn hero-btn-check" type="submit" data-i18n="Check my score">Check my score</button>
+              <a class="hero-btn hero-btn-side" id="tm-url" href="/" data-i18n="URL">URL</a>
+            </div>
+          </form>
+        </div>
+      </article>
+
+      <p class="tm-kicker" data-i18n="Add a trust signal">Add a trust signal</p>
+      <article class="tm-card tm-pop">
+        <div class="tm-preview">
+          <div class="tm-token"><i>MY</i><span><b>MY TOKEN</b><small>0x0000…4444</small></span><span class="tm-badge" data-i18n="Verified">Verified</span></div>
+          <ul class="tm-risks">
+            <li><span data-i18n="Low liquidity">Low liquidity</span><span class="risk medium" data-i18n="Medium risk">Medium risk</span></li>
+            <li><span data-i18n="Mutable metadata">Mutable metadata</span><span class="risk fair" data-i18n="Fair">Fair</span></li>
+          </ul>
+          <p class="tm-cap" data-i18n="Unverified becomes Verified, links go live">Unverified becomes Verified, links go live</p>
+        </div>
+        <div>
+          <h2><span data-i18n="Get a verified badge">Get a verified badge</span> <span class="tm-pop-tag" data-i18n="Most popular">Most popular</span></h2>
+          <p data-i18n="Prove you're the real creator, and make copycats obvious.">Prove you're the real creator, and make copycats obvious.</p>
+          <ul class="tm-points">
+            <li data-i18n="Verified badge on your token page">Verified badge on your token page</li>
+            <li data-i18n="Your website and socials shown right there">Your website and socials shown right there</li>
+            <li data-i18n="Copycats get flagged and downscored, not you">Copycats get flagged and downscored, not you</li>
+            <li data-i18n="Manual review available for edge cases">Manual review available for edge cases</li>
+          </ul>
+          <div class="tm-actions">
+            <button class="hero-btn hero-btn-check" type="button" data-pay="150 USDC" data-i18n="Verify my token">Verify my token</button>
+            <span class="tm-price">150 USDC</span>
+            <button class="hero-btn hero-btn-side" type="button" data-review data-i18n="Check review status">Check review status</button>
+          </div>
+          <p class="tm-note" data-review-note hidden></p>
+          <p class="tm-note" data-i18n="One signature from the wallet you pay with.">One signature from the wallet you pay with.</p>
+        </div>
+      </article>
+
+      <article class="tm-card">
+        <div class="tm-preview">
+          <div class="tm-msg"><b data-i18n="Creator message">Creator message</b><span data-i18n="Verified">Verified</span></div>
+          <p class="tm-cap" data-i18n="A signed message pinned under your token">A signed message pinned under your token</p>
+        </div>
+        <div>
+          <h2 data-i18n="Creator message">Creator message</h2>
+          <p data-i18n="Say something official, right where people check your token.">Say something official, right where people check your token.</p>
+          <ul class="tm-points">
+            <li data-i18n="Creator-signed message pinned to your token page">Creator-signed message pinned to your token page</li>
+            <li data-i18n="Only your creator wallet can publish it">Only your creator wallet can publish it</li>
+          </ul>
+          <div class="tm-actions">
+            <button class="hero-btn hero-btn-check" type="button" data-pay="25 USDC" data-i18n="Publish or update">Publish or update</button>
+            <span class="tm-price">25 USDC</span>
+          </div>
+          <p class="tm-note" data-i18n="Already published one? Updating costs 10 USDC">Already published one? Updating costs 10 USDC</p>
+        </div>
+      </article>
+
+      <article class="tm-card">
+        <div class="tm-preview">
+          <div class="tm-domain"><b>mytoken</b><span>.token</span><i aria-hidden="true">→</i><small>0x0000…4444</small></div>
+          <p class="tm-cap" data-i18n="Your token name, resolving to your token">Your token name, resolving to your token</p>
+        </div>
+        <div>
+          <h2 data-i18n="Claim your token domain">Claim your token domain</h2>
+          <p data-i18n="Reserve your token's name before someone else takes it.">Reserve your token's name before someone else takes it.</p>
+          <ul class="tm-points">
+            <li data-i18n="A unique .token domain via ANS">A unique .token domain via ANS</li>
+            <li data-i18n="Easy to share, hard to copy">Easy to share, hard to copy</li>
+            <li data-i18n="Recognized across the ecosystem">Recognized across the ecosystem</li>
+          </ul>
+          <div class="tm-actions">
+            <button class="hero-btn hero-btn-check" type="button" data-pay="1 SOL" data-i18n="Claim my domain">Claim my domain</button>
+            <span class="tm-price">1 SOL</span>
+          </div>
+          <p class="tm-note" data-i18n="Priced in SOL because the ANS registry charges in SOL.">Priced in SOL because the ANS registry charges in SOL.</p>
+        </div>
+      </article>
+
+      <p class="tm-kicker" data-i18n="Change what you already have">Change what you already have</p>
+      <article class="tm-card">
+        <div class="tm-preview">
+          <div class="tm-token"><i>MY</i><span><b>MY TOKEN</b><small>0x0000…4444</small></span><span class="tm-badge" data-i18n="Verified">Verified</span></div>
+          <p class="tm-cap" data-i18n="Your links and logo">Your links and logo</p>
+        </div>
+        <div>
+          <h2 data-i18n="Update token info">Update token info</h2>
+          <p data-i18n="Keep your website, socials and logo current after you verify.">Keep your website, socials and logo current after you verify.</p>
+          <ul class="tm-points">
+            <li data-i18n="Website and socials in one signature">Website and socials in one signature</li>
+            <li data-i18n="Your cached token metadata and image refresh automatically">Your cached token metadata and image refresh automatically</li>
+            <li data-i18n="Only the wallet that verified the token can automatically make updates">Only the wallet that verified the token can automatically make updates</li>
+            <li data-i18n="Manual review available for edge cases">Manual review available for edge cases</li>
+          </ul>
+          <div class="tm-actions">
+            <button class="hero-btn hero-btn-check" type="button" data-pay="50 USDC" data-i18n="Update my token">Update my token</button>
+            <span class="tm-price">50 USDC</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div class="foot-left">
+      <p class="foot-follow"><span data-i18n="Follow us:">Follow us:</span>
+      <a href="https://x.com/0x_Punisher" target="_blank" rel="noopener" aria-label="FoxScanner on X"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14.7 10.3 22.4 2h-1.8l-6.7 7.2L8.6 2H2l8.1 11.1L2 22h1.8l7.1-7.6L15.4 22H22l-7.3-11.7Zm-2.5 2.7-.8-1.1L4.6 3.3h2.8l5.3 7 .8 1.1 6.9 9.3h-2.8l-5.4-7.7Z"/></svg></a>
+      </p>
+    </div>
+    <p class="foot-copy" data-i18n="2026 © FoxScanner. All rights reserved.">2026 © FoxScanner. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="/static/js/api.js?v="></script>
+<script src="/static/js/app.js?v="></script>
+<script>
+(function () {
+  var input = document.getElementById('tm-ca');
+  var url = document.getElementById('tm-url');
+  function address() { return (input && input.value || '').trim(); }
+  function syncUrl() {
+    var ca = address();
+    if (url) url.href = /^0x[a-fA-F0-9]{40}$/.test(ca) ? '/?ca=' + encodeURIComponent(ca) + '&chain=bnb' : '/';
+  }
+  function placeholder() {
+    if (input && window.FS) input.placeholder = FS.i18n.t('BNB token address (0x…)');
+  }
+  if (input) input.addEventListener('input', syncUrl);
+  document.addEventListener('fs:lang', placeholder);
+  document.querySelectorAll('[data-pay]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var wallet = document.querySelector('[data-wallet]');
+      if (wallet && !wallet.dataset.account) { wallet.click(); return; }
+      if (window.FS) FS.toast(FS.i18n.t('One signature from the wallet you pay with.') + ' ' + btn.getAttribute('data-pay'));
+    });
+  });
+  var review = document.querySelector('[data-review]');
+  if (review) review.addEventListener('click', function () {
+    var note = document.querySelector('[data-review-note]');
+    if (!note || !window.FS) return;
+    var ok = /^0x[a-fA-F0-9]{40}$/.test(address());
+    note.hidden = false;
+    note.textContent = FS.i18n.t(ok ? 'No review on file for this token.' : 'Paste the token address first.');
+  });
+  placeholder();
+  syncUrl();
+})();
+</script>
+</body>
+</html>

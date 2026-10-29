@@ -9,7 +9,7 @@
 Запасной источник рынка — DexScreener (публичный API, без ключа): если GT не ответил (429, ошибка, таймаут),
 fetch_market берёт цену, ликвидность, капу, возраст и объём оттуда (поле source: "gt" | "dexscreener").
 Свечей у DexScreener нет — чарт только из GT. GT_FORCE_FAIL=1 — каждый запрос к GT ведёт себя как 429."""
-import json, os, socket, threading, time, urllib.request, urllib.error
+import json, os, re, socket, threading, time, urllib.parse, urllib.request, urllib.error
 from datetime import datetime
 
 GT_API = "https://api.geckoterminal.com/api/v2"
@@ -33,10 +33,26 @@ ESTABLISHED_TTL = 24 * 3600  # секунд: вердикт «too established» 
 _CACHE, _EST, _lock = {}, {}, threading.Lock()
 
 
+_TREND = {}          # network -> (ts, items): топ пулов GT, отдельно от кэша шапки
+TREND_TTL = 120        # секунд
+_AVATARS = {}          # (network, address) -> (ts, https image or ""): аватар токена для ленты
+AVATAR_TTL = 600
+_NEW = {}              # network -> (ts, items): новые токены (four.meme + Flap + пулы GT)
+NEW_TTL = 15
+WBNB = "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c"
+_SEARCH = {}           # query -> (ts, items): поиск BNB по адресу, имени или символу
+SEARCH_TTL = 60
+DS_SEARCH = "https://api.dexscreener.com/latest/dex/search"
+
+
 def clear_cache():
     with _lock:
         _CACHE.clear()
         _EST.clear()
+        _TREND.clear()
+        _SEARCH.clear()
+        _AVATARS.clear()
+        _NEW.clear()
 
 
 def _key(token, network):
@@ -74,6 +90,14 @@ def gt_force_fail():
 
 def _get(url, timeout):
     req = urllib.request.Request(url, headers={"accept": "application/json", "user-agent": "foxscanner/0.1"})
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        return json.loads(r.read())
+
+
+def _post(url, payload, timeout):
+    req = urllib.request.Request(url, data=json.dumps(payload).encode(),
+                                 headers={"accept": "application/json", "content-type": "application/json",
+                                          "user-agent": "foxscanner/0.1"})
     with urllib.request.urlopen(req, timeout=timeout) as r:
         return json.loads(r.read())
 
@@ -352,3 +376,376 @@ def fetch_chart(token, network="robinhood", now=None):
     return {"pool": main["address"], "dex": main["dex"], "timeframe": tf[2], "candles": candles,
             "price_usd": main["price_usd"], "age_h": None if age_h is None else round(age_h, 1),
             "stitched": stitched, "failed": failed}
+
+
+def _num(v):
+    try:
+        return float(v)
+    except (TypeError, ValueError):
+        return None
+
+
+def parse_trending(data, limit=20):
+    """Ответ GT /trending_pools?include=base_token → уникальные базовые токены в порядке пулов.
+    {"token", "symbol", "name", "image", "mcap_usd", "price_usd"}. image — только https."""
+    included = {}
+    for item in (data or {}).get("included") or []:
+        if item.get("type") == "token" and item.get("id"):
+            included[item["id"]] = item.get("attributes") or {}
+    out, seen = [], set()
+    for pool in (data or {}).get("data") or []:
+        rel = ((pool.get("relationships") or {}).get("base_token") or {}).get("data") or {}
+        tid = rel.get("id") or ""
+        attrs = included.get(tid) or {}
+        addr = (attrs.get("address") or "").strip()
+        if not addr and "_" in tid:
+            addr = tid.split("_", 1)[1]
+        key = addr.lower()
+        if not addr or key in seen:
+            continue
+        seen.add(key)
+        pa = pool.get("attributes") or {}
+        img = attrs.get("image_url") or ""
+        out.append({
+            "token": addr,
+            "symbol": attrs.get("symbol") or "",
+            "name": attrs.get("name") or "",
+            "image": img if isinstance(img, str) and img.startswith("https://") else "",
+            "mcap_usd": _num(pa.get("market_cap_usd")) or _num(pa.get("fdv_usd")),
+            "price_usd": _num(pa.get("base_token_price_usd")),
+        })
+        if len(out) >= limit:
+            break
+    return out
+
+
+def token_images(addresses, network="bsc"):
+    """https-аватар GeckoTerminal по адресу (нижний регистр) или "". Сбой и токен без картинки — ""."""
+    need, out, now = [], {}, time.time()
+    for raw in addresses or []:
+        addr = (raw or "").strip().lower()
+        if not addr.startswith("0x") or len(addr) != 42 or addr in out or addr in need:
+            continue
+        with _lock:
+            hit = _AVATARS.get((network, addr))
+        if hit and now - hit[0] < AVATAR_TTL:
+            out[addr] = hit[1]
+        else:
+            need.append(addr)
+    found, asked = {}, []
+    for i in range(0, len(need), 30):
+        chunk = need[i:i + 30]
+        try:
+            data = _get(f"{GT}/{network}/tokens/multi/{','.join(chunk)}", 2)
+        except Exception as e:
+            print(f"gt: avatars {network} failed: {_why(e)}", flush=True)
+            continue
+        asked.extend(chunk)
+        for item in (data or {}).get("data") or []:
+            attrs = item.get("attributes") or {}
+            addr = (attrs.get("address") or "").strip().lower()
+            img = attrs.get("image_url") or ""
+            if addr in chunk and isinstance(img, str) and img.startswith("https://"):
+                found[addr] = img
+    with _lock:
+        for addr in asked:
+            url = found.get(addr, "")
+            _AVATARS[(network, addr)] = (now, url)
+            out[addr] = url
+    return out
+
+
+_FLAP_IMG = re.compile(r'image\\?":\\?"(https://[^"\\]+)')
+
+
+def flap_image(address):
+    """Картинка токена Flap со страницы flap.sh, если GeckoTerminal её не знает. Только https. Кэш 10 минут."""
+    addr = (address or "").strip().lower()
+    if not addr.startswith("0x") or len(addr) != 42:
+        return ""
+    now = time.time()
+    with _lock:
+        hit = _AVATARS.get(("flap", addr))
+    if hit and now - hit[0] < (AVATAR_TTL if hit[1] else 60):
+        return hit[1]
+    url = ""
+    try:
+        req = urllib.request.Request("https://flap.sh/bnb/" + addr,
+                                     headers={"user-agent": "foxscanner/0.1", "accept": "text/html"})
+        with urllib.request.urlopen(req, timeout=8) as r:
+            html = r.read(250000).decode("utf-8", "replace")
+        m = _FLAP_IMG.search(html)
+        if m:
+            url = m.group(1)
+    except Exception as e:
+        print(f"flap: avatar {addr} failed: {_why(e)}", flush=True)
+    with _lock:
+        _AVATARS[("flap", addr)] = (now, url)
+    return url
+
+
+def _unix(s):
+    if not isinstance(s, str) or not s:
+        return None
+    try:
+        return int(datetime.fromisoformat(s.replace("Z", "+00:00")).timestamp())
+    except ValueError:
+        return None
+
+
+def parse_new_pools(data, limit=7):
+    """Ответ GT /new_pools?include=base_token → новые базовые токены, самые свежие сверху.
+    {"token", "symbol", "name", "image", "created"}. WBNB пропускается. image — только https."""
+    included = {}
+    for item in (data or {}).get("included") or []:
+        if item.get("type") == "token" and item.get("id"):
+            included[item["id"]] = item.get("attributes") or {}
+    by = {}
+    for pool in (data or {}).get("data") or []:
+        rel = ((pool.get("relationships") or {}).get("base_token") or {}).get("data") or {}
+        tid = rel.get("id") or ""
+        attrs = included.get(tid) or {}
+        addr = (attrs.get("address") or "").strip()
+        if not addr and "_" in tid:
+            addr = tid.split("_", 1)[1]
+        key = addr.lower()
+        if not addr or key == WBNB:
+            continue
+        pa = pool.get("attributes") or {}
+        created = _unix(pa.get("pool_created_at") or pa.get("created_at"))
+        prev = by.get(key)
+        if prev and (prev["created"] or 0) >= (created or 0):
+            continue
+        img = attrs.get("image_url") or ""
+        by[key] = {
+            "token": addr,
+            "symbol": attrs.get("symbol") or "",
+            "name": attrs.get("name") or "",
+            "image": img if isinstance(img, str) and img.startswith("https://") else "",
+            "created": created,
+        }
+    limit = max(1, int(limit))
+    return sorted(by.values(), key=lambda x: x["created"] or 0, reverse=True)[:limit]
+
+
+FOUR_SEARCH = "https://four.meme/meme-api/v1/public/token/search"
+FOUR_IMG = "https://static.four.meme"
+
+
+def four_image(img):
+    """Картинка four.meme: путь /market/... или уже https. Иное — ""."""
+    if not isinstance(img, str) or not img:
+        return ""
+    if img.startswith("https://"):
+        return img
+    if img.startswith("/"):
+        return FOUR_IMG + img
+    if img.startswith("market/"):
+        return FOUR_IMG + "/" + img
+    return ""
+
+
+def _seconds(n):
+    """Unix-секунды из числа или цифровой строки. Значение больше 10^12 — миллисекунды."""
+    if isinstance(n, str):
+        n = n.strip()
+        if not n.isdigit():
+            return None
+        n = int(n)
+    if not isinstance(n, (int, float)) or n <= 0:
+        return None
+    return int(n / 1000) if n > 10 ** 12 else int(n)
+
+
+def parse_four_new(data, limit=30):
+    """Ответ four.meme /public/token/search → новые токены, самые свежие сверху.
+    {"token", "symbol", "name", "image", "created"}. Повторы адреса схлопываются. image — только https."""
+    rows = data.get("data") if isinstance(data, dict) else data
+    if isinstance(rows, dict):
+        rows = next((v for v in rows.values() if isinstance(v, list)), [])
+    if not isinstance(rows, list):
+        return []
+    by = {}
+    for x in rows:
+        if not isinstance(x, dict):
+            continue
+        addr = (x.get("tokenAddress") or x.get("address") or "").strip()
+        key = addr.lower()
+        if not key.startswith("0x") or len(key) != 42 or key == WBNB:
+            continue
+        created = _seconds(x.get("createDate") or x.get("launchTime"))
+        row = {"token": addr, "symbol": x.get("shortName") or "", "name": x.get("name") or "",
+               "image": four_image(x.get("img") or x.get("image") or ""), "created": created}
+        prev = by.get(key)
+        if prev is None or (created or 0) > (prev["created"] or 0):
+            if prev and not row["image"]:
+                row["image"] = prev["image"]
+            if prev and not row["symbol"]:
+                row["symbol"] = prev["symbol"]
+            if prev and not row["name"]:
+                row["name"] = prev["name"]
+            by[key] = row
+        elif not prev["image"] and row["image"]:
+            prev["image"] = row["image"]
+    limit = max(1, int(limit))
+    return sorted(by.values(), key=lambda x: x["created"] or 0, reverse=True)[:limit]
+
+
+def merge_new(rows, limit=20):
+    """Несколько лент в одну. created — самый ранний, пустые symbol, name и image добираются из другой ленты."""
+    by = {}
+    for x in rows or []:
+        if not isinstance(x, dict):
+            continue
+        addr = (x.get("token") or "").strip()
+        key = addr.lower()
+        if not key.startswith("0x") or len(key) != 42 or key == WBNB:
+            continue
+        created = x.get("created") if isinstance(x.get("created"), (int, float)) and x["created"] > 0 else None
+        image = x.get("image") if isinstance(x.get("image"), str) and x["image"].startswith("https://") else ""
+        prev = by.get(key)
+        if prev is None:
+            by[key] = {"token": addr, "symbol": x.get("symbol") or "", "name": x.get("name") or "",
+                       "image": image, "created": int(created) if created else None}
+            continue
+        if created and (not prev["created"] or created < prev["created"]):
+            prev["created"] = int(created)
+        if not prev["image"] and image:
+            prev["image"] = image
+        if not prev["symbol"] and x.get("symbol"):
+            prev["symbol"] = x["symbol"]
+        if not prev["name"] and x.get("name"):
+            prev["name"] = x["name"]
+    limit = max(1, int(limit))
+    return sorted(by.values(), key=lambda x: x["created"] or 0, reverse=True)[:limit]
+
+
+def new_tokens(network="bsc", limit=7):
+    """Новые токены BNB в момент создания (four.meme и Flap) плюс свежие пулы GeckoTerminal.
+    Сбой одного источника не стирает остальные. Сбой всех — прошлый кэш или []."""
+    limit = min(20, max(1, int(limit)))
+    now = time.time()
+    with _lock:
+        hit = _NEW.get(network)
+    if hit and now - hit[0] < NEW_TTL:
+        return hit[1][:limit]
+    from concurrent.futures import ThreadPoolExecutor
+
+    def safe(fn, label):
+        try:
+            return fn()
+        except Exception as e:
+            print(f"new tokens: {label} failed: {_why(e)}", flush=True)
+            return []
+
+    def four_rows():
+        if network not in ("bsc", "bnb"):
+            return []
+        data = _post(FOUR_SEARCH, {"type": "NEW", "pageIndex": 1, "pageSize": 30, "status": "ALL", "sort": "DESC"}, 8)
+        return parse_four_new(data, 30)
+
+    def gt_rows():
+        data = _get(f"{GT}/{network}/new_pools?include=base_token&page=1", 8)
+        return parse_new_pools(data, 20)
+
+    def flap_rows():
+        if network not in ("bsc", "bnb"):
+            return []
+        from foxscanner.chains import bnb_flap
+        return bnb_flap.recent_created(12)
+
+    with ThreadPoolExecutor(max_workers=3) as pool:
+        parts = list(pool.map(lambda job: safe(job[0], job[1]),
+                              ((four_rows, "four.meme"), (gt_rows, "gt"), (flap_rows, "flap"))))
+    items = merge_new([row for part in parts for row in part], 20)
+    if not items and hit:
+        return hit[1][:limit]
+    with _lock:
+        _NEW[network] = (now, items)
+    return items[:limit]
+
+
+def trending(network="bsc", limit=20):
+    """Топ токенов сети по трендовым пулам GeckoTerminal. Сбой — прошлый кэш или []."""
+    limit = min(20, max(1, int(limit)))
+    now = time.time()
+    with _lock:
+        hit = _TREND.get(network)
+    if hit and now - hit[0] < TREND_TTL:
+        return hit[1][:limit]
+    items, seen = [], set()
+    try:
+        for page in (1, 2):
+            data = _get(f"{GT}/{network}/trending_pools?include=base_token&page={page}", 8)
+            for row in parse_trending(data, 20):
+                key = row["token"].lower()
+                if key in seen:
+                    continue
+                seen.add(key)
+                items.append(row)
+                if len(items) >= 20:
+                    break
+            if len(items) >= 20:
+                break
+    except Exception as e:
+        print(f"gt: trending {network} failed: {_why(e)}", flush=True)
+        return (hit[1] if hit else [])[:limit]
+    with _lock:
+        _TREND[network] = (now, items)
+    return items[:limit]
+
+
+def parse_search(data, limit=20):
+    """Ответ DexScreener /search → уникальные базовые токены BNB, ликвидные пары первыми.
+    {"token", "symbol", "name", "image", "mcap_usd", "price_usd"}."""
+    def liq(pair):
+        return _num(((pair or {}).get("liquidity") or {}).get("usd")) or 0
+
+    out, seen = [], set()
+    for pair in sorted((data or {}).get("pairs") or [], key=liq, reverse=True):
+        if (pair.get("chainId") or "") != "bsc":
+            continue
+        base = pair.get("baseToken") or {}
+        addr = (base.get("address") or "").strip()
+        key = addr.lower()
+        if not addr or key in seen:
+            continue
+        seen.add(key)
+        img = ((pair.get("info") or {}).get("imageUrl") or "")
+        out.append({
+            "token": addr,
+            "symbol": base.get("symbol") or "",
+            "name": base.get("name") or "",
+            "image": img if isinstance(img, str) and img.startswith("https://") else "",
+            "mcap_usd": _num(pair.get("marketCap")) or _num(pair.get("fdv")),
+            "price_usd": _num(pair.get("priceUsd")),
+        })
+        if len(out) >= limit:
+            break
+    return out
+
+
+def search_tokens(query, limit=20):
+    """Поиск токенов BNB по адресу, имени или символу. Короткий запрос и сбой — [] или прошлый кэш."""
+    q = " ".join((query or "").split())
+    limit = min(20, max(1, int(limit)))
+    if len(q) < 2 or len(q) > 80:
+        return []
+    key = q.lower()
+    now = time.time()
+    with _lock:
+        hit = _SEARCH.get(key)
+    if hit and now - hit[0] < SEARCH_TTL:
+        return hit[1][:limit]
+    try:
+        data = _get(DS_SEARCH + "?q=" + urllib.parse.quote(q), 8)
+        items = parse_search(data, 20)
+    except Exception as e:
+        print(f"search: {q!r} failed: {_why(e)}", flush=True)
+        return (hit[1] if hit else [])[:limit]
+    with _lock:
+        _SEARCH[key] = (now, items)
+        if len(_SEARCH) > 200:
+            for k, _ in sorted(_SEARCH.items(), key=lambda kv: kv[1][0])[:len(_SEARCH) - 200]:
+                del _SEARCH[k]
+    return items[:limit]

@@ -33,7 +33,7 @@ class TestStore(unittest.TestCase):
         items = self.store.recent(12)
         self.assertEqual([x["token"] for x in items], [SOL, "0x" + "33" * 20, "0x" + "11" * 20])
         self.assertEqual(items[0], {"token": SOL, "chain": "solana", "launchpad": None, "ticker": "SOLX", "name": "Alpha",
-                                    "score": 80, "band": "CLEAN", "rug": False, "ts": 200})
+                                    "score": 80, "band": "CLEAN", "rug": False, "mcap_usd": None, "ts": 200})
         self.assertTrue(items[1]["rug"])
         self.assertEqual(len(self.store.recent(2)), 2)
         self.assertEqual([x["token"] for x in self.store.recent(12, "DANGER")], ["0x" + "33" * 20])
@@ -54,6 +54,19 @@ class TestStore(unittest.TestCase):
                    "band": "TOO_EARLY_OR_LATE", "rug": None}, ts=5)
         self.assertEqual((e["score"], e["ticker"], e["name"], e["rug"]), (None, None, None, False))
 
+    def test_radar_keeps_recent_clean_with_mcap(self):
+        now = int(time.time())
+        fresh = res("0x" + "aa" * 20, chain="bnb", score=88, band="CLEAN", ticker="NEW", name="New")
+        fresh["header"]["mcap_usd"] = 3500.5
+        self.store.record(fresh, ts=now - 20)
+        self.store.record(res("0x" + "bb" * 20, chain="bnb", score=91, band="CLEAN"), ts=now - 8 * 86400)
+        self.store.record(res("0x" + "cc" * 20, chain="bnb", score=10, band="DANGER"), ts=now - 10)
+        self.store.record(res(SOL, chain="solana", score=95, band="CLEAN"), ts=now - 5)
+        rows = self.store.radar()
+        self.assertEqual([r["token"] for r in rows], ["0x" + "aa" * 20])
+        self.assertEqual(rows[0]["mcap_usd"], 3500.5)
+        self.assertEqual(rows[0]["band"], "CLEAN")
+
     def test_flap_launchpad(self):
         self.store.record(res("0x" + "66" * 20) | {"launchpad": "flap"}, ts=300)
         self.assertEqual(self.store.recent(1)[0]["launchpad"], "flap")
@@ -70,10 +83,81 @@ class TestStore(unittest.TestCase):
         st = RecentStore(path)
         try:
             self.assertIsNone(st.recent()[0]["launchpad"])
+            self.assertIsNone(st.recent()[0]["mcap_usd"])
             st.record(res("0x" + "77" * 20) | {"launchpad": "flap"}, ts=2)
             self.assertEqual(st.recent()[0]["launchpad"], "flap")
         finally:
             st.close()
+
+    def test_parse_new_pools_skips_wbnb(self):
+        from foxscanner.scan.market import WBNB, parse_new_pools
+        foo = "0x" + "ab" * 20
+        older = "0x" + "cd" * 20
+        data = {"data": [
+            {"attributes": {"pool_created_at": "2026-10-23T09:00:00Z"},
+             "relationships": {"base_token": {"data": {"id": "bsc_" + older}}}},
+            {"attributes": {"pool_created_at": "2026-10-23T10:00:00Z"},
+             "relationships": {"base_token": {"data": {"id": "bsc_" + WBNB}}}},
+            {"attributes": {"pool_created_at": "2026-10-23T10:00:16Z"},
+             "relationships": {"base_token": {"data": {"id": "bsc_" + foo}}}},
+        ], "included": [
+            {"id": "bsc_" + older, "type": "token",
+             "attributes": {"address": older, "symbol": "OLD", "name": "Old"}},
+            {"id": "bsc_" + WBNB, "type": "token",
+             "attributes": {"address": WBNB, "symbol": "WBNB", "name": "Wrapped BNB"}},
+            {"id": "bsc_" + foo, "type": "token",
+             "attributes": {"address": foo, "symbol": "FOO", "name": "Foo", "image_url": "http://nope"}},
+        ]}
+        rows = parse_new_pools(data)
+        self.assertEqual([x["symbol"] for x in rows], ["FOO", "OLD"])
+        self.assertEqual([x["symbol"] for x in parse_new_pools(data, 1)], ["FOO"])
+        self.assertEqual(rows[0]["image"], "")
+        self.assertEqual(rows[0]["created"], int(__import__("datetime").datetime.fromisoformat("2026-10-23T10:00:16+00:00").timestamp()))
+
+    def test_parse_four_new_uses_launch_image_and_time(self):
+        from foxscanner.scan.market import WBNB, merge_new, parse_four_new
+        fresh = "0x" + "ab" * 18 + "ffff"
+        older = "0x" + "cd" * 18 + "4444"
+        data = {"code": 0, "data": [
+            {"tokenAddress": fresh, "shortName": "NEW", "name": "New", "symbol": "BNB",
+             "img": "/market/a.jpg", "createDate": "1793003209000"},
+            {"tokenAddress": fresh, "shortName": "DUP", "name": "Dup", "img": "", "createDate": 1793003209000},
+            {"tokenAddress": older, "shortName": "OLD", "name": "Old", "img": "http://nope", "createDate": 1793000000},
+            {"tokenAddress": WBNB, "shortName": "WBNB", "name": "Wrapped", "img": "/market/w.jpg", "createDate": 1793009999000},
+        ]}
+        rows = parse_four_new(data)
+        self.assertEqual([x["symbol"] for x in rows], ["NEW", "OLD"])
+        self.assertEqual(rows[0]["image"], "https://static.four.meme/market/a.jpg")
+        self.assertEqual(rows[0]["created"], 1793003209)
+        self.assertEqual(rows[1]["image"], "")
+        self.assertEqual(rows[1]["created"], 1793000000)
+        merged = merge_new([
+            {"token": fresh, "symbol": "NEW", "name": "New", "image": rows[0]["image"], "created": 100},
+            {"token": fresh.upper(), "symbol": "", "name": "", "image": "", "created": 250},
+            {"token": older, "symbol": "POOL", "name": "Pool", "image": "", "created": 50},
+        ])
+        self.assertEqual(merged[0]["symbol"], "NEW")
+        self.assertEqual(merged[0]["created"], 100)
+        self.assertEqual(merged[0]["image"], "https://static.four.meme/market/a.jpg")
+        self.assertEqual(merged[1]["token"], older)
+        self.assertEqual(merged[1]["created"], 50)
+
+    def test_viewed_counts_each_bnb_scan(self):
+        now = int(time.time())
+        ca = "0x" + "11" * 20
+        self.store.record(res(ca, chain="bnb", ticker="NEW"), ts=now - 10)
+        self.store.record(res(ca, chain="bnb", ticker="NEW", score=10, band="DANGER"), ts=now)
+        self.store.record(res("0x" + "22" * 20, chain="bnb", ticker="OLD"), ts=now - 7200)
+        self.store.record(res("0x" + "33" * 20, chain="robinhood"), ts=now)
+        day = {x["token"]: x for x in self.store.viewed("24h")}
+        self.assertEqual(day[ca]["checks"], 2)
+        self.assertEqual(day[ca]["band"], "DANGER")
+        self.assertEqual(day["0x" + "22" * 20]["checks"], 1)
+        self.assertNotIn("0x" + "33" * 20, day)
+        hour = {x["token"] for x in self.store.viewed("1h")}
+        self.assertIn(ca, hour)
+        self.assertNotIn("0x" + "22" * 20, hour)
+        self.assertEqual(self.store.viewed("nope")[0]["token"], ca)
 
     def test_no_verdict_not_saved(self):
         for bad in (None, {}, {"token": "0x" + "55" * 20}, {"band": "OK"}, "error"):

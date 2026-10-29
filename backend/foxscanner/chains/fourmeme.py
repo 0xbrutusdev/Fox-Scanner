@@ -80,7 +80,8 @@ def enabled():
     return os.environ.get("BNB_ENABLED", "true").strip().lower() in ("1", "true", "yes")
 
 
-SUFFIX = "4444"          # с марта 2025 каждый новый токен four.meme кончается на 4444
+SUFFIX = "4444"          # с марта 2025; вместе с ffff — текущие vanity-суффиксы four.meme
+SUFFIXES = ("4444", "ffff")
 X_PREFIX = "0x4444"       # X Mode: адрес начинается с 0x4444
 
 
@@ -90,12 +91,12 @@ def candidate(token):
 
 
 def by_address(token):
-    """Токен four.meme узнаётся по адресу, без RPC: суффикс 4444 или префикс X Mode 0x4444.
+    """Токен four.meme узнаётся по адресу, без RPC: суффикс 4444 или ffff, либо префикс X Mode 0x4444.
     Токены до стандартизации адреса сюда не попадают."""
     if not isinstance(token, str):
         return False
     t = token.lower()
-    return t.endswith(SUFFIX) or t.startswith(X_PREFIX)
+    return t.endswith(SUFFIXES) or t.startswith(X_PREFIX)
 
 
 # --------------------------------------------------------------------------- состояние токена

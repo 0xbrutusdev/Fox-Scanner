@@ -1,5 +1,5 @@
 """BNB Chain: лаунчпад Flap (chains/bnb_flap.py) рядом с four.meme. Без сети."""
-import os, time, unittest
+import json, os, time, unittest
 from contextlib import ExitStack
 from unittest import mock
 
@@ -34,9 +34,36 @@ def state_words():
             0, 0, 0, 400, 400, 0, int(0.26 * 1e18), 0, 0]
 
 
+def enc_str(s):
+    b = s.encode()
+    pad = (32 - (len(b) % 32)) % 32
+    return f"{len(b):064x}" + b.hex() + "00" * pad
+
+
 class TestBnbFlap(unittest.TestCase):
     def setUp(self):
         flap.drop_caches()
+
+    def test_parse_token_created_and_image(self):
+        name, sym, meta = enc_str("生肖"), enc_str("SX"), enc_str("bafkreiabc1234567890")
+        off0 = 7 * 32
+        off1 = off0 + len(name) // 2
+        off2 = off1 + len(sym) // 2
+        raw = data(1_700_000_000, DEV, 3, TOKEN, off0, off1, off2) + name + sym + meta
+        row = flap.parse_token_created(raw)
+        self.assertEqual(row["token"], TOKEN)
+        self.assertEqual(row["name"], "生肖")
+        self.assertEqual(row["symbol"], "SX")
+        self.assertEqual(row["meta"], "bafkreiabc1234567890")
+        self.assertEqual(row["created"], 1_700_000_000)
+        self.assertIsNone(flap.parse_token_created("0x"))
+        self.assertEqual(
+            flap.image_from_meta("bafkreiabc1234567890", json.dumps({"image": "bafkreibbbbbbbbbbb"})),
+            "https://flap.mypinata.cloud/ipfs/bafkreibbbbbbbbbbb")
+        self.assertEqual(
+            flap.image_from_meta("bafkreiabc1234567890", None, "image/png"),
+            "https://flap.mypinata.cloud/ipfs/bafkreiabc1234567890")
+        self.assertEqual(flap.image_from_meta("cid", json.dumps({"image": "http://nope"})), "")
 
     def test_suffix_only_when_enabled(self):
         with mock.patch.dict(os.environ, {"FLAP_BNB_ENABLED": "true"}):

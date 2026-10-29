@@ -3,15 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>FoxScanner · Spot the rug before it hits</title>
-<meta name="description" content="FoxScanner reads every transfer of a fresh memecoin and tells you who really holds it: linked wallets, snipers, fresh wallets and how hard the price could fall. BNB Chain first, four.meme supported.">
+<title data-i18n="FoxScanner · Spot the rug before it hits">FoxScanner · Spot the rug before it hits</title>
+<meta name="description" content="FoxScanner reads every transfer of a fresh memecoin and tells you who really holds it: linked wallets, snipers, fresh wallets and how hard the price could fall. BNB Chain first, four.meme, Flap and Genius.fun supported.">
 <meta name="theme-color" content="#0B0B0B">
+<script>(function(){try{if(localStorage.getItem('fs.theme')==='light')document.documentElement.setAttribute('data-theme','light')}catch(e){}})();</script>
 <meta property="og:title" content="FoxScanner · Spot the rug before it hits">
 <meta property="og:description" content="Multi-chain memecoin scanner. Paste a token address, get a rug risk verdict in seconds.">
 <meta property="og:image" content="/static/img/mascot-banner.png">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/static/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/static/fonts/orbitron-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/static/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/static/css/app.css?v=">
@@ -30,57 +32,80 @@
 
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="/" aria-label="FoxScanner home"><img src="/static/img/logo.png?v=" alt="" width="38" height="38"><b>FOX<span>SCANNER</span></b></a>
+    <a class="brand" href="/" aria-label="FoxScanner home"><img src="/static/img/logo.png?v=" alt="" width="36" height="36"><b>FOX<span>SCANNER</span></b></a>
     <nav class="nav" aria-label="Main">
-      <a href="/" class="on">Home</a>
-      <a href="#recent">Live scans</a>
-      <a href="#how">How it works</a>
+      <a href="/" class="on" aria-current="page" data-i18n="Home">Home</a>
+      <a href="/tokens" data-i18n="Tokens">Tokens</a>
+      <a href="/radar" data-i18n="Radar">Radar</a>
+      <a href="/token-management" data-i18n="Manage">Manage</a>
+      <a href="/api" data-i18n="API">API</a>
+      <a href="/about" data-i18n="About">About</a>
     </nav>
-    <div class="grow"></div>
-    <span class="chip-net"><span class="dot"></span><span data-net>BNB Chain</span></span>
+    <div class="top-actions">
+      <div class="wallet">
+        <button type="button" class="wallet-btn" data-wallet aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18"/><circle cx="16.5" cy="14.5" r="1" fill="currentColor" stroke="none"/></g></svg>
+          <span data-wallet-label data-i18n="Connect Wallet">Connect Wallet</span>
+        </button>
+        <div class="wallet-menu" data-wallet-menu hidden role="menu">
+          <button type="button" data-disconnect role="menuitem" data-i18n="Disconnect">Disconnect</button>
+        </div>
+      </div>
+      <button type="button" class="icon-btn" data-theme-toggle aria-pressed="false" aria-label="Light mode">
+        <svg class="ico-sun" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/></g></svg>
+        <svg class="ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M20 14.5A8 8 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z"/></svg>
+      </button>
+      <div class="lang">
+        <button type="button" class="lang-btn" data-lang-toggle aria-haspopup="listbox" aria-expanded="false" data-i18n-aria="Language" aria-label="Language">
+          <span data-lang-code>EN</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <ul class="lang-menu" role="listbox" hidden>
+          <li role="none"><button type="button" role="option" data-lang="en">English</button></li>
+          <li role="none"><button type="button" role="option" data-lang="zh">中文(简体)</button></li>
+          <li role="none"><button type="button" role="option" data-lang="ja">日本語</button></li>
+        </ul>
+      </div>
+    </div>
   </div>
 </header>
 
 <main>
-  <section class="hero">
-    <div class="wrap">
-      <div>
-        <span class="eyebrow">Multi-chain memecoin scanner</span>
-        <h1>Spot the rug <em>before it hits.</em></h1>
-        <p class="lead">Paste a fresh token and FoxScanner reads its whole transfer history: who really holds it, which wallets are linked, and how hard the price could fall if they sell. BNB Chain first, four.meme supported.</p>
-
-        <div class="chains" data-chains role="group" aria-label="Chain"></div>
-        <form class="search" data-scan-form autocomplete="off">
-          <label class="sr" for="ca">Token address</label>
-          <input id="ca" name="ca" spellcheck="false" inputmode="text" placeholder="Paste a BNB Chain token address (0x…)">
-          <button class="btn" type="submit" data-go><span>Start scanning</span><span class="arr">›</span></button>
-        </form>
-        <p class="form-msg" data-form-msg role="status"></p>
-
-        <div class="feats">
-          <div class="feat"><svg><use href="#i-scan"/></svg>Instant scan of new tokens</div>
-          <div class="feat"><svg><use href="#i-target"/></svg>Rug risk detection</div>
-          <div class="feat"><svg><use href="#i-drop"/></svg>Liquidity &amp; dump impact</div>
-          <div class="feat"><svg><use href="#i-link"/></svg>Linked wallet clusters</div>
-        </div>
-
-        <div class="counters hidden" data-counters>
-          <div class="counter"><svg><use href="#i-target"/></svg><div><b data-stat-scanned>0</b><span>Tokens scanned</span></div></div>
-          <div class="counter"><svg><use href="#i-alert"/></svg><div><b data-stat-danger>0</b><span>High risk found</span></div></div>
-          <div class="counter"><svg><use href="#i-shield"/></svg><div><b data-stat-rate>0%</b><span>Flagged high risk</span></div></div>
-        </div>
-      </div>
+  <section class="hero" id="top">
+    <div class="wrap stage">
+      <h1 data-hero-title>Check BNB Chain tokens</h1>
       <div class="hero-art" aria-hidden="true">
-        <img src="/static/img/mascot-hero.png?v=" alt="" width="560" height="580" fetchpriority="high">
-        <span class="tag">Stay safer</span>
+        <div class="watermark"><span class="lh-1 fw-bold flex-shrink-0" data-text="RUG"></span><span class="lh-1 fw-bold flex-shrink-0" data-text="CHECK"></span></div>
+        <img src="/static/img/mascot-hero.png?v=" alt="" width="858" height="637" fetchpriority="high">
       </div>
+      <div class="finder">
+        <form class="search" id="scan-form" data-scan-form autocomplete="off">
+          <label class="sr" for="ca">Token address, name, or symbol</label>
+          <span class="search-mark" aria-hidden="true"><svg viewBox="0 0 126.61 126.61"><path fill="#F3BA2F" d="M38.73 53.2 63.32 28.62l24.6 24.6 14.3-14.31L63.32 0 24.42 38.9l14.31 14.3zM0 63.31l14.3-14.31 14.31 14.31-14.31 14.3L0 63.31zM38.73 73.41l24.59 24.59 24.6-24.6 14.31 14.29-38.9 38.91-38.9-38.88 14.3-14.31zM98 63.31l14.3-14.31 14.31 14.3-14.31 14.32L98 63.31zM77.83 63.3 63.32 48.78 52.59 59.51l-1.24 1.23-2.23 2.23-.36.37.36.36 14.2 14.2 14.51-14.52.01-.08z"/></svg></span>
+          <input id="ca" name="ca" spellcheck="false" inputmode="text" placeholder="Token address, name, or symbol" autocomplete="off">
+          <button class="search-go" type="submit" data-go aria-label="Scan"><svg aria-hidden="true"><use href="#i-scan"/></svg></button>
+        </form>
+        <div class="trend" data-trend hidden></div>
+      </div>
+      <div class="hero-actions">
+        <button class="hero-btn hero-btn-check" type="submit" form="scan-form" data-go><span data-i18n="Check">Check</span></button>
+        <a class="hero-btn hero-btn-side" href="/replay" data-i18n="Rug Replay">Rug Replay</a>
+      </div>
+      <p class="form-msg" data-form-msg role="status"></p>
+    </div>
+  </section>
+
+  <section id="recent" class="ticker" aria-label="Recently Verified">
+    <div class="wrap">
+      <h2 class="ticker-label"><span data-i18n="Recently Verified">Recently Verified</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="m8 12.2 2.4 2.4 5.2-5.4"/></svg></h2>
+      <div class="marquee" data-recent-track></div>
     </div>
   </section>
 
   <section id="scanner" class="sec hidden" aria-live="polite">
     <div class="wrap scan-grid">
       <aside class="card console" data-console>
-        <div class="card-h"><h3 data-console-title>Scan</h3><span class="live"><span class="dot"></span>live</span></div>
+        <div class="card-h"><h3 data-console-title>Scan</h3><span class="live"><span class="dot"></span><span data-i18n="live">live</span></span></div>
         <ol class="steps" data-steps></ol>
         <div class="bar"><div data-bar></div></div>
         <ul class="log" data-log></ul>
@@ -88,43 +113,24 @@
       <div>
         <div class="card error-card" data-result-wait>
           <img src="/static/img/logo.png?v=" alt="">
-          <h3>The fox is on it</h3>
-          <p>Reading launch, transfers and holder wallets. Most scans take 10–40 seconds.</p>
+          <h3 data-i18n="The fox is on it">The fox is on it</h3>
+          <p data-i18n="Reading launch, transfers and holder wallets. Most scans take 10–40 seconds.">Reading launch, transfers and holder wallets. Most scans take 10–40 seconds.</p>
         </div>
         <div class="result" data-result></div>
       </div>
     </div>
   </section>
 
-  <section id="recent" class="sec hidden">
-    <div class="wrap">
-      <div class="sec-h"><h2>Live token <span>scanner</span></h2><span class="live"><span class="dot"></span>recent scans</span></div>
-      <div class="card table-wrap">
-        <table>
-          <thead><tr><th>Token</th><th>Chain</th><th class="hide-m">Launchpad</th><th class="num">Score</th><th>Risk</th><th class="num hide-m">Scanned</th><th class="num">Action</th></tr></thead>
-          <tbody data-recent-body></tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <section id="how" class="sec">
-    <div class="wrap">
-      <div class="sec-h"><h2>How the <span>fox</span> hunts</h2></div>
-      <div class="how">
-        <div class="card"><svg><use href="#i-bolt"/></svg><h3>Fast scan</h3><p>Finds the launch on four.meme and replays every transfer since, on the curve and after PancakeSwap.</p></div>
-        <div class="card"><svg><use href="#i-target"/></svg><h3>Deep analysis</h3><p>Checks each top holder: fresh wallet, sniper, bundle, received by transfer, already sold.</p></div>
-        <div class="card"><svg><use href="#i-link"/></svg><h3>Linked wallets</h3><p>Joins wallets that bought in one transaction, share a funder or pass tokens around into operators.</p></div>
-        <div class="card"><svg><use href="#i-globe"/></svg><h3>Multi-chain</h3><p>BNB Chain is live. Solana and Robinhood Chain are coming next.</p></div>
-      </div>
-    </div>
-  </section>
 </main>
 
 <footer>
-  <div class="wrap">
-    <a class="brand" href="/"><img src="/static/img/logo.png?v=" alt="" width="30" height="30"><b>FOX<span>SCANNER</span></b></a>
-    <p>FoxScanner reads public on-chain data and is not financial advice. A low risk score is not a guarantee: always do your own research.</p>
+  <div class="wrap foot">
+    <div class="foot-left">
+      <p class="foot-follow"><span data-i18n="Follow us:">Follow us:</span>
+      <a href="https://x.com/0x_Punisher" target="_blank" rel="noopener" aria-label="FoxScanner on X"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14.7 10.3 22.4 2h-1.8l-6.7 7.2L8.6 2H2l8.1 11.1L2 22h1.8l7.1-7.6L15.4 22H22l-7.3-11.7Zm-2.5 2.7-.8-1.1L4.6 3.3h2.8l5.3 7 .8 1.1 6.9 9.3h-2.8l-5.4-7.7Z"/></svg>      </a>
+      </p>
+    </div>
+    <p class="foot-copy" data-i18n="2026 © FoxScanner. All rights reserved.">2026 © FoxScanner. All rights reserved.</p>
   </div>
 </footer>
 

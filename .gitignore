@@ -6,7 +6,7 @@ __pycache__/
 *_out.txt
 DEV_NOTES.md
 CLAUDE.md
-scripts/probe_*.py
+backend/scripts/probe_*.py
 .claude/
 data/*
-design-src/shot_*
+frontend/design-src/shot_*

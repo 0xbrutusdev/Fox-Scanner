@@ -3,6 +3,7 @@
   'use strict';
   const FS = window.FS;
   const {esc, price} = FS.fmt;
+  const t = (s, v) => FS.i18n.t(s, v);
   const C = {line: '#FFD800', grid: '#1f1f1f', axis: '#6a6a6a', rug: '#EF4444', now: '#FFD800', ink: '#0B0B0B'};
   const RUG_LABEL = {linked: 'Linked wallets', transfer: 'Received by transfer', virgin: 'Fresh wallets', bundle: 'Bundle / snipers'};
   const GT_NET = {bnb: 'bsc', robinhood: 'robinhood', solana: 'solana'};
@@ -13,9 +14,9 @@
     const tot = rug.share || 1;
     return (rug.parts || []).map(p => {
       const n = (p.wallets || []).length;
-      return `<div class="rug-row"><span>${RUG_LABEL[p.kind] || esc(p.kind)}</span>`
+      return `<div class="rug-row"><span>${esc(t(RUG_LABEL[p.kind] || p.kind))}</span>`
         + `<div class="track"><div style="width:${Math.max(2, p.share / tot * 100).toFixed(1)}%"></div></div>`
-        + `<span>${n} wallet${n === 1 ? '' : 's'} · <b>${(p.share * 100).toFixed(1)}%</b></span></div>`;
+        + `<span>${esc(t(n === 1 ? '{n} wallet' : '{n} wallets', {n}))} · <b>${(p.share * 100).toFixed(1)}%</b></span></div>`;
     }).join('');
   }
 
@@ -24,12 +25,12 @@
     return pool && net ? `https://www.geckoterminal.com/${net}/pools/${encodeURIComponent(pool)}?embed=1&info=0&swaps=0&grayscale=0&light_chart=0` : null;
   }
 
-  const head = (tf, stale, src) => `<div class="chart-head"><span>Price${tf ? ' · ' + esc(tf) : ''}</span><span>`
-    + (stale > 0 ? `chart as of ${new Date(stale * 1000).toISOString().slice(11, 16)} UTC · ` : '') + esc(src) + '</span></div>';
+  const head = (tf, stale, src) => `<div class="chart-head"><span>${esc(t('Price'))}${tf ? ' · ' + esc(tf) : ''}</span><span>`
+    + (stale > 0 ? esc(t('chart as of {t} UTC · ', {t: new Date(stale * 1000).toISOString().slice(11, 16)})) : '') + esc(src) + '</span></div>';
 
   function widget(url, W) {
     const H = W < 640 ? 240 : 320;
-    return head('', 0, 'GeckoTerminal') + `<div class="chart-body"><iframe data-chart-widget="1" src="${esc(url)}" title="price chart" loading="lazy" `
+    return head('', 0, 'GeckoTerminal') + `<div class="chart-body"><iframe data-chart-widget="1" src="${esc(url)}" title="${esc(t('price chart'))}" loading="lazy" `
       + `sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox" referrerpolicy="strict-origin-when-cross-origin" style="height:${H}px"></iframe></div>`;
   }
 
@@ -38,8 +39,8 @@
     const cs = (data.candles || []).filter(c => c && c.length >= 5 && c[4] > 0);
     const now = data.price_usd > 0 ? data.price_usd : cs.length ? cs[cs.length - 1][4] : (hdrPrice > 0 ? hdrPrice : null);
     if (!now) {
-      return head('', 0, 'GeckoTerminal') + `<div class="chart-empty" data-chart-empty="1">${down ? 'Chart temporarily unavailable' : 'No price data for this token yet'}`
-        + (rug ? `<div style="margin-top:8px;color:var(--high);font-weight:700">Probably rug −${dropPct(rug)}% if suspicious holders sell</div>` : '') + '</div>';
+      return head('', 0, 'GeckoTerminal') + `<div class="chart-empty" data-chart-empty="1">${esc(down ? t('Chart temporarily unavailable') : t('No price data for this token yet'))}`
+        + (rug ? `<div style="margin-top:8px;color:var(--high);font-weight:700">${esc(t('Probably rug −{n}% if suspicious holders sell', {n: dropPct(rug)}))}</div>` : '') + '</div>';
     }
     const few = cs.length < 5;
     const pl = 6, pr = mob ? 72 : 84, pt = 22, pb = 26, pw = sw - pl - pr, ph = H - pt - pb;
@@ -81,7 +82,7 @@
       g += `<path d="${line}" fill="none" stroke="${C.line}" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>`;
     } else {
       g += `<line x1="${pl}" x2="${f(xEnd)}" y1="${f(yn)}" y2="${f(yn)}" stroke="${C.line}" stroke-width="1.4" stroke-dasharray="4 4" opacity="0.8"/>`;
-      g += `<text data-chart-few="1" x="${f(pl + (xEnd - pl) / 2)}" y="${f(yn > pt + ph / 2 ? yn - 14 : yn + 24)}" fill="${C.axis}" font-size="12" text-anchor="middle">${down ? 'chart temporarily unavailable' : 'not enough trades to chart yet'}</text>`;
+      g += `<text data-chart-few="1" x="${f(pl + (xEnd - pl) / 2)}" y="${f(yn > pt + ph / 2 ? yn - 14 : yn + 24)}" fill="${C.axis}" font-size="12" text-anchor="middle">${esc(down ? t('chart temporarily unavailable') : t('not enough trades to chart yet'))}</text>`;
     }
     if (rug) {
       const dx = xArrow - xEnd, dy = yl - yn, len = Math.hypot(dx, dy) || 1, ux = dx / len, uy = dy / len, ah = 10;
@@ -125,7 +126,7 @@
       if (el.dataset.k === key) return;
       el.dataset.k = key;
       try { el.innerHTML = render(st, result, W); }
-      catch (err) { el.dataset.k = ''; el.innerHTML = '<div class="chart-empty" data-chart-empty="1">Chart temporarily unavailable</div>'; console.warn('chart render failed', err); }
+      catch (err) { el.dataset.k = ''; el.innerHTML = '<div class="chart-empty" data-chart-empty="1">' + esc(t('Chart temporarily unavailable')) + '</div>'; console.warn('chart render failed', err); }
     },
   };
 })();

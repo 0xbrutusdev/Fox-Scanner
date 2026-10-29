@@ -354,7 +354,7 @@ def scan(token, emit=lambda e: None, chain=None):
     # остальные — Pons прежним путём, без дополнительных запросов
     flap_state = flap.detect(token) if chain == "robinhood" else None
     bankr_state = bankr.detect(token) if chain == "robinhood" and flap_state is None else None
-    # BNB по адресу, без перебора: 8888/7777 — Flap, 4444 или 0x4444… — four.meme.
+    # BNB по адресу, без перебора: 8888/7777 — Flap, 4444, ffff или 0x4444… — four.meme.
     # Остальные адреса — старый four.meme (один getTokenInfo) и только при промахе Genius.fun.
     bnb_pad = ("flap" if bnb_flap.candidate(token) else "fourmeme" if fourmeme.by_address(token) else None) if chain == "bnb" else None
     bnb_flap_state = bnb_flap.detect(token) if bnb_pad == "flap" else None

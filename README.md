@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="static/img/logo.png" width="96" alt="FoxScanner">
+<img src="frontend/static/img/logo.png" width="96" alt="FoxScanner">
 
 # FoxScanner
 
@@ -16,7 +16,7 @@ Multichain meme token checker. BNB Chain (four.meme) first; Solana and Robinhood
 ![runtime deps](https://img.shields.io/badge/runtime_deps-0-FFD800?style=flat-square\&labelColor=0B0B0B)
 [![license](https://img.shields.io/badge/license-MIT-2A2A2A?style=flat-square\&labelColor=0B0B0B)](LICENSE)
 
-![FoxScanner](static/img/mascot-banner.png)
+![FoxScanner](frontend/static/img/mascot-banner.png)
 
 </div>
 
@@ -103,16 +103,38 @@ The first 20 buyers after launch: how many seconds after launch each one bought,
 FoxScanner reads wallets in parallel under a hard time budget and streams every step of the scan to the page live. Under load it protects itself: a scan queue with *Scanner is busy, try again in a few seconds*, a per-address limit on new scans, bounded caches and a memory guard.
 
 * **Python 3.12**, **standard library only**: zero runtime dependencies.
-* **One adapter per chain and launchpad** (`chains/`), shared chain-agnostic detectors and scoring.
-* **Plain HTML, CSS and JS frontend** in `index.html` and `static/`, self-hosted fonts, no build step.
+* **Backend** in `backend/`: the `foxscanner` package with one adapter per chain and launchpad (`foxscanner/chains/`) and shared chain-agnostic detectors and scoring (`foxscanner/scan/`).
+* **Frontend** in `frontend/`: plain HTML, CSS and JS (`index.html`, `replay.html`, `static/`), self-hosted fonts, no build step. The backend serves it.
 * **No private keys**: FoxScanner never signs transactions or touches funds.
+
+## Project layout
+
+```text
+backend/
+  foxscanner/        Python package (standard library only)
+    server.py        HTTP server: API, pages and /static/ from frontend/
+    scan/            engine, detectors, early buyers, market data and chart
+    chains/          chain and launchpad adapters, shared EVM JSON-RPC client
+    alerts/          Telegram alerts: snapshots, storage, sending, rechecks
+    draw/, rewards/  holder draw and Token Burn & Holder Rewards
+    history/         recently scanned feed, operator memory, Rug Replay
+    bot/             Telegram bot (separate service)
+  scripts/           preview server, one-off draw / rewards runs, terminal scan
+  tests/             unit and API tests on mocked chains
+frontend/
+  index.html, replay.html
+  static/            css/, js/, fonts/, img/, favicons
+  design-src/        brand source images; scripts/brand_assets.py builds static/img from them
+data/                SQLite databases (not in git)
+```
 
 ## Run locally
 
 ```sh
 cp .env.example .env
 # BNB_RPC=https://bnb-mainnet.g.alchemy.com/v2/<your-key>   # any BSC RPC with eth_getLogs
-python3 server.py
+cd backend
+python3 -m foxscanner
 ```
 
 Open `http://localhost:8000`, or go straight to `http://localhost:8000/?ca=0x...&chain=bnb`.
@@ -120,18 +142,19 @@ Open `http://localhost:8000`, or go straight to `http://localhost:8000/?ca=0x...
 Frontend preview with a fake scanner, no RPC needed (addresses ending in `1` give DANGER, `2` CLEAN, `3` too established):
 
 ```sh
-python3 scripts/preview.py   # http://localhost:8765
+python3 backend/scripts/preview.py   # http://localhost:8765
 ```
 
 Run the tests:
 
 ```sh
+cd backend
 python3 -m unittest discover -s tests -v
 ```
 
 ## Telegram bot
 
-A separate service in `bot/` (standard library only) and a thin client of the FoxScanner API: it starts a scan on the website and turns the result into a short verdict with a link to the full report and a Trade button.
+A separate service in `backend/foxscanner/bot/` (standard library only) and a thin client of the FoxScanner API: it starts a scan on the website and turns the result into a short verdict with a link to the full report and a Trade button.
 
 * In a private chat: send a token address, or `/scan <address>`. `/start` and `/help` explain the bot and the verdict.
 * **Alerts** (`ALERTS_ENABLED`): tap **Watch** under a verdict to get a message when it moves into or out of `DANGER`, a probably rug warning appears, the biggest operator starts selling, or the early buyers exit.
@@ -139,9 +162,10 @@ A separate service in `bot/` (standard library only) and a thin client of the Fo
 ```sh
 # .env
 # TG_BOT_TOKEN=<token from @BotFather>
-# FOXSCANNER_API=https://your-site   # CRAWLSCAN_API is still read as a fallback
+# FOXSCANNER_API=https://your-site
 # SITE_URL=https://your-site         # links to the site in bot and alert messages
-python3 bot/main.py
+cd backend
+python3 -m foxscanner.bot
 ```
 
 Only one copy of the bot can poll Telegram at a time.

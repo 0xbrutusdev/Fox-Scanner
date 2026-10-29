@@ -1,0 +1,886 @@
+alerts: snapshot not saved: OSError: disk full
+alerts: early share not saved: OSError: disk full
+alerts: snapshot not saved: RuntimeError: locked
+..............E.................C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py:484: ResourceWarning: Implicitly cleaning up <HTTPError 409: 'Conflict'>
+  _warnings.warn(self.warn_message, ResourceWarning)
+C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py:484: ResourceWarning: Implicitly cleaning up <HTTPError 400: 'Bad Request'>
+  _warnings.warn(self.warn_message, ResourceWarning)
+C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py:484: ResourceWarning: Implicitly cleaning up <HTTPError 404: 'Not Found'>
+  _warnings.warn(self.warn_message, ResourceWarning)
+alerts: /api/alerts/watch failed: OSError: disk full
+......C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\unittest\mock.py:2252: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x000001D09CBACF40>
+  def __init__(self, name, parent):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+alerts: sent 0xabababababababababababababababababababab to 77: operator_sold
+alerts: sent 0xabababababababababababababababababababab to 77: operator_sold
+alerts: send to 77 failed: RuntimeError: telegram exploded
+alerts: send to 77 failed: RuntimeError: telegram exploded
+alerts: test alert 0xabababababababababababababababababababab to 5 (snapshot)
+alerts: test alert 0xabababababababababababababababababababab to 5 (snapshot)
+alerts: test alert 0xabababababababababababababababababababab to 5 (scan)
+alerts: test alert 0xabababababababababababababababababababab to 5 (snapshot)
+alerts: 0x1111111111111111111111111111111111111111 became too established, unwatched 2 chats
+............................................................D:\Home\Utility_Projects\foxscan\backend\tests\test_bankr.py:1133: ResourceWarning: unclosed file <_io.TextIOWrapper name='D:\\Home\\Utility_Projects\\foxscan\\frontend\\static\\js\\api.js' mode='r' encoding='utf-8'>
+  js = {n: open(os.path.join(root, n), encoding="utf-8").read() for n in ("api.js", "result.js", "recent.js")}
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+D:\Home\Utility_Projects\foxscan\backend\tests\test_bankr.py:1133: ResourceWarning: unclosed file <_io.TextIOWrapper name='D:\\Home\\Utility_Projects\\foxscan\\frontend\\static\\js\\result.js' mode='r' encoding='utf-8'>
+  js = {n: open(os.path.join(root, n), encoding="utf-8").read() for n in ("api.js", "result.js", "recent.js")}
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+D:\Home\Utility_Projects\foxscan\backend\tests\test_bankr.py:1133: ResourceWarning: unclosed file <_io.TextIOWrapper name='D:\\Home\\Utility_Projects\\foxscan\\frontend\\static\\js\\recent.js' mode='r' encoding='utf-8'>
+  js = {n: open(os.path.join(root, n), encoding="utf-8").read() for n in ("api.js", "result.js", "recent.js")}
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+early: 0xb1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b10ba3 robinhood 12 buyers, 0 HTTP, 0.0s
+bankr: index 0xb1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b10ba3 stopped (error) in 0s, ~0 HTTP (all threads), queue 0
+bankr: index 0xa built in 0s, None logs, None entries, ~0 HTTP (all threads), queue 0
+memory: relieve ? MB -> caches+gc ? MB -> malloc_trim n/a
+bankr: index 0xa built in 0s, None logs, None entries, ~0 HTTP (all threads), queue 5
+bankr: index 0xb built in 0s, None logs, None entries, ~0 HTTP (all threads), queue 4
+bankr: index 0xc built in 0s, None logs, None entries, ~0 HTTP (all threads), queue 3
+bankr: index 0xd built in 0s, None logs, None entries, ~0 HTTP (all threads), queue 2
+bankr: index 0xe built in 0s, None logs, None entries, ~0 HTTP (all threads), queue 1
+bankr: index 0xf built in 0s, None logs, None entries, ~0 HTTP (all threads), queue 0
+bankr: index 0xl built in 0s, None logs, None entries, ~0 HTTP (all threads), queue 0
+bankr: index 0xm built in 0s, None logs, None entries, ~0 HTTP (all threads), queue 0
+bankr: index 0xa built in 0s, None logs, None entries, ~0 HTTP (all threads), queue 0
+bankr: 0xb1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b10ba3 too active for a full scan (~50 logs, probe 0.0s)
+early: 0x4b4b4b4b4b4b4b4b4b4b4b4b4b4b4b4b4b4b45ab bnb 0 buyers, 0 HTTP, 0.0s
+gt: fail /robinhood/tokens/0xabababababababababababababababababababab/pools [http 429, no time left] 0.3s (GT_FORCE_FAIL)
+chart: 0xabababababababababababababababababababab no candles from gt -> stale cache from 22:31 UTC
+chart: 0xabababababababababababababababababababab no candles from gt -> empty
+chart: 0xabababababababababababababababababababab no candles from gt -> empty
+gt: fail /robinhood/tokens/0xabababababababababababababababababababab/pools [http 429, no time left] 0.4s
+F.....................................................................................................................................................................................................................................C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py:484: ResourceWarning: Implicitly cleaning up <HTTPError 429: 'GT_FORCE_FAIL'>
+  _warnings.warn(self.warn_message, ResourceWarning)
+C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py:484: ResourceWarning: Implicitly cleaning up <HTTPError 429: 'Too Many Requests'>
+  _warnings.warn(self.warn_message, ResourceWarning)
+gt: fail /robinhood/tokens/x [http 429, http 429, no time left] 0.6s
+gt: fail /robinhood/tokens/0xabababababababababababababababababababab?include=top_pools [http 429, http 429, no time left] 1.3s
+market: 0xabababababababababababababababababababab gt http 429 -> dexscreener failed (http 429)
+gt: no answer in 0.2s for 0xabababababababababababababababababababab, scanning; late check before verdict
+gt: late answer for 0xabababababababababababababababababababab at 0.2s: still none
+..................................C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py:484: ResourceWarning: Implicitly cleaning up <HTTPError 429: 'x'>
+  _warnings.warn(self.warn_message, ResourceWarning)
+...........C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py:484: ResourceWarning: Implicitly cleaning up <HTTPError 503: 'x'>
+  _warnings.warn(self.warn_message, ResourceWarning)
+gt: fail /robinhood/tokens/0xabababababababababababababababababababab?include=top_pools [OSError, no time left] 0.1s
+market: 0xabababababababababababababababababababab gt OSError -> dexscreener failed (timeout)
+gt: no answer in 0.1s for 0xabababababababababababababababababababab, scanning; late check before verdict
+gt: late answer for 0xabababababababababababababababababababab at 0.1s: still none
+market: 0xabababababababababababababababababababab gt
+market: 0xabababababababababababababababababababab gt
+market: 0xabababababababababababababababababababab gt
+market: 0xabababababababababababababababababababab gt
+gt: no answer in 0.05s for 0xabababababababababababababababababababab, scanning; late check before verdict
+gt: late answer for 0xabababababababababababababababababababab at 1.7s: ok
+gt: no answer in 0.1s for 0xabababababababababababababababababababab, scanning; late check before verdict
+gt: late answer for 0xabababababababababababababababababababab at 1.7s: too established
+early: 0xf1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f17777 robinhood 12 buyers, 0 HTTP, 0.0s
+...........................................................D:\Home\Utility_Projects\foxscan\backend\tests\test_flap.py:750: ResourceWarning: unclosed file <_io.TextIOWrapper name='D:\\Home\\Utility_Projects\\foxscan\\frontend\\static\\js\\app.js' mode='r' encoding='utf-8'>
+  js = {n: open(os.path.join(root, n), encoding="utf-8").read() for n in ("app.js", "result.js", "recent.js")}
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+D:\Home\Utility_Projects\foxscan\backend\tests\test_flap.py:750: ResourceWarning: unclosed file <_io.TextIOWrapper name='D:\\Home\\Utility_Projects\\foxscan\\frontend\\static\\js\\result.js' mode='r' encoding='utf-8'>
+  js = {n: open(os.path.join(root, n), encoding="utf-8").read() for n in ("app.js", "result.js", "recent.js")}
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+D:\Home\Utility_Projects\foxscan\backend\tests\test_flap.py:750: ResourceWarning: unclosed file <_io.TextIOWrapper name='D:\\Home\\Utility_Projects\\foxscan\\frontend\\static\\js\\recent.js' mode='r' encoding='utf-8'>
+  js = {n: open(os.path.join(root, n), encoding="utf-8").read() for n in ("app.js", "result.js", "recent.js")}
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+..................C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py:484: ResourceWarning: Implicitly cleaning up <HTTPError 413: 'Payload Too Large'>
+  _warnings.warn(self.warn_message, ResourceWarning)
+....D:\Home\Utility_Projects\foxscan\backend\tests\test_frontend.py:8: ResourceWarning: unclosed file <_io.TextIOWrapper name='D:\\Home\\Utility_Projects\\foxscan\\frontend\\index.html' mode='r' encoding='utf-8'>
+  read = lambda *p: open(os.path.join(ROOT, *p), encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+D:\Home\Utility_Projects\foxscan\backend\tests\test_frontend.py:8: ResourceWarning: unclosed file <_io.TextIOWrapper name='D:\\Home\\Utility_Projects\\foxscan\\frontend\\static\\js\\api.js' mode='r' encoding='utf-8'>
+  read = lambda *p: open(os.path.join(ROOT, *p), encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+D:\Home\Utility_Projects\foxscan\backend\tests\test_frontend.py:8: ResourceWarning: unclosed file <_io.TextIOWrapper name='D:\\Home\\Utility_Projects\\foxscan\\frontend\\static\\js\\app.js' mode='r' encoding='utf-8'>
+  read = lambda *p: open(os.path.join(ROOT, *p), encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+D:\Home\Utility_Projects\foxscan\backend\tests\test_frontend.py:8: ResourceWarning: unclosed file <_io.TextIOWrapper name='D:\\Home\\Utility_Projects\\foxscan\\frontend\\static\\js\\chart.js' mode='r' encoding='utf-8'>
+  read = lambda *p: open(os.path.join(ROOT, *p), encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+D:\Home\Utility_Projects\foxscan\backend\tests\test_frontend.py:8: ResourceWarning: unclosed file <_io.TextIOWrapper name='D:\\Home\\Utility_Projects\\foxscan\\frontend\\static\\js\\radar.js' mode='r' encoding='utf-8'>
+  read = lambda *p: open(os.path.join(ROOT, *p), encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+D:\Home\Utility_Projects\foxscan\backend\tests\test_frontend.py:8: ResourceWarning: unclosed file <_io.TextIOWrapper name='D:\\Home\\Utility_Projects\\foxscan\\frontend\\static\\js\\recent.js' mode='r' encoding='utf-8'>
+  read = lambda *p: open(os.path.join(ROOT, *p), encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+D:\Home\Utility_Projects\foxscan\backend\tests\test_frontend.py:8: ResourceWarning: unclosed file <_io.TextIOWrapper name='D:\\Home\\Utility_Projects\\foxscan\\frontend\\static\\js\\result.js' mode='r' encoding='utf-8'>
+  read = lambda *p: open(os.path.join(ROOT, *p), encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+D:\Home\Utility_Projects\foxscan\backend\tests\test_frontend.py:8: ResourceWarning: unclosed file <_io.TextIOWrapper name='D:\\Home\\Utility_Projects\\foxscan\\frontend\\static\\js\\scan.js' mode='r' encoding='utf-8'>
+  read = lambda *p: open(os.path.join(ROOT, *p), encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+D:\Home\Utility_Projects\foxscan\backend\tests\test_frontend.py:8: ResourceWarning: unclosed file <_io.TextIOWrapper name='D:\\Home\\Utility_Projects\\foxscan\\frontend\\static\\js\\tokens.js' mode='r' encoding='utf-8'>
+  read = lambda *p: open(os.path.join(ROOT, *p), encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+D:\Home\Utility_Projects\foxscan\backend\tests\test_frontend.py:8: ResourceWarning: unclosed file <_io.TextIOWrapper name='D:\\Home\\Utility_Projects\\foxscan\\frontend\\static\\css\\app.css' mode='r' encoding='utf-8'>
+  read = lambda *p: open(os.path.join(ROOT, *p), encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+...EE..F....EE..E..EE.........[rewards] 2026-10-28 22:41:55 scheduler started for x, dev wallets: 0
+recent: not saved: OSError: disk full
+recent: not read: OSError: disk full
+...........................................EE......E.EEEEEEE....EEE........................[rewards] 2026-10-28 22:42:00 draw 2026-10-04: done, 3 participants, winner 0xb1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1
+[rewards] 2026-10-28 22:42:00 burns: 1 new
+[rewards] 2026-10-28 22:42:00 supply check failed: rpc down
+[rewards] 2026-10-28 22:42:00 draw 2026-10-05 failed: boom
+.......................................................C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py:484: ResourceWarning: Implicitly cleaning up <HTTPError 429: 'rl'>
+  _warnings.warn(self.warn_message, ResourceWarning)
+.D:\Home\Utility_Projects\foxscan\backend\tests\test_stability.py:589: ResourceWarning: unclosed file <_io.TextIOWrapper name='D:\\Home\\Utility_Projects\\foxscan\\frontend\\static\\js\\api.js' mode='r' encoding='utf-8'>
+  api = open(os.path.join(root, "api.js"), encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+D:\Home\Utility_Projects\foxscan\backend\tests\test_stability.py:590: ResourceWarning: unclosed file <_io.TextIOWrapper name='D:\\Home\\Utility_Projects\\foxscan\\frontend\\static\\js\\recent.js' mode='r' encoding='utf-8'>
+  recent = open(os.path.join(root, "recent.js"), encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+scan: 0xabababababababababababababababababababab history too large (16 logs, cap 5)
+.......C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py:484: ResourceWarning: Implicitly cleaning up <HTTPError 503: 'busy'>
+  _warnings.warn(self.warn_message, ResourceWarning)
+memory: relieve 900 MB -> caches+gc 900 MB -> malloc_trim n/a
+memory: relieve 150 MB -> caches+gc 150 MB -> malloc_trim n/a
+recent: not saved: OperationalError: database is locked
+db: /api/rewards/status failed: OperationalError: database is locked
+db: /api/rewards/history failed: OperationalError: database is locked
+db: /api/rewards/status failed: OperationalError: database is locked
+memory: relieve 900 MB -> caches+gc 900 MB -> malloc_trim n/a
+memory: relieve 150 MB -> caches+gc 150 MB -> malloc_trim n/a
+recent: not saved: OperationalError: database is locked
+recent: not read: OperationalError: database is locked
+db: /api/rewards/status failed: OperationalError: database is locked
+db: /api/rewards/history failed: OperationalError: database is locked
+.........E.............................
+======================================================================
+ERROR: test_disabled_writes_nothing (test_alerts.TestServerSnapshots.test_disabled_writes_nothing)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 701, in _rmtree_unsafe
+    os.unlink(fullname)
+    ~~~~~~~~~^^^^^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmp6t3o4456\\a.db'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Home\Utility_Projects\foxscan\backend\tests\test_alerts.py", line 239, in tearDown
+    self.tmp.cleanup()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 975, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 955, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 852, in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 705, in _rmtree_unsafe
+    onexc(os.unlink, fullname, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 930, in onexc
+    _os.unlink(path)
+    ~~~~~~~~~~^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmp6t3o4456\\a.db'
+
+======================================================================
+ERROR: test_partial_then_full (test_opmem.TestBankr.test_partial_then_full)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 701, in _rmtree_unsafe
+    os.unlink(fullname)
+    ~~~~~~~~~^^^^^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpiqfnu75x\\memory.db'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Home\Utility_Projects\foxscan\backend\tests\test_opmem.py", line 50, in tearDown
+    self.tmp.cleanup()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 975, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 955, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 852, in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 705, in _rmtree_unsafe
+    onexc(os.unlink, fullname, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 930, in onexc
+    _os.unlink(path)
+    ~~~~~~~~~~^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpiqfnu75x\\memory.db'
+
+======================================================================
+ERROR: test_partial_then_full_after_restart (test_opmem.TestBankr.test_partial_then_full_after_restart)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 701, in _rmtree_unsafe
+    os.unlink(fullname)
+    ~~~~~~~~~^^^^^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpce_6za9u\\memory.db'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Home\Utility_Projects\foxscan\backend\tests\test_opmem.py", line 50, in tearDown
+    self.tmp.cleanup()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 975, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 955, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 852, in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 705, in _rmtree_unsafe
+    onexc(os.unlink, fullname, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 930, in onexc
+    _os.unlink(path)
+    ~~~~~~~~~~^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpce_6za9u\\memory.db'
+
+======================================================================
+ERROR: test_enabled_writes_scan (test_opmem.TestServer.test_enabled_writes_scan)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 701, in _rmtree_unsafe
+    os.unlink(fullname)
+    ~~~~~~~~~^^^^^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpzn_xcpej\\memory.db'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Home\Utility_Projects\foxscan\backend\tests\test_opmem.py", line 235, in tearDown
+    super().tearDown()
+    ~~~~~~~~~~~~~~~~^^
+  File "D:\Home\Utility_Projects\foxscan\backend\tests\test_opmem.py", line 50, in tearDown
+    self.tmp.cleanup()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 975, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 955, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 852, in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 705, in _rmtree_unsafe
+    onexc(os.unlink, fullname, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 930, in onexc
+    _os.unlink(path)
+    ~~~~~~~~~~^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpzn_xcpej\\memory.db'
+
+======================================================================
+ERROR: test_recheck_goes_through_same_dedup (test_opmem.TestServer.test_recheck_goes_through_same_dedup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 701, in _rmtree_unsafe
+    os.unlink(fullname)
+    ~~~~~~~~~^^^^^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmp22ft30s2\\memory.db'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Home\Utility_Projects\foxscan\backend\tests\test_opmem.py", line 235, in tearDown
+    super().tearDown()
+    ~~~~~~~~~~~~~~~~^^
+  File "D:\Home\Utility_Projects\foxscan\backend\tests\test_opmem.py", line 50, in tearDown
+    self.tmp.cleanup()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 975, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 955, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 852, in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 705, in _rmtree_unsafe
+    onexc(os.unlink, fullname, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 930, in onexc
+    _os.unlink(path)
+    ~~~~~~~~~~^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmp22ft30s2\\memory.db'
+
+======================================================================
+ERROR: test_dedup_survives_restart (test_opmem.TestWriter.test_dedup_survives_restart)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 701, in _rmtree_unsafe
+    os.unlink(fullname)
+    ~~~~~~~~~^^^^^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpkeiyh1it\\memory.db'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Home\Utility_Projects\foxscan\backend\tests\test_opmem.py", line 50, in tearDown
+    self.tmp.cleanup()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 975, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 955, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 852, in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 705, in _rmtree_unsafe
+    onexc(os.unlink, fullname, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 930, in onexc
+    _os.unlink(path)
+    ~~~~~~~~~~^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpkeiyh1it\\memory.db'
+
+======================================================================
+ERROR: test_write_and_dedup (test_opmem.TestWriter.test_write_and_dedup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 701, in _rmtree_unsafe
+    os.unlink(fullname)
+    ~~~~~~~~~^^^^^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpombimna3\\memory.db'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Home\Utility_Projects\foxscan\backend\tests\test_opmem.py", line 50, in tearDown
+    self.tmp.cleanup()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 975, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 955, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 852, in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 705, in _rmtree_unsafe
+    onexc(os.unlink, fullname, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 930, in onexc
+    _os.unlink(path)
+    ~~~~~~~~~~^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpombimna3\\memory.db'
+
+======================================================================
+ERROR: test_write_error_only_logs (test_opmem.TestWriter.test_write_error_only_logs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 701, in _rmtree_unsafe
+    os.unlink(fullname)
+    ~~~~~~~~~^^^^^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmp7y_ius2o\\memory.db'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Home\Utility_Projects\foxscan\backend\tests\test_opmem.py", line 50, in tearDown
+    self.tmp.cleanup()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 975, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 955, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 852, in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 705, in _rmtree_unsafe
+    onexc(os.unlink, fullname, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 930, in onexc
+    _os.unlink(path)
+    ~~~~~~~~~~^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmp7y_ius2o\\memory.db'
+
+======================================================================
+ERROR: test_batches_cap_and_confirm (test_replay.TestChecker.test_batches_cap_and_confirm)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 701, in _rmtree_unsafe
+    os.unlink(fullname)
+    ~~~~~~~~~^^^^^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmp7eaeegv0\\memory.db'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Home\Utility_Projects\foxscan\backend\tests\test_replay.py", line 47, in tearDown
+    self.tmp.cleanup()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 975, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 955, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 852, in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 705, in _rmtree_unsafe
+    onexc(os.unlink, fullname, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 930, in onexc
+    _os.unlink(path)
+    ~~~~~~~~~~^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmp7eaeegv0\\memory.db'
+
+======================================================================
+ERROR: test_errors_only_logged (test_replay.TestChecker.test_errors_only_logged)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 701, in _rmtree_unsafe
+    os.unlink(fullname)
+    ~~~~~~~~~^^^^^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpdjaxyyk_\\memory.db'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Home\Utility_Projects\foxscan\backend\tests\test_replay.py", line 47, in tearDown
+    self.tmp.cleanup()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 975, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 955, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 852, in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 705, in _rmtree_unsafe
+    onexc(os.unlink, fullname, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 930, in onexc
+    _os.unlink(path)
+    ~~~~~~~~~~^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpdjaxyyk_\\memory.db'
+
+======================================================================
+ERROR: test_api_items (test_replay.TestRules.test_api_items)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 701, in _rmtree_unsafe
+    os.unlink(fullname)
+    ~~~~~~~~~^^^^^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpvzid63jk\\memory.db'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Home\Utility_Projects\foxscan\backend\tests\test_replay.py", line 47, in tearDown
+    self.tmp.cleanup()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 975, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 955, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 852, in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 705, in _rmtree_unsafe
+    onexc(os.unlink, fullname, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 930, in onexc
+    _os.unlink(path)
+    ~~~~~~~~~~^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpvzid63jk\\memory.db'
+
+======================================================================
+ERROR: test_clean_is_never_confirmed (test_replay.TestRules.test_clean_is_never_confirmed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 701, in _rmtree_unsafe
+    os.unlink(fullname)
+    ~~~~~~~~~^^^^^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpt2td1x2f\\memory.db'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Home\Utility_Projects\foxscan\backend\tests\test_replay.py", line 47, in tearDown
+    self.tmp.cleanup()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 975, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 955, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 852, in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 705, in _rmtree_unsafe
+    onexc(os.unlink, fullname, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 930, in onexc
+    _os.unlink(path)
+    ~~~~~~~~~~^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpt2td1x2f\\memory.db'
+
+======================================================================
+ERROR: test_confirmed_at_90_percent (test_replay.TestRules.test_confirmed_at_90_percent)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 701, in _rmtree_unsafe
+    os.unlink(fullname)
+    ~~~~~~~~~^^^^^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpu7czn1qs\\memory.db'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Home\Utility_Projects\foxscan\backend\tests\test_replay.py", line 47, in tearDown
+    self.tmp.cleanup()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 975, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 955, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 852, in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 705, in _rmtree_unsafe
+    onexc(os.unlink, fullname, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 930, in onexc
+    _os.unlink(path)
+    ~~~~~~~~~~^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpu7czn1qs\\memory.db'
+
+======================================================================
+ERROR: test_due_respects_interval (test_replay.TestRules.test_due_respects_interval)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 701, in _rmtree_unsafe
+    os.unlink(fullname)
+    ~~~~~~~~~^^^^^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmp23qagp54\\memory.db'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Home\Utility_Projects\foxscan\backend\tests\test_replay.py", line 47, in tearDown
+    self.tmp.cleanup()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 975, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 955, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 852, in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 705, in _rmtree_unsafe
+    onexc(os.unlink, fullname, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 930, in onexc
+    _os.unlink(path)
+    ~~~~~~~~~~^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmp23qagp54\\memory.db'
+
+======================================================================
+ERROR: test_first_danger_scan_is_reference_and_danger_beats_clean (test_replay.TestRules.test_first_danger_scan_is_reference_and_danger_beats_clean)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 701, in _rmtree_unsafe
+    os.unlink(fullname)
+    ~~~~~~~~~^^^^^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpsi1m3zbo\\memory.db'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Home\Utility_Projects\foxscan\backend\tests\test_replay.py", line 47, in tearDown
+    self.tmp.cleanup()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 975, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 955, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 852, in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 705, in _rmtree_unsafe
+    onexc(os.unlink, fullname, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 930, in onexc
+    _os.unlink(path)
+    ~~~~~~~~~~^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpsi1m3zbo\\memory.db'
+
+======================================================================
+ERROR: test_minimum_is_kept (test_replay.TestRules.test_minimum_is_kept)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 701, in _rmtree_unsafe
+    os.unlink(fullname)
+    ~~~~~~~~~^^^^^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpyvpu64_s\\memory.db'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Home\Utility_Projects\foxscan\backend\tests\test_replay.py", line 47, in tearDown
+    self.tmp.cleanup()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 975, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 955, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 852, in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 705, in _rmtree_unsafe
+    onexc(os.unlink, fullname, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 930, in onexc
+    _os.unlink(path)
+    ~~~~~~~~~~^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpyvpu64_s\\memory.db'
+
+======================================================================
+ERROR: test_no_confirm_after_7_days_and_not_due (test_replay.TestRules.test_no_confirm_after_7_days_and_not_due)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 701, in _rmtree_unsafe
+    os.unlink(fullname)
+    ~~~~~~~~~^^^^^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpnlz8ahg_\\memory.db'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Home\Utility_Projects\foxscan\backend\tests\test_replay.py", line 47, in tearDown
+    self.tmp.cleanup()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 975, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 955, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 852, in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 705, in _rmtree_unsafe
+    onexc(os.unlink, fullname, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 930, in onexc
+    _os.unlink(path)
+    ~~~~~~~~~~^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpnlz8ahg_\\memory.db'
+
+======================================================================
+ERROR: test_who_is_tracked (test_replay.TestRules.test_who_is_tracked)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 701, in _rmtree_unsafe
+    os.unlink(fullname)
+    ~~~~~~~~~^^^^^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpfp_ialdi\\memory.db'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Home\Utility_Projects\foxscan\backend\tests\test_replay.py", line 47, in tearDown
+    self.tmp.cleanup()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 975, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 955, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 852, in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 705, in _rmtree_unsafe
+    onexc(os.unlink, fullname, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 930, in onexc
+    _os.unlink(path)
+    ~~~~~~~~~~^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpfp_ialdi\\memory.db'
+
+======================================================================
+ERROR: test_collecting_below_20 (test_replay.TestStats.test_collecting_below_20)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 701, in _rmtree_unsafe
+    os.unlink(fullname)
+    ~~~~~~~~~^^^^^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpw8qnl21d\\memory.db'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Home\Utility_Projects\foxscan\backend\tests\test_replay.py", line 47, in tearDown
+    self.tmp.cleanup()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 975, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 955, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 852, in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 705, in _rmtree_unsafe
+    onexc(os.unlink, fullname, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 930, in onexc
+    _os.unlink(path)
+    ~~~~~~~~~~^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpw8qnl21d\\memory.db'
+
+======================================================================
+ERROR: test_only_older_than_24h_and_checked (test_replay.TestStats.test_only_older_than_24h_and_checked)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 701, in _rmtree_unsafe
+    os.unlink(fullname)
+    ~~~~~~~~~^^^^^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpnrl6u94i\\memory.db'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Home\Utility_Projects\foxscan\backend\tests\test_replay.py", line 47, in tearDown
+    self.tmp.cleanup()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 975, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 955, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 852, in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 705, in _rmtree_unsafe
+    onexc(os.unlink, fullname, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 930, in onexc
+    _os.unlink(path)
+    ~~~~~~~~~~^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpnrl6u94i\\memory.db'
+
+======================================================================
+ERROR: test_ready_at_20_each (test_replay.TestStats.test_ready_at_20_each)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 701, in _rmtree_unsafe
+    os.unlink(fullname)
+    ~~~~~~~~~^^^^^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpx5shxkrk\\memory.db'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Home\Utility_Projects\foxscan\backend\tests\test_replay.py", line 47, in tearDown
+    self.tmp.cleanup()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 975, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 955, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 852, in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 705, in _rmtree_unsafe
+    onexc(os.unlink, fullname, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 930, in onexc
+    _os.unlink(path)
+    ~~~~~~~~~~^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpx5shxkrk\\memory.db'
+
+======================================================================
+ERROR: test_draw_status_and_config_cached (test_stability.TestPollingLoad.test_draw_status_and_config_cached)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 701, in _rmtree_unsafe
+    os.unlink(fullname)
+    ~~~~~~~~~^^^^^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpgit_eo17\\t.db'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Home\Utility_Projects\foxscan\backend\tests\test_stability.py", line 334, in tearDown
+    self.tmp.cleanup()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 975, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 955, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 852, in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 705, in _rmtree_unsafe
+    onexc(os.unlink, fullname, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cheng\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 930, in onexc
+    _os.unlink(path)
+    ~~~~~~~~~~^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\cheng\\AppData\\Local\\Temp\\tmpgit_eo17\\t.db'
+
+======================================================================
+FAIL: test_bankr_behind_flag (test_bankr.TestB2Frontend.test_bankr_behind_flag)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Home\Utility_Projects\foxscan\backend\tests\test_bankr.py", line 1137, in test_bankr_behind_flag
+    self.assertIn("`${pct(v.total_share_supply)} (${pct(v.unlocked_share_supply)} unlocked)`", js["result.js"])
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '`${pct(v.total_share_supply)} (${pct(v.unlocked_share_supply)} unlocked)`' not found in '// FoxScanner: result card � verdict, token facts, risk checklist, rug box, chart, holders, early buyers\n(function () {\n  \'use strict\';\n  const FS = window.FS;\n  const {api, links} = FS;\n  const {esc, price, usd, pct, short, age, secs, risk, riskLabel, RISK_COLOR, LAUNCHPAD} = FS.fmt;\n  const t = (s, v) => FS.i18n.t(s, v);\n\n  const WEIGHTS = {operator: 35, virgin: 25, transfer: 20, sniper: 10, concentration: 10};\n  const NO_EARLY = new Set([\'TOO_ESTABLISHED\', \'TOO_ACTIVE\']);\n  const EARLY_STATUS = {holding_all: \'Holding\', added: \'Added more\', sold_part: \'Sold part\', sold_all: \'Sold all\',\n    moved: \'Moved out\', burned: \'Burned\', locked: \'Locked\'};\n\n  const link = (href, text, cls) => href ? `<a class="${cls || \'mono\'}" href="${esc(href)}" target="_blank" rel="noopener">${text}</a>` : text;\n\n  function checks(r) {\n    const p = r.parts || {}, m = r.metrics || {};\n    if (!Object.keys(p).length) return \'\';\n    const rows = [\n      [\'operator\', t(\'Biggest operator dump impact\'),\n        m.impact != null ? t(\'\u2212{impact} price if sold � {share} of float\', {impact: pct(m.impact, 0), share: pct(m.operator)}) : t(\'{share} of float (liquidity not measured)\', {share: pct(m.operator)})],\n      [\'virgin\', t(\'Fresh wallets in top holders\'), m.virgin != null ? t(\'{p} of top 20\', {p: pct(m.virgin, 0)}) : t(\'most of the top could not be read\')],\n      [\'transfer\', t(\'Supply received by transfer\'), t(\'{p} of float\', {p: pct(m.transfer)})],\n      [\'sniper\', t(\'Snipers still holding\'), t(\'{p} of float\', {p: pct(m.sniper)})],\n      [\'concentration\', t(\'Top 20 concentration\'), t(\'{p} of float\', {p: pct(m.concentration)})],\n    ].map(([k, label, val]) => {\n      const ratio = p[k] == null ? null : p[k] / WEIGHTS[k];\n      const st = ratio == null ? \'na\' : ratio >= 0.8 ? \'pass\' : ratio >= 0.4 ? \'warn\' : \'fail\';\n      const word = {pass: t(\'Safe\'), warn: t(\'Watch\'), fail: t(\'Risk\'), na: t(\'n/a\')}[st];\n      const ic = {pass: \'\u2713\', warn: \'!\', fail: \'\u2715\', na: \'�\'}[st];\n      return `<li class="check ${st}" data-check="${k}"><span class="ic">${ic}</span><div>${label}<small>${esc(val)}</small></div><em>${word}</em></li>`;\n    }).join(\'\');\n    const hard = (r.gates || []).filter(x => !String(x).startsWith(\'soft:\'));\n    const note = hard.length\n      ? t(\'score parts � verdict follows the rule above\')\n      : t(\'score {n} / 100\', {n: r.score == null ? \'�\' : r.score});\n    return `<div class="card" data-panel="checks"><div class="card-h"><h3>${esc(t(\'Risk checks\'))}</h3><span class="muted">${esc(note)}</span></div><ul class="checks">${rows}</ul></div>`;\n  }\n\n  function gates(r) {\n    const g = r.gates || [];\n    if (!g.length) return \'\';\n    const hard = g.some(x => !String(x).startsWith(\'soft:\'));\n    const head = hard\n      ? \'<p class="gate-note">\' + esc(t(\'Verdict follows this rule, not the checklist average.\')) + \'</p>\'\n      : \'<p class="gate-note">\' + esc(t(\'Soft cap: the checklist still applies, but the band cannot go cleaner than Medium.\')) + \'</p>\';\n    return head + \'<ul class="gates">\' + g.map(x => x.startsWith(\'soft:\')\n      ? `<li class="soft">${esc(x.slice(5).trim())}</li>` : `<li>${esc(x)}</li>`).join(\'\') + \'</ul>\';\n  }\n\n  function rugBox(r) {\n    if (!r.rug) return \'\';\n    const rug = r.rug;\n    const drop = FS.chart.dropPct(rug);\n    const line = rug.level_usd\n      ? t(\'Suspicious holders control {share} of float. If they sell into current liquidity, the price could fall about {drop}% (to {price}).\', {share: pct(rug.share), drop, price: price(rug.level_usd)})\n      : t(\'Suspicious holders control {share} of float. If they sell into current liquidity, the price could fall about {drop}%.\', {share: pct(rug.share), drop});\n    return `<div class="rugbox" data-rug="1"><h3>\u26a0 ${esc(t(\'Potential rug pull � \u2212{n}%\', {n: drop}))}</h3>`\n      + `<p>${esc(line)}</p>` + FS.chart.rugRows(rug) + \'</div>\';\n  }\n\n  function padInfo(r, cfg) {\n    const flapOn = !!(cfg.flap || cfg.flap_bnb);\n    const fm = r.fourmeme, fl = flapOn && r.launchpad === \'flap\' ? r.flap : null, bk = cfg.bankr && r.launchpad === \'bankr\' ? r.bankr : null;\n    const gn = cfg.genius_bnb && r.launchpad === \'genius\' ? r.genius : null;\n    if (fm) {\n      if (fm.phase === \'pancakeswap\') return {label: t(\'Phase\'), value: \'PancakeSwap\', bar: null};\n      return {label: t(\'Bonding curve\'), value: fm.progress == null ? t(\'on curve\') : pct(fm.progress, 0), bar: fm.progress};\n    }\n    if (fl) return {label: \'Flap\', value: fl.phase === \'dex\' ? t(\'graduated\') : (fl.phase_text || t(\'bonding curve\')), bar: fl.phase === \'dex\' ? null : fl.progress};\n    if (gn) return {label: \'Genius.fun\', value: gn.phase === \'bonding_curve\' ? (gn.progress == null ? \'on curve\' : pct(gn.progress, 0)) : (gn.phase_text || gn.phase || \'Genius.fun\'), bar: gn.phase === \'bonding_curve\' ? gn.progress : null};\n    if (bk && bk.vesting) {\n      const v = bk.vesting;\n      return {label: t(\'Dev vesting\'), value: t(\'{total} ({unlocked} unlocked)\', {total: pct(v.total_share_supply), unlocked: pct(v.unlocked_share_supply)}), bar: null};\n    }\n    return null;\n  }\n\n  function stats(r, cfg) {\n    const h = r.header || {};\n    const cells = [[t(\'Price\'), price(h.price_usd)], [t(\'Market cap\'), usd(h.mcap_usd || h.fdv_usd)], [t(\'Liquidity\'), usd(h.liquidity_usd)],\n      [t(\'Volume 24h\'), usd(h.vol24h_usd)], [t(\'Age\'), age(h.age_h)]];\n    if (r.holders_total != null) cells.push([t(\'Holders\'), r.holders_total.toLocaleString(\'en-US\')]);\n    const pad = padInfo(r, cfg);\n    let html = cells.map(([k, v]) => `<div class="stat"><span>${k}</span><b>${v}</b></div>`).join(\'\');\n    if (pad) html += `<div class="stat" data-launchpad-info="1"><span>${esc(pad.label)}</span><b>${esc(pad.value)}</b>`\n      + (pad.bar != null ? `<div class="progress"><div style="width:${Math.min(100, Math.max(0, pad.bar * 100)).toFixed(0)}%"></div></div>` : \'\') + \'</div>\';\n    return `<div class="stats">${html}</div>`;\n  }\n\n  function holderFlags(s) {\n    const out = [];\n    if (s.is_deployer) out.push([t(\'dev\'), \'y\']);\n    if (s.virgin) out.push([t(\'fresh\'), \'bad\']);\n    if (s.sniper) out.push([t(\'sniper\'), \'bad\']);\n    if (s.launch_bundle) out.push([t(\'bundle\'), \'bad\']);\n    if (s.kind === \'transfer\') out.push([t(\'transfer\'), \'warn\']);\n    if (s.short_history) out.push([t(\'short history\'), \'warn\']);\n    if (s.one_shot_funded) out.push([t(\'one-shot funded\'), \'warn\']);\n    if (s.sold) out.push([t(\'sold\'), \'\']);\n    if (s.unread) out.push([t(\'unread\'), \'\']);\n    return out.map(([t, c]) => `<span class="flag ${c}">${t}</span>`).join(\'\');\n  }\n\n  function holders(r, cfg) {\n    const hs = r.holders || [];\n    if (!hs.length) return \'\';\n    const group = {};\n    (r.operators || []).filter(o => (o.wallets || []).length > 1).forEach((o, i) => o.wallets.forEach(w => { group[w] = i + 1; }));\n    const ops = (r.operators || []).filter(o => (o.wallets || []).length > 1);\n    const rows = hs.map((h, i) => {\n      const s = h.signals || {};\n      return `<tr data-row="${esc(h.wallet)}"><td class="num muted">${i + 1}</td>`\n        + `<td>${link(links.explorer(cfg, r.chain, \'address\', h.wallet), esc(short(h.wallet)))}</td>`\n        + `<td class="num">${pct(h.share_supply, 2)}</td>`\n        + `<td class="hide-m">${s.kind ? esc(t(s.kind)) : \'<span class="muted">\' + esc(t(\'unknown\')) + \'</span>\'}</td>`\n        + `<td><div class="flags">${holderFlags(s)}</div></td>`\n        + `<td class="num">${group[h.wallet] ? `<span class="op" title="operator ${group[h.wallet]}">#${group[h.wallet]}</span>` : \'\'}</td></tr>`;\n    }).join(\'\');\n    const sum = ops.length ? `<div class="summary"><span><b>${ops.length}</b> ${esc(t(ops.length === 1 ? \'operator (linked wallets)\' : \'operators (linked wallets)\'))}</span>`\n      + ops.slice(0, 3).map((o, i) => `<span>#${i + 1}: <b>${o.wallets.length}</b> ${esc(t(\'wallets\'))} � <b>${pct(o.share_supply)}</b> ${esc(t(\'of supply\'))}</span>`).join(\'\') + \'</div>\' : \'\';\n    return `<div class="card" data-table="1" data-panel="holders"><div class="card-h"><h3>${esc(t(\'Top holders\'))}</h3><span class="muted">${esc(t(\'{n} of {t}\', {n: hs.length, t: r.holders_total == null ? \'�\' : r.holders_total}))}</span></div>`\n      + sum + `<div class="table-wrap"><table><thead><tr><th class="num">#</th><th>${esc(t(\'Wallet\'))}</th><th class="num">${esc(t(\'Supply\'))}</th><th class="hide-m">${esc(t(\'Entry\'))}</th><th>${esc(t(\'Signals\'))}</th><th class="num">${esc(t(\'Op\'))}</th></tr></thead><tbody>${rows}</tbody></table></div></div>`;\n  }\n\n  function earlyHtml(d, r, cfg) {\n    if (!d) return \'<div class="card-b"><div class="skel" style="height:120px"></div></div>\';\n    if (d.available === false) return `<div class="empty">${esc(t(\'Early buyers: {reason}\', {reason: d.reason || t(\'not available\')}))}</div>`;\n    if (d.error) return `<div class="empty">${esc(t(\'Early buyers temporarily unavailable\'))} <button class="btn ghost sm" data-early-retry="1">${esc(t(\'Retry\'))}</button></div>`;\n    const bs = d.buyers || [], s = d.summary || {};\n    if (!bs.length) return `<div class="empty">${esc(t(\'No early buyers found yet\'))}</div>`;\n    const rows = bs.map(b => {\n      const st = t(EARLY_STATUS[b.status] || b.status);\n      const where = b.status === \'locked\' && b.locked_in && b.locked_in.length ? \' in \' + esc(short(b.locked_in[0])) : \'\';\n      const whereLabel = where ? esc(t(\' in {where}\', {where: short(b.locked_in[0])})) : \'\';\n      const fl = (b.scan_flags || []).map(f => `<span class="flag ${f === \'operator\' ? \'bad\' : \'warn\'}">${esc(f)}</span>`).join(\'\');\n      return `<tr><td class="num muted">${b.rank}</td><td>${link(links.explorer(cfg, r.chain, \'address\', b.wallet), esc(short(b.wallet)))}`\n        + `${b.dev ? \' <span class="flag y">dev</span>\' : \'\'}</td><td class="num hide-m">${secs(b.dt_s)}</td>`\n        + `<td class="num">${pct(b.bought_share_supply, 2)}</td><td class="num">${pct(b.now_share_supply, 2)}</td>`\n        + `<td><span class="status ${esc(b.status)}">${esc(st)}${whereLabel}</span></td><td class="hide-m"><div class="flags">${fl}</div></td></tr>`;\n    }).join(\'\');\n    const stale = d.stale_at ? ` � as of ${new Date(d.stale_at * 1000).toISOString().slice(11, 16)} UTC` : \'\';\n    const exits = (s.same_destination || []).length;\n    return `<div class="summary"><span><b>${s.holding || 0}</b> ${esc(t(\'still holding\'))}</span><span><b>${s.exited || 0}</b> ${esc(t(\'exited\'))}</span>`\n      + `<span>${esc(t(\'first {n} hold {p} of supply\', {n: s.buyers || bs.length, p: pct(s.held_share_supply)}))}</span>`\n      + (exits ? `<span style="color:var(--high)">${esc(t(exits === 1 ? \'{n} shared exit address\' : \'{n} shared exit addresses\', {n: exits}))}</span>` : \'\')\n      + `<span class="muted">${s.partial ? esc(t(\'partial\')) : \'\'}${stale}</span></div>`\n      + `<div class="table-wrap"><table><thead><tr><th class="num">#</th><th>${esc(t(\'Wallet\'))}</th><th class="num hide-m">${esc(t(\'Entry\'))}</th><th class="num">${esc(t(\'Bought\'))}</th><th class="num">${esc(t(\'Now\'))}</th><th>${esc(t(\'Status\'))}</th><th class="hide-m">${esc(t(\'Scan\'))}</th></tr></thead><tbody>${rows}</tbody></table></div>`;\n  }\n\n  function riskLines(r) {\n    const hard = (r.gates || []).filter(x => !String(x).startsWith(\'soft:\')).map(x => String(x).trim()).filter(Boolean);\n    if (hard.length) return hard.slice(0, 4);\n    const p = r.parts || {};\n    const labels = {\n      operator: t(\'Biggest operator dump impact\'),\n      virgin: t(\'Fresh wallets in top holders\'),\n      transfer: t(\'Supply received by transfer\'),\n      sniper: t(\'Snipers still holding\'),\n      concentration: t(\'Top 20 concentration\'),\n    };\n    return Object.keys(labels).filter(k => p[k] != null && p[k] / WEIGHTS[k] < 0.4).map(k => labels[k]).slice(0, 4);\n  }\n\n  // ---------------------------------------------------------------- card\n  function Result(root, cfg) {\n    this.root = root; this.cfg = cfg || {};\n    this._rs = () => this.paintChart();\n    window.addEventListener(\'resize\', this._rs);\n  }\n  Result.prototype.clear = function () { this.r = null; this.gen = (this.gen || 0) + 1; clearInterval(this._idx); this.root.innerHTML = \'\'; };\n\n  Result.prototype.error = function (msg, retry) {\n    this.clear();\n    this.root.innerHTML = `<div class="card error-card"><img src="/static/img/logo.png" alt=""><h3>${esc(t(\'Couldn\\\'t scan this token\'))}</h3><p>${esc(msg)}</p>`\n      + (retry ? \'<button class="btn" data-retry="1">\' + esc(t(\'Try again\')) + \'</button>\' : \'\') + \'</div>\';\n    const b = this.root.querySelector(\'[data-retry]\');\n    if (b) b.addEventListener(\'click\', retry);\n  };\n\n  Result.prototype.show = function (r, rescan) {\n    this.clear();\n    this.r = r;\n    const cfg = this.cfg, h = r.header || {}, lvl = risk(r.band);\n    const name = h.name || h.ticker || t(\'Unknown token\');\n    const trade = links.trade(cfg, r.chain, r.token, r.launchpad);\n    const flapOn = !!(cfg.flap || cfg.flap_bnb);\n    const pad = LAUNCHPAD[r.launchpad] && (r.launchpad !== \'flap\' || flapOn) && (r.launchpad !== \'bankr\' || cfg.bankr) && (r.launchpad !== \'genius\' || cfg.genius_bnb) ? LAUNCHPAD[r.launchpad] : null;\n    const chainName = ((cfg.chain_names || {})[r.chain]) || r.chain;\n    const warn = r.band === \'DANGER\' || r.band === \'RISKY\';\n    const m = r.metrics || {};\n    const ops = (r.operators || []).filter(o => (o.wallets || []).length > 1);\n    const lines = riskLines(r);\n    const shown = lines.length ? lines : (warn && r.reason ? [r.reason] : []);\n    const tile = (label, value, jump, on) => `<button type="button" class="tile${on ? \' on\' : \'\'}" data-jump="${jump}"><span>${esc(label)}</span><b>${esc(String(value))}</b></button>`;\n    const dev = (r.holders || []).find(x => (x.signals || {}).is_deployer);\n    const dep = (r.launch || {}).deployer;\n    const facts = [\n      [t(\'Price\'), price(h.price_usd)],\n      [t(\'Market cap\'), usd(h.mcap_usd || h.fdv_usd)],\n      [t(\'Liquidity\'), usd(h.liquidity_usd)],\n      [t(\'Volume 24h\'), usd(h.vol24h_usd)],\n      [t(\'Age\'), age(h.age_h)],\n      [t(\'Holders\'), r.holders_total == null ? \'�\' : r.holders_total.toLocaleString(\'en-US\')],\n    ];\n    if (pad) facts.push([t(\'Launch\'), pad]);\n    if (dep) facts.push([t(\'Deployer\'), link(links.explorer(cfg, r.chain, \'address\', dep), esc(short(dep))), true]);\n    if (dev) facts.push([t(\'Deployer balance\'), pct(dev.share_supply, 1)]);\n    const info = padInfo(r, cfg);\n    if (info) facts.push([info.label, info.value]);\n    const factRows = facts.map(([k, v, raw]) => `<tr><td>${esc(k)}</td><td>${raw ? v : esc(v)}</td></tr>`).join(\'\');\n    const explorer = links.explorer(cfg, r.chain, \'token\', r.token);\n    this.root.innerHTML =\n      `<div class="card report"><div class="report-top"><div class="avatar">${esc((h.ticker || name).slice(0, 2).toUpperCase())}</div>`\n      + `<div class="token-name"><h2>${esc(name)}${h.ticker && h.name ? `<small>$${esc(h.ticker)}</small>` : \'\'}</h2>`\n      + `<div class="addr"><button type="button" data-copy="${esc(r.token)}" title="${esc(t(\'Copy address\'))}" aria-label="${esc(t(\'Copy contract address\'))}">${esc(short(r.token))} \u29c9</button>`\n      + `<span class="pill y">${esc(chainName)}</span>${pad ? `<span class="pill">${esc(pad)}</span>` : \'\'}`\n      + (r.limited ? \'<span class="pill">\' + esc(t(\'limited data\')) + \'</span>\' : \'\') + \'</div></div>\'\n      + `<div class="report-price"><b>${esc(price(h.price_usd))}</b><div class="token-actions">`\n      + (explorer ? `<a class="btn ghost sm" href="${esc(explorer)}" target="_blank" rel="noopener">${esc(t(\'Explorer\'))}</a>` : \'\')\n      + (trade ? `<a class="btn sm${warn ? \' ghost\' : \'\'}" data-trade="1" href="${esc(trade)}" target="_blank" rel="noopener">${esc(t(\'Trade \u2197\'))}</a>` : \'\')\n      + `</div></div></div>`\n      + `<div class="report-dash"><div class="gauge"><div class="ring" style="--c:${RISK_COLOR[lvl]};--p:${r.score == null ? 0 : r.score}"><b>${r.score == null ? \'�\' : r.score}<small>/ 100</small></b></div>`\n      + `<span class="ring-cap">${esc(t(\'Holder score\'))}</span><span class="ring-sub">${esc(t(\'100 = cleaner distribution\'))}</span>`\n      + `<span class="risk ${lvl}" data-risk="${lvl}">${esc(riskLabel(r.band))}</span></div>`\n      + `<div class="tiles">`\n      + tile(t(\'Overview\'), riskLabel(r.band), \'overview\', true)\n      + tile(t(\'Liquidity\'), usd(h.liquidity_usd), \'markets\')\n      + tile(t(\'Holders\'), r.holders_total == null ? \'�\' : r.holders_total.toLocaleString(\'en-US\'), \'holders\')\n      + tile(t(\'Operators\'), String(ops.length), \'holders\')\n      + tile(t(\'Snipers\'), pct(m.sniper, 0), \'checks\')\n      + tile(t(\'Launch\'), pad || chainName, \'overview\')\n      + `</div><aside class="risk-col"><h3>${esc(t(\'Risks\'))}</h3>`\n      + (shown.length ? \'<ul>\' + shown.map(x => `<li>${esc(x)}</li>`).join(\'\') + \'</ul>\' : `<p class="ok">${esc(t(\'No major risks\'))}</p>`)\n      + `</aside></div>`\n      + `<div class="report-ov" data-panel="overview">`\n      + (r.headline ? `<p class="report-line">${esc(r.headline)}</p>` : \'\')\n      + (r.reason ? `<p class="reason">${esc(r.reason)}</p>` : \'\')\n      + gates(r)\n      + `<h3>${esc(t(\'Token overview\'))}</h3><table class="ov-table"><tbody>${factRows}</tbody></table>`\n      + ((r.notes || []).length ? `<div class="notes">${r.notes.map(esc).join(\' � \')}</div>` : \'\')\n      + (r.partial_scan ? `<div class="notes" data-partial="1">${esc(t(\'Partial scan: {msg}\', {msg: r.partial_scan.message || t(\'holder index is still building\')}))} <span data-index-state></span></div>` : \'\')\n      + `<div class="notes">${esc(t(\'This scan does not check contract owner, mint, honeypot or tax.\'))}</div>`\n      + `<div class="notes">${esc(r.elapsed_s == null ? t(\'Scanned in �\') : t(\'Scanned in {s}s\', {s: r.elapsed_s}))} � <button type="button" class="btn ghost sm" data-rescan="1" style="height:28px">${esc(t(\'Rescan\'))}</button></div>`\n      + `</div></div>`\n      + rugBox(r)\n      + `<div class="card" data-panel="markets" data-chart-box="1"><div class="chart-box" data-chart-el></div></div>`\n      + checks(r) + holders(r, cfg)\n      + (NO_EARLY.has(r.band) ? \'\' : `<div class="card" data-early="1" data-panel="early"><div class="card-h"><h3>${esc(t(\'Early buyers\'))}</h3><span class="muted">${esc(t(\'first 20 after launch\'))}</span></div><div data-early-el></div></div>`);\n    this.root.querySelector(\'[data-copy]\').addEventListener(\'click\', e => FS.copy(e.currentTarget.dataset.copy));\n    this.root.querySelector(\'[data-rescan]\').addEventListener(\'click\', rescan);\n    this.root.querySelectorAll(\'[data-jump]\').forEach(b => b.addEventListener(\'click\', () => {\n      const el = this.root.querySelector(\'[data-panel="\' + b.dataset.jump + \'"]\');\n      if (el) el.scrollIntoView({behavior: \'smooth\', block: \'start\'});\n    }));\n    this.loadChart();\n    if (!NO_EARLY.has(r.band)) this.loadEarly();\n    if (r.partial_scan && cfg.bankr) this.watchIndex(rescan);\n  };\n\n  Result.prototype.loadChart = function () {\n    const r = this.r, gen = this.gen;\n    this.chartSt = {status: \'loading\'};\n    this.paintChart();\n    api.chart(r.token, r.chain).then(d => ({status: \'ok\', data: d}), () => ({status: \'none\', data: {}}))\n      .then(st => { if (this.gen === gen) { this.chartSt = st; this.paintChart(); } });\n  };\n  Result.prototype.paintChart = function () {\n    if (!this.r) return;\n    FS.chart.paint(this.root.querySelector(\'[data-chart-el]\'), this.chartSt, this.r);\n  };\n\n  Result.prototype.loadEarly = function () {\n    const r = this.r, gen = this.gen, el = this.root.querySelector(\'[data-early-el]\');\n    if (!el) return;\n    el.innerHTML = earlyHtml(null, r, this.cfg);\n    api.early(r.token, r.chain).then(d => d, () => ({error: \'temporarily unavailable\'})).then(d => {\n      if (this.gen !== gen) return;\n      el.innerHTML = earlyHtml(d, r, this.cfg);\n      const b = el.querySelector(\'[data-early-retry]\');\n      if (b) b.addEventListener(\'click\', () => this.loadEarly());\n    });\n  };\n\n  // Bankr partial scan: the full holder index builds in the background; offer a rescan once it is ready\n  Result.prototype.watchIndex = function (rescan) {\n    const r = this.r, gen = this.gen, el = this.root.querySelector(\'[data-index-state]\');\n    const check = () => {\n      if (document.hidden) return;\n      api.index(r.token, r.chain).then(d => {\n        if (this.gen !== gen || !el) return;\n        if (d.state === \'ready\') {\n          clearInterval(this._idx);\n          el.innerHTML = \'<button type="button" class="btn sm" style="height:28px">\' + esc(t(\'Full index ready � rescan\')) + \'</button>\';\n          el.querySelector(\'button\').addEventListener(\'click\', rescan);\n        } else if (d.eta_s) el.textContent = t(\'� full index in ~{n} min\', {n: Math.ceil(d.eta_s / 60)});\n      }, () => {});\n    };\n    check();\n    this._idx = setInterval(check, 30000);\n  };\n\n  FS.Result = Result;\n})();\n'
+
+======================================================================
+FAIL: test_default_path_next_to_draw_db (test_opmem.TestRows.test_default_path_next_to_draw_db)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Home\Utility_Projects\foxscan\backend\tests\test_opmem.py", line 90, in test_default_path_next_to_draw_db
+    self.assertEqual(opmem.db_path(), "/data/memory.db")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'D:\\data\\memory.db' != '/data/memory.db'
+- D:\data\memory.db
+? ^^^    ^
++ /data/memory.db
+? ^    ^
+
+
+----------------------------------------------------------------------
+Ran 677 tests in 46.172s
+
+FAILED (failures=2, errors=22)
