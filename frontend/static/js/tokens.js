@@ -8,6 +8,7 @@
   let viewed = [];
   let fresh = [];
   let windowId = '24h';
+  const status = {chips: 'loading', viewed: 'loading', fresh: 'loading'};
 
   function letters(x) {
     const raw = String(x.symbol || x.ticker || '').replace(/^\$/, '').trim();
@@ -59,6 +60,14 @@
   function paintChips() {
     const box = $('[data-chips]');
     if (!box) return;
+    if (status.chips === 'loading') {
+      box.innerHTML = `<p class="tick-empty">${esc(t('Loading recent scans…'))}</p>`;
+      return;
+    }
+    if (status.chips === 'error') {
+      box.innerHTML = `<p class="tick-empty">${esc(t('Recent scans are unavailable.'))}</p>`;
+      return;
+    }
     if (!chips.length) {
       box.innerHTML = `<p class="tick-empty">${esc(t('No scans yet.'))}</p>`;
       return;
@@ -73,15 +82,29 @@
     box.innerHTML = `<div class="tick-run">${html}${html}</div>`;
   }
 
+  function stateRow(columns, message, retry) {
+    const action = retry
+      ? `<button type="button" data-retry="${esc(retry)}">${esc(t('Retry'))}</button>` : '';
+    return `<tr><td colspan="${columns}"><div class="token-data-state"><span>${esc(t(message))}</span>${action}</div></td></tr>`;
+  }
+
   function paintViewed() {
     const body = $('[data-viewed]');
     if (!body) return;
+    if (status.viewed === 'loading') {
+      body.innerHTML = stateRow(4, 'Loading checks…');
+      return;
+    }
+    if (status.viewed === 'error') {
+      body.innerHTML = stateRow(4, 'Checks are unavailable.', 'viewed');
+      return;
+    }
     if (!viewed.length) {
       body.innerHTML = `<tr><td colspan="4"><p class="token-empty">${esc(t('No checks in this window.'))}</p></td></tr>`;
       return;
     }
     body.innerHTML = viewed.map(x =>
-      `<tr data-ca="${esc(x.token)}"><td>${tokenCell(x)}</td>` +
+      `<tr tabindex="0" data-ca="${esc(x.token)}"><td>${tokenCell(x)}</td>` +
       `<td class="tok-name">${esc(x.name || '—')}</td>` +
       `<td class="tok-num">${esc(compact(x.checks))}</td>` +
       `<td>${riskPill(x.band)}</td></tr>`).join('');
@@ -90,67 +113,118 @@
   function paintNew() {
     const body = $('[data-new]');
     if (!body) return;
+    if (status.fresh === 'loading') {
+      body.innerHTML = stateRow(2, 'Loading new tokens…');
+      return;
+    }
+    if (status.fresh === 'error') {
+      body.innerHTML = stateRow(2, 'New tokens are unavailable.', 'new');
+      return;
+    }
     if (!fresh.length) {
       body.innerHTML = `<tr><td colspan="2"><p class="token-empty">${esc(t('No new tokens right now.'))}</p></td></tr>`;
       return;
     }
     body.innerHTML = fresh.map(x =>
-      `<tr data-ca="${esc(x.token)}"><td>${tokenCell(x)}</td><td>${esc(when(x.created))}</td></tr>`).join('');
+      `<tr tabindex="0" data-ca="${esc(x.token)}"><td>${tokenCell(x)}</td><td>${esc(when(x.created))}</td></tr>`).join('');
+  }
+
+  function paintFreshness() {
+    const el = $('[data-token-state]');
+    const copy = $('[data-token-state-copy]');
+    if (!el || !copy) return;
+    const values = Object.values(status);
+    const failed = values.includes('error');
+    const loading = values.includes('loading');
+    el.classList.toggle('is-error', failed);
+    el.classList.toggle('is-loading', !failed && loading);
+    copy.textContent = t(failed ? 'Some market data is unavailable' : loading ? 'Loading market data' : 'Updated just now');
   }
 
   function paint() {
     paintChips();
     paintViewed();
     paintNew();
+    paintFreshness();
   }
 
   function busy(btn, on) {
-    if (btn) btn.classList.toggle('is-busy', on);
+    if (!btn) return;
+    btn.classList.toggle('is-busy', on);
+    btn.disabled = on;
+    btn.setAttribute('aria-busy', String(on));
   }
 
   async function loadChips() {
+    status.chips = 'loading';
+    paintChips();
+    paintFreshness();
     try {
       const d = await FS.api.recent();
       chips = (d && d.items) || [];
+      status.chips = 'ready';
     } catch (e) {
-      chips = [];
+      status.chips = 'error';
     }
     paintChips();
+    paintFreshness();
   }
 
   async function loadViewed() {
     const btn = $('[data-refresh="viewed"]');
     busy(btn, true);
+    status.viewed = 'loading';
+    paintViewed();
+    paintFreshness();
     try {
       const d = await FS.api.tokensViewed(windowId);
       viewed = (d && d.items) || [];
+      status.viewed = 'ready';
     } catch (e) {
-      viewed = [];
+      status.viewed = 'error';
     }
     busy(btn, false);
     paintViewed();
+    paintFreshness();
   }
 
   async function loadNew(manual) {
     const btn = manual ? $('[data-refresh="new"]') : null;
     busy(btn, true);
+    status.fresh = 'loading';
+    paintNew();
+    paintFreshness();
     try {
       const d = await FS.api.tokensNew();
       fresh = ((d && d.items) || []).slice().sort((a, b) => (b.created || 0) - (a.created || 0)).slice(0, 7);
+      status.fresh = 'ready';
     } catch (e) {
-      fresh = [];
+      status.fresh = 'error';
     }
     busy(btn, false);
     paintNew();
+    paintFreshness();
   }
 
   function onRowClick(e) {
+    const retry = e.target.closest('[data-retry]');
+    if (retry) {
+      if (status.chips === 'error') loadChips();
+      retry.dataset.retry === 'viewed' ? loadViewed() : loadNew(true);
+      return;
+    }
     const copy = e.target.closest('[data-copy]');
     if (copy) {
       e.stopPropagation();
       FS.copy(copy.getAttribute('data-copy') || '');
       return;
     }
+    const row = e.target.closest('[data-ca]');
+    if (row) openToken(row.getAttribute('data-ca'));
+  }
+
+  function onRowKeydown(e) {
+    if (e.key !== 'Enter' || e.target.closest('button, a')) return;
     const row = e.target.closest('[data-ca]');
     if (row) openToken(row.getAttribute('data-ca'));
   }
@@ -173,12 +247,15 @@
     const chipBox = $('[data-chips]');
     if (viewedBody) viewedBody.addEventListener('click', onRowClick);
     if (newBody) newBody.addEventListener('click', onRowClick);
+    if (viewedBody) viewedBody.addEventListener('keydown', onRowKeydown);
+    if (newBody) newBody.addEventListener('keydown', onRowKeydown);
     if (chipBox) chipBox.addEventListener('click', e => {
       const chip = e.target.closest('[data-ca]');
       if (chip) openToken(chip.getAttribute('data-ca'));
     });
     document.addEventListener('fs:lang', paint);
     document.addEventListener('visibilitychange', () => { if (!document.hidden) loadNew(false); });
+    paint();
     loadChips();
     loadViewed();
     loadNew(true);

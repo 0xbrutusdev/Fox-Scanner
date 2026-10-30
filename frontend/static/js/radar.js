@@ -15,6 +15,9 @@
     solana: 'https://axiom.trade/t/{address}/@foxscan'
   }, flap_bnb: true, genius_bnb: true};
   let items = [];
+  let filter = 'all';
+  let loadedAt = 0;
+  let loadStatus = 'idle';
 
   function fresh(ts) {
     const s = Math.max(0, Math.floor(Date.now() / 1000 - Number(ts || 0)));
@@ -63,7 +66,7 @@
       ? '<a class="radar-act" href="' + esc(trade) + '" target="_blank" rel="noopener">' + esc(t('Trade on {venue}', {venue: who})) + '</a>' : '';
     const cakeBtn = cake
       ? '<a class="radar-act" href="' + esc(cake) + '" target="_blank" rel="noopener">' + esc(t('Trade on PancakeSwap')) + '</a>' : '';
-    return '<article class="radar-card"><header><div class="radar-av">' + avatar(x) + '</div><div class="radar-id"><b>$'
+    return '<article class="radar-card" data-radar-token="' + esc(x.token) + '"><header><div class="radar-av">' + avatar(x) + '</div><div class="radar-id"><b>$'
       + esc(tk) + '</b><span class="radar-age" data-ts="' + esc(x.ts) + '">' + esc(fresh(x.ts)) + '</span>'
       + (x.name ? '<small>' + esc(x.name) + '</small>' : '')
       + '</div><div class="radar-tags">'
@@ -117,13 +120,27 @@
   }
 
   function render() {
-    const list = items.filter(x => x.chain === 'bnb' || x.chain === 'bsc');
+    const list = items.filter(x => (x.chain === 'bnb' || x.chain === 'bsc') && (filter === 'all' || String(x.launchpad || '').toLowerCase() === filter));
     const count = root.querySelector('[data-radar-count]');
-    if (count) count.textContent = String(list.length);
+    if (count) count.textContent = loadedAt ? String(list.length) : '—';
     const grid = root.querySelector('[data-radar-list]');
     if (grid) {
-      grid.innerHTML = list.length ? list.map(card).join('')
-        : '<p class="radar-empty">' + esc(t('No clean launches in the last 7 days.')) + '</p>';
+      if (!loadedAt && (loadStatus === 'idle' || loadStatus === 'loading')) {
+        grid.innerHTML = '<p class="radar-empty">' + esc(t('Checking launch feeds…')) + '</p>';
+      } else if (!loadedAt && loadStatus === 'error') {
+        grid.innerHTML = '<div class="radar-empty"><span>' + esc(t('Radar update unavailable.'))
+          + '</span><button type="button" data-radar-retry>' + esc(t('Retry')) + '</button></div>';
+      } else {
+        grid.innerHTML = list.length ? list.map(card).join('')
+          : '<p class="radar-empty">' + esc(t('No clean launches in the last 7 days.')) + '</p>';
+      }
+    }
+    const state = root.querySelector('[data-radar-state]');
+    if (state) {
+      const copy = state.querySelector('span:last-child');
+      state.classList.toggle('is-stale', !loadedAt || loadStatus === 'error');
+      state.classList.toggle('is-error', loadStatus === 'error');
+      if (copy) copy.textContent = loadStatus === 'error' ? t('Update unavailable') : loadedAt ? t('Updated just now') : t('Waiting for the first update');
     }
     paintDial();
     const out = root.querySelector('[data-radar-out]');
@@ -140,17 +157,54 @@
       const scan = '/?ca=' + encodeURIComponent(x.token) + '&chain=' + encodeURIComponent(x.chain || 'bnb');
       const tk = String(x.ticker || short(x.token) || '').replace(/^\$/, '');
       const side = s.left > 54 ? ' radar-blip-left' : '';
-      return '<a class="radar-blip' + side + '" style="left:' + s.left.toFixed(1) + '%;top:' + s.top.toFixed(1) + '%" href="'
+      return '<a class="radar-blip' + side + '" data-radar-token="' + esc(x.token) + '" style="left:' + s.left.toFixed(1) + '%;top:' + s.top.toFixed(1) + '%" href="'
         + esc(scan) + '"><span class="radar-face">' + avatar(x) + '</span><span class="radar-sticker">$'
         + esc(tk) + '</span></a>';
     }).join('');
   }
 
   root.addEventListener('click', e => {
+    if (e.target.closest('[data-radar-retry]')) {
+      load();
+      return;
+    }
     const b = e.target.closest('[data-copy]');
     if (!b) return;
     e.preventDefault();
     FS.copy(b.dataset.copy);
+  });
+  const filters = root.querySelector('[data-radar-filters]');
+  if (filters) filters.addEventListener('click', e => {
+    const b = e.target.closest('[data-radar-filter]');
+    if (!b) return;
+    filter = b.dataset.radarFilter || 'all';
+    filters.querySelectorAll('[data-radar-filter]').forEach(x => {
+      const active = x === b;
+      x.classList.toggle('is-active', active);
+      x.setAttribute('aria-pressed', String(active));
+    });
+    render();
+  });
+
+  function selectToken(token) {
+    root.querySelectorAll('[data-radar-token]').forEach(el => el.classList.toggle('is-selected', Boolean(token) && el.dataset.radarToken === token));
+  }
+  root.addEventListener('mouseover', e => {
+    const item = e.target.closest('[data-radar-token]');
+    if (item) selectToken(item.dataset.radarToken);
+  });
+  root.addEventListener('mouseout', e => {
+    const from = e.target.closest('[data-radar-token]');
+    const to = e.relatedTarget && e.relatedTarget.closest ? e.relatedTarget.closest('[data-radar-token]') : null;
+    if (from && (!to || to.dataset.radarToken !== from.dataset.radarToken)) selectToken(to && to.dataset.radarToken);
+  });
+  root.addEventListener('focusin', e => {
+    const item = e.target.closest('[data-radar-token]');
+    if (item) selectToken(item.dataset.radarToken);
+  });
+  root.addEventListener('focusout', e => {
+    const to = e.relatedTarget && e.relatedTarget.closest ? e.relatedTarget.closest('[data-radar-token]') : null;
+    selectToken(to && to.dataset.radarToken);
   });
   document.addEventListener('fs:lang', render);
   setInterval(() => {
@@ -159,13 +213,21 @@
 
   function load() {
     if (document.hidden) return;
+    loadStatus = loadedAt ? 'refreshing' : 'loading';
+    render();
     FS.api.radar().then(d => {
       items = (d && d.items) || [];
+      loadedAt = Date.now();
+      loadStatus = 'ready';
       if (d && d.window_min > 0) windowSec = d.window_min * 60;
       render();
-    }, () => render());
+    }, () => {
+      loadStatus = 'error';
+      render();
+    });
   }
   document.addEventListener('visibilitychange', load);
+  render();
   FS.api.config().then(c => { cfg = Object.assign(cfg, c || {}); }, () => {}).then(load);
   setInterval(load, EVERY);
 })();

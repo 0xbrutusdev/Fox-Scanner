@@ -1,0 +1,8 @@
+.code-explorer{overflow:hidden;border:1px solid var(--line);border-radius:18px;background:#090a08;color:#f4f2e8}
+.code-tabs{display:flex;overflow-x:auto;border-bottom:1px solid #262820;background:#11120f;scrollbar-width:thin}
+.code-tabs button{flex:none;min-height:44px;padding:0 16px;border:0;border-bottom:2px solid transparent;background:transparent;color:#999b92;font:700 12px/1 var(--body);cursor:pointer}
+.code-tabs button[aria-selected="true"]{border-color:var(--y);color:var(--y)}
+.code-pane{position:relative;min-width:0;padding:20px}
+.code-pane[hidden]{display:none}
+.code-pane pre{max-width:100%;margin:0;overflow:auto;color:#e7e4d9;font:500 12px/1.7 var(--mono);white-space:pre}
+.code-copy{position:absolute;right:12px;top:12px;min-height:34px;padding:0 11px;border:1px solid #34362e;border-radius:9px;background:#161713;color:#d8d5c9;font:700 11px/1 var(--body);cursor:pointer}

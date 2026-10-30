@@ -1,0 +1,13 @@
+schema_version: 1
+source_plan: ../MANAGE_API_ABOUT_REFACTOR_PLAN.md
+checkpoint_status: core_implementation_complete
+remaining:
+  - id: T027
+    disposition: optional_not_selected
+    rationale: A methodology video would add download, caption, playback, and maintenance cost without improving the current SVG evidence explanation.
+  - id: T028
+    disposition: superseded
+    rationale: The refactored pages no longer require the large mascot raster in their initial media path; page-specific SVGs satisfy the visual and performance goals.
+follow_up_recommendations:
+  - Add CI-hosted Playwright plus axe-core if this repository later adopts a Node-based browser-test toolchain.
+  - Capture approved visual-regression snapshots after product copy and temporary API pricing are finalized.

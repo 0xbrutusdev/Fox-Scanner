@@ -1,200 +1,163 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title data-i18n="API · FoxScanner">API · FoxScanner</title>
-<meta name="description" content="Real-time holder risk for your app. BNB Chain tokens, one score, the risks behind it.">
-<meta name="theme-color" content="#0B0B0B">
-<script>(function(){try{if(localStorage.getItem('fs.theme')==='light')document.documentElement.setAttribute('data-theme','light')}catch(e){}})();</script>
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="icon" href="/favicon.png" type="image/png">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="preload" href="/static/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/static/fonts/orbitron-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/static/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/static/css/app.css?v=">
-</head>
-<body>
-<header class="top">
-  <div class="wrap">
-    <a class="brand" href="/" aria-label="FoxScanner home"><img src="/static/img/logo.png?v=" alt="" width="36" height="36"><b>FOX<span>SCANNER</span></b></a>
-    <nav class="nav" aria-label="Main">
-      <a href="/" data-i18n="Home">Home</a>
-      <a href="/tokens" data-i18n="Tokens">Tokens</a>
-      <a href="/radar" data-i18n="Radar">Radar</a>
-      <a href="/token-management" data-i18n="Manage">Manage</a>
-      <a href="/api" class="on" aria-current="page" data-i18n="API">API</a>
-      <a href="/about" data-i18n="About">About</a>
-    </nav>
-    <div class="top-actions">
-      <div class="wallet">
-        <button type="button" class="wallet-btn" data-wallet aria-expanded="false">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18"/><circle cx="16.5" cy="14.5" r="1" fill="currentColor" stroke="none"/></g></svg>
-          <span data-wallet-label data-i18n="Connect Wallet">Connect Wallet</span>
-        </button>
-        <div class="wallet-menu" data-wallet-menu hidden role="menu">
-          <button type="button" data-disconnect role="menuitem" data-i18n="Disconnect">Disconnect</button>
+<!-- Shared site chrome is rendered by backend/foxscanner/server.py::render_site_page. -->
+<html lang="en"><body>
+<main id="main-content" class="signal-api">
+  <div class="api-signal-strip" aria-label="Page status"><div class="wrap"><span aria-hidden="true"></span> Integration signal <b>API preview</b></div></div>
+
+  <section class="api-lab wrap" aria-labelledby="api-title">
+    <div class="api-lab__intro">
+      <p class="api-eyebrow">Risk Signal Lab · BNB Chain</p>
+      <h1 id="api-title">Put holder-risk evidence in the path of every trade.</h1>
+      <p class="api-lead">Send a token address. Receive the launch context, grouped holder evidence, and a deterministic verdict your product can explain.</p>
+      <div class="api-actions" aria-label="API actions">
+        <a class="btn" href="#integration-example">View integration example</a>
+        <a class="btn ghost" href="https://x.com/0x_Punisher" target="_blank" rel="noopener noreferrer">Request API access on X <span class="sr">(opens in a new tab)</span></a>
+      </div>
+      <form class="api-address" data-api-address-form>
+        <div class="api-address__heading"><label for="api-demo-address">Token address</label><span class="api-badge">Demo input</span></div>
+        <div class="api-address__control">
+          <span class="api-chain" aria-label="BNB Chain">BNB</span>
+          <input id="api-demo-address" name="address" type="text" spellcheck="false" autocomplete="off" value="0x7fA9385bE102ac3EAc297483Dd6233D62b3e1496" aria-describedby="api-address-help api-address-status">
+          <button type="submit">Update example</button>
         </div>
-      </div>
-      <button type="button" class="icon-btn" data-theme-toggle aria-pressed="false" aria-label="Light mode">
-        <svg class="ico-sun" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/></g></svg>
-        <svg class="ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M20 14.5A8 8 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z"/></svg>
-      </button>
-      <div class="lang">
-        <button type="button" class="lang-btn" data-lang-toggle aria-haspopup="listbox" aria-expanded="false" data-i18n-aria="Language" aria-label="Language">
-          <span data-lang-code>EN</span>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6"/></svg>
-        </button>
-        <ul class="lang-menu" role="listbox" hidden>
-          <li role="none"><button type="button" role="option" data-lang="en">English</button></li>
-          <li role="none"><button type="button" role="option" data-lang="zh">中文(简体)</button></li>
-          <li role="none"><button type="button" role="option" data-lang="ja">日本語</button></li>
-        </ul>
-      </div>
+        <p id="api-address-help">Example data only. This preview does not submit a live scan.</p>
+        <p id="api-address-status" class="api-form-status" role="status" aria-live="polite"></p>
+      </form>
     </div>
-  </div>
-</header>
 
-<main>
-  <section class="api-page">
-    <div class="wrap">
-      <div class="api-hero">
-        <div>
-          <h1 data-i18n="FoxScanner API">FoxScanner API</h1>
-          <p class="api-lead" data-i18n="Real-time holder risk for your app. BNB Chain tokens, one score, the risks behind it.">Real-time holder risk for your app. BNB Chain tokens, one score, the risks behind it.</p>
-          <div class="api-cta">
-            <a class="hero-btn hero-btn-check" href="https://x.com/0x_Punisher" target="_blank" rel="noopener" data-i18n="Create an account">Create an account</a>
-            <a class="hero-btn hero-btn-side" href="#docs" data-i18n="Documentation">Documentation</a>
+    <article id="integration-example" class="api-console" aria-labelledby="integration-title">
+      <header class="api-console__header"><div><span class="api-console__status"><i aria-hidden="true"></i> Representative contract</span><h2 id="integration-title">Request → verdict</h2></div><span class="api-badge api-badge--muted">Preview response</span></header>
+      <div class="api-code-explorer" data-code-explorer="request">
+        <div class="api-code-toolbar">
+          <div class="api-tabs" role="tablist" aria-label="Request language">
+            <button id="request-tab-curl" type="button" role="tab" aria-selected="true" aria-controls="request-panel-curl" data-code-tab="curl">cURL</button>
+            <button id="request-tab-js" type="button" role="tab" aria-selected="false" aria-controls="request-panel-js" tabindex="-1" data-code-tab="javascript">JavaScript</button>
+            <button id="request-tab-python" type="button" role="tab" aria-selected="false" aria-controls="request-panel-python" tabindex="-1" data-code-tab="python">Python</button>
           </div>
+          <button class="api-copy" type="button" data-copy-control data-copy-target="#request-code-curl" aria-label="Copy cURL request"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.5"></rect><path d="M10.5 3.5V3A1.5 1.5 0 0 0 9 1.5H4A1.5 1.5 0 0 0 2.5 3v5A1.5 1.5 0 0 0 4 9.5h.5"></path></svg><span data-copy-label>Copy</span></button>
         </div>
-        <div class="api-fox"><img src="/static/img/mascot-hero.png?v=" alt="" width="858" height="637"></div>
+        <div id="request-panel-curl" class="api-code-panel is-active" role="tabpanel" aria-labelledby="request-tab-curl" data-code-panel="curl"><pre><code id="request-code-curl">curl --request POST https://api.foxscanner.io/v1/scans \
+  --header "Authorization: Bearer $FOXSCANNER_API_KEY" \
+  --header "Content-Type: application/json" \
+  --data '{"chain":"bnb","address":"<span data-demo-address>0x7fA9385bE102ac3EAc297483Dd6233D62b3e1496</span>"}'</code></pre></div>
+        <div id="request-panel-js" class="api-code-panel" role="tabpanel" aria-labelledby="request-tab-js" data-code-panel="javascript"><pre><code id="request-code-js">const response = await fetch("https://api.foxscanner.io/v1/scans", {
+  method: "POST",
+  headers: {
+    Authorization: `Bearer ${process.env.FOXSCANNER_API_KEY}`,
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    chain: "bnb",
+    address: "<span data-demo-address>0x7fA9385bE102ac3EAc297483Dd6233D62b3e1496</span>",
+  }),
+});</code></pre></div>
+        <div id="request-panel-python" class="api-code-panel" role="tabpanel" aria-labelledby="request-tab-python" data-code-panel="python"><pre><code id="request-code-python">response = requests.post(
+    "https://api.foxscanner.io/v1/scans",
+    headers={"Authorization": f"Bearer {FOXSCANNER_API_KEY}"},
+    json={
+        "chain": "bnb",
+        "address": "<span data-demo-address>0x7fA9385bE102ac3EAc297483Dd6233D62b3e1496</span>",
+    },
+    timeout=10,
+)</code></pre></div>
       </div>
 
-      <p class="api-kicker" data-i18n="Security that scales with your app">Security that scales with your app</p>
-      <h2 data-i18n="Real-time risk scoring. Keep users safer.">Real-time risk scoring. Keep users safer.</h2>
-      <div class="api-plans">
-        <article class="api-plan">
-          <h3 data-i18n="Free">Free</h3>
-          <p class="price" data-i18n="$0/mo">$0/mo</p>
-          <ul>
-            <li data-i18n="Essential protection for every token">Essential protection for every token</li>
-            <li data-i18n="3 requests per minute">3 requests per minute</li>
-            <li data-i18n="10 requests per minute burst">10 requests per minute burst</li>
-            <li data-i18n="Cached results">Cached results</li>
-            <li data-i18n="Watermark support">Watermark support</li>
-            <li data-i18n="One report">One report</li>
-          </ul>
-          <a class="hero-btn hero-btn-side" href="https://x.com/0x_Punisher" target="_blank" rel="noopener" data-i18n="Create an account">Create an account</a>
-        </article>
-        <article class="api-plan on">
-          <h3><span data-i18n="Basic">Basic</span> <span class="api-rec" data-i18n="Recommended">Recommended</span></h3>
-          <p class="price" data-i18n="$49/mo">$49/mo</p>
-          <ul>
-            <li data-i18n="Built for active traders">Built for active traders</li>
-            <li data-i18n="50 requests per minute">50 requests per minute</li>
-            <li data-i18n="Bulk data, monthly">Bulk data, monthly</li>
-            <li data-i18n="Regular fresh reports">Regular fresh reports</li>
-            <li data-i18n="Watermark support">Watermark support</li>
-            <li data-i18n="One token endpoint">One token endpoint</li>
-            <li data-i18n="Paid support">Paid support</li>
-          </ul>
-          <a class="hero-btn hero-btn-check" href="https://x.com/0x_Punisher" target="_blank" rel="noopener" data-i18n="Create an account">Create an account</a>
-        </article>
-        <article class="api-plan">
-          <h3 data-i18n="Business">Business</h3>
-          <p class="price" data-i18n="$199/mo">$199/mo</p>
-          <ul>
-            <li data-i18n="Built for teams">Built for teams</li>
-            <li data-i18n="100 requests per minute">100 requests per minute</li>
-            <li data-i18n="500 requests per minute burst">500 requests per minute burst</li>
-            <li data-i18n="Bulk data and reports">Bulk data and reports</li>
-            <li data-i18n="10 token endpoints">10 token endpoints</li>
-            <li data-i18n="Priority support">Priority support</li>
-          </ul>
-          <a class="hero-btn hero-btn-side" href="https://x.com/0x_Punisher" target="_blank" rel="noopener" data-i18n="Create an account">Create an account</a>
-        </article>
-        <article class="api-plan">
-          <h3 data-i18n="Pro">Pro</h3>
-          <p class="price" data-i18n="$499/mo">$499/mo</p>
-          <ul>
-            <li data-i18n="Built for high-traffic apps">Built for high-traffic apps</li>
-            <li data-i18n="500 requests per minute">500 requests per minute</li>
-            <li data-i18n="1,000 requests per minute burst">1,000 requests per minute burst</li>
-            <li data-i18n="Bulk data and reports">Bulk data and reports</li>
-            <li data-i18n="Unlimited token endpoints">Unlimited token endpoints</li>
-            <li data-i18n="Dedicated monthly support">Dedicated monthly support</li>
-          </ul>
-          <a class="hero-btn hero-btn-side" href="https://x.com/0x_Punisher" target="_blank" rel="noopener" data-i18n="Create an account">Create an account</a>
-        </article>
-      </div>
-      <p class="api-ribbon" data-i18n="This API powers FoxScanner from $49/month.">This API powers FoxScanner from $49/month.</p>
-
-      <div class="api-split">
-        <div>
-          <h2 data-i18n="Protect your users">Protect your users</h2>
-          <p data-i18n="Show a score before someone buys.">Show a score before someone buys.</p>
-          <ul class="tm-points">
-            <li><b data-i18n="Simple risk scoring">Simple risk scoring</b><br><span data-i18n="One score for the holder picture.">One score for the holder picture.</span></li>
-            <li><b data-i18n="Continuous detection">Continuous detection</b><br><span data-i18n="Danger tokens stay on the watch list after the scan.">Danger tokens stay on the watch list after the scan.</span></li>
-            <li><b data-i18n="Streams of risky tokens">Streams of risky tokens</b><br><span data-i18n="Recently checked and marked tokens, ready for your app.">Recently checked and marked tokens, ready for your app.</span></li>
-          </ul>
+      <div class="api-code-explorer api-code-explorer--response" data-code-explorer="response">
+        <div class="api-code-toolbar">
+          <div class="api-tabs" role="tablist" aria-label="Response state">
+            <button id="response-tab-success" type="button" role="tab" aria-selected="true" aria-controls="response-panel-success" data-code-tab="success">200</button>
+            <button id="response-tab-validation" type="button" role="tab" aria-selected="false" aria-controls="response-panel-validation" tabindex="-1" data-code-tab="validation">400</button>
+            <button id="response-tab-rate" type="button" role="tab" aria-selected="false" aria-controls="response-panel-rate" tabindex="-1" data-code-tab="rate-limit">429</button>
+            <button id="response-tab-pending" type="button" role="tab" aria-selected="false" aria-controls="response-panel-pending" tabindex="-1" data-code-tab="pending">202</button>
+          </div>
+          <button class="api-copy" type="button" data-copy-control data-copy-target="#response-code-success" aria-label="Copy success response"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.5"></rect><path d="M10.5 3.5V3A1.5 1.5 0 0 0 9 1.5H4A1.5 1.5 0 0 0 2.5 3v5A1.5 1.5 0 0 0 4 9.5h.5"></path></svg><span data-copy-label>Copy</span></button>
         </div>
-        <div class="api-fox"><img src="/static/img/mascot-hero.png?v=" alt="" width="858" height="637"></div>
+        <div id="response-panel-success" class="api-code-panel is-active" role="tabpanel" aria-labelledby="response-tab-success" data-code-panel="success"><pre><code id="response-code-success">{
+  "scan_id": "scan_demo_01",
+  "status": "complete",
+  "verdict": { "band": "high", "score": 82 },
+  "signals": {
+    "linked_wallet_share": 0.41,
+    "fresh_wallet_share": 0.18,
+    "sniper_share": 0.09
+  },
+  "data_mode": "representative_preview"
+}</code></pre></div>
+        <div id="response-panel-validation" class="api-code-panel" role="tabpanel" aria-labelledby="response-tab-validation" data-code-panel="validation"><pre><code id="response-code-validation">{
+  "error": {
+    "code": "invalid_address",
+    "message": "address must be a 20-byte EVM address",
+    "field": "address"
+  }
+}</code></pre></div>
+        <div id="response-panel-rate" class="api-code-panel" role="tabpanel" aria-labelledby="response-tab-rate" data-code-panel="rate-limit"><pre><code id="response-code-rate">{
+  "error": {
+    "code": "rate_limit_exceeded",
+    "message": "request quota exceeded",
+    "retry_after_seconds": 30
+  }
+}</code></pre></div>
+        <div id="response-panel-pending" class="api-code-panel" role="tabpanel" aria-labelledby="response-tab-pending" data-code-panel="pending"><pre><code id="response-code-pending">{
+  "scan_id": "scan_demo_01",
+  "status": "pending",
+  "poll_after_seconds": 3
+}</code></pre></div>
       </div>
+      <p class="api-console__note">Schema and values are representative preview content, not a live API response or availability guarantee.</p>
+      <div class="sr" aria-live="polite" aria-atomic="true" data-copy-status></div>
+    </article>
+  </section>
 
-      <div class="api-split flip">
-        <div class="api-fox"><img src="/static/img/mascot-hero.png?v=" alt="" width="858" height="637"></div>
-        <div>
-          <h2 data-i18n="Bot and AI support">Bot and AI support</h2>
-          <p data-i18n="The same report a person reads, in a shape a bot can use.">The same report a person reads, in a shape a bot can use.</p>
-          <ul class="tm-points">
-            <li><b data-i18n="Ready-made routes">Ready-made routes</b><br><span data-i18n="Scan, result, chart, trending, search, and new tokens.">Scan, result, chart, trending, search, and new tokens.</span></li>
-            <li><b data-i18n="Machine-readable reports">Machine-readable reports</b><br><span data-i18n="JSON for every check.">JSON for every check.</span></li>
-            <li><b data-i18n="Detailed fields">Detailed fields</b><br><span data-i18n="Linked wallets, snipers, fresh wallets, and the launchpad.">Linked wallets, snipers, fresh wallets, and the launchpad.</span></li>
-          </ul>
-        </div>
-      </div>
+  <section class="api-section wrap" aria-labelledby="pipeline-title">
+    <div class="api-section-heading"><p class="api-eyebrow">Signal pipeline</p><h2 id="pipeline-title">Evidence enters once. Every verdict keeps its trail.</h2><p>The diagram is a deterministic simulation of the fields that contribute to a representative response.</p></div>
+    <div class="api-pipeline" data-signal-animation>
+      <figure class="api-pipeline__visual"><img src="/static/img/pages/api-signal-pipeline.svg?v=" width="920" height="440" alt="Four-stage pipeline from a token address through launch context and holder graph to a high-risk verdict."><figcaption><span class="api-badge">Simulation</span> No live chain activity is shown.</figcaption></figure>
+      <ol class="api-pipeline__stages">
+        <li><span>01</span><div><b>Address accepted</b><code>chain · address</code></div></li>
+        <li><span>02</span><div><b>Launch located</b><code>launchpad · block · pair</code></div></li>
+        <li><span>03</span><div><b>Holders grouped</b><code>linked · fresh · snipers</code></div></li>
+        <li><span>04</span><div><b>Verdict resolved</b><code>band · score · evidence</code></div></li>
+      </ol>
+    </div>
+    <div class="api-event-tape" aria-label="Simulated pipeline events"><strong>SIMULATION</strong><span>00:00 address accepted</span><span>00:01 launch located</span><span>00:02 holders grouped</span><span>00:03 verdict ready</span></div>
+  </section>
 
-      <div class="api-split">
-        <div>
-          <h2 data-i18n="Bulk token reports">Bulk token reports</h2>
-          <p data-i18n="Ask for many tokens, not one page at a time.">Ask for many tokens, not one page at a time.</p>
-          <ul class="tm-points">
-            <li data-i18n="Many tokens in one request">Many tokens in one request</li>
-            <li data-i18n="Full reports or a short summary">Full reports or a short summary</li>
-            <li data-i18n="Built for busy apps">Built for busy apps</li>
-          </ul>
-        </div>
-        <div class="api-fox"><img src="/static/img/mascot-hero.png?v=" alt="" width="858" height="637"></div>
-      </div>
-
-      <h2 id="docs" class="api-kicker" data-i18n="Documentation">Documentation</h2>
-      <ul class="api-docs">
-        <li><code>POST /api/scan</code> <span data-i18n="Check my score">Check my score</span></li>
-        <li><code>GET /api/result</code> <span data-i18n="One report">One report</span></li>
-        <li><code>GET /api/chart</code> <span>Chart</span></li>
-        <li><code>GET /api/trending</code> <span data-i18n="Streams of risky tokens">Streams of risky tokens</span></li>
-        <li><code>GET /api/search</code> <span data-i18n="Search">Search</span></li>
-        <li><code>GET /api/tokens/new</code> <span data-i18n="New Tokens">New Tokens</span></li>
-        <li><code>GET /api/recent</code> <span data-i18n="Recently Verified">Recently Verified</span></li>
-      </ul>
+  <section class="api-section wrap" aria-labelledby="uses-title">
+    <div class="api-section-heading"><p class="api-eyebrow">Integration map</p><h2 id="uses-title">Use the smallest contract that fits the decision.</h2><p>Suggested integration patterns, not customer claims or measured performance.</p></div>
+    <div class="api-use-grid">
+      <article><span>01 / Pre-trade</span><h3>Trading bot</h3><p>Gate an order on a completed holder-risk verdict.</p><dl><div><dt>Endpoint</dt><dd><code>POST /v1/scans</code></dd></div><div><dt>Cadence</dt><dd>Before trade</dd></div></dl></article>
+      <article><span>02 / Detail view</span><h3>Token terminal</h3><p>Render a verdict with the evidence behind the score.</p><dl><div><dt>Endpoint</dt><dd><code>GET /v1/scans/:id</code></dd></div><div><dt>Cadence</dt><dd>On view</dd></div></dl></article>
+      <article><span>03 / Safety layer</span><h3>Wallet warning</h3><p>Surface a clear warning before a user confirms a swap.</p><dl><div><dt>Endpoint</dt><dd><code>GET /v1/tokens/:address/risk</code></dd></div><div><dt>Cadence</dt><dd>Before signature</dd></div></dl></article>
+      <article><span>04 / Monitoring</span><h3>Research feed</h3><p>Collect changed verdicts for human review and enrichment.</p><dl><div><dt>Endpoint</dt><dd><code>GET /v1/verdicts</code></dd></div><div><dt>Cadence</dt><dd>Scheduled pull</dd></div></dl></article>
     </div>
   </section>
-</main>
 
-<footer>
-  <div class="wrap foot">
-    <div class="foot-left">
-      <p class="foot-follow"><span data-i18n="Follow us:">Follow us:</span>
-      <a href="https://x.com/0x_Punisher" target="_blank" rel="noopener" aria-label="FoxScanner on X"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14.7 10.3 22.4 2h-1.8l-6.7 7.2L8.6 2H2l8.1 11.1L2 22h1.8l7.1-7.6L15.4 22H22l-7.3-11.7Zm-2.5 2.7-.8-1.1L4.6 3.3h2.8l5.3 7 .8 1.1 6.9 9.3h-2.8l-5.4-7.7Z"/></svg></a>
-      </p>
+  <section id="docs" class="api-section api-contracts wrap" aria-labelledby="contracts-title">
+    <div class="api-section-heading"><p class="api-eyebrow">Endpoint contracts</p><h2 id="contracts-title">Inspect the route before you wire it in.</h2><p>Preview contracts may change before access is generally available.</p></div>
+    <div class="api-contract-layout">
+      <nav class="api-endpoint-nav" aria-label="API endpoint navigation"><a href="#endpoint-create"><span>POST</span> Create scan</a><a href="#endpoint-result"><span>GET</span> Scan result</a><a href="#endpoint-risk"><span>GET</span> Token risk</a><a href="#endpoint-feed"><span>GET</span> Verdict feed</a></nav>
+      <div class="api-endpoint-list">
+        <details id="endpoint-create" data-disclosure open><summary data-disclosure-trigger><span class="api-method api-method--post">POST</span><code>/v1/scans</code><small>Create or reuse a scan</small></summary><div class="api-endpoint-body" data-disclosure-panel><p>Accepts a supported chain and token address. Returns a completed result or a pending scan identifier.</p><dl><div><dt>Required</dt><dd><code>chain</code>, <code>address</code></dd></div><div><dt>Responses</dt><dd><code>200</code>, <code>202</code>, <code>400</code>, <code>429</code></dd></div></dl></div></details>
+        <details id="endpoint-result" data-disclosure><summary data-disclosure-trigger><span class="api-method">GET</span><code>/v1/scans/:scan_id</code><small>Read one scan result</small></summary><div class="api-endpoint-body" data-disclosure-panel><p>Returns scan status, holder-risk verdict, and supporting evidence fields for a known scan.</p><dl><div><dt>Required</dt><dd><code>scan_id</code></dd></div><div><dt>Responses</dt><dd><code>200</code>, <code>404</code>, <code>429</code></dd></div></dl></div></details>
+        <details id="endpoint-risk" data-disclosure><summary data-disclosure-trigger><span class="api-method">GET</span><code>/v1/tokens/:address/risk</code><small>Read latest token verdict</small></summary><div class="api-endpoint-body" data-disclosure-panel><p>Returns the latest available holder-risk verdict for a supported token address.</p><dl><div><dt>Query</dt><dd><code>chain=bnb</code></dd></div><div><dt>Responses</dt><dd><code>200</code>, <code>404</code>, <code>429</code></dd></div></dl></div></details>
+        <details id="endpoint-feed" data-disclosure><summary data-disclosure-trigger><span class="api-method">GET</span><code>/v1/verdicts</code><small>Read a verdict feed</small></summary><div class="api-endpoint-body" data-disclosure-panel><p>Returns a cursor-paginated preview feed of recently changed holder-risk verdicts.</p><dl><div><dt>Optional</dt><dd><code>cursor</code>, <code>band</code>, <code>limit</code></dd></div><div><dt>Responses</dt><dd><code>200</code>, <code>400</code>, <code>429</code></dd></div></dl></div></details>
+      </div>
     </div>
-    <p class="foot-copy" data-i18n="2026 © FoxScanner. All rights reserved.">2026 © FoxScanner. All rights reserved.</p>
-  </div>
-</footer>
+  </section>
 
-<script src="/static/js/api.js?v="></script>
-<script src="/static/js/app.js?v="></script>
-</body>
-</html>
+  <section class="api-section wrap" aria-labelledby="plans-title">
+    <div class="api-section-heading"><p class="api-eyebrow">Preview pricing</p><h2 id="plans-title">Model the integration. Treat every limit as temporary.</h2><p>Prices, quotas, features, and availability below are planning examples only. They are not an active offer.</p></div>
+    <div class="api-pricing" data-plan-selector>
+      <div class="api-plan-tabs" role="tablist" aria-label="Preview plan" data-plan-tabs></div>
+      <label class="api-plan-select-label" for="api-plan-select">Preview plan</label><select id="api-plan-select" data-plan-select></select>
+      <article class="api-plan-detail" aria-live="polite" data-plan-detail><p class="api-empty-state">Plan preview requires JavaScript. Request access for current availability and terms.</p></article>
+      <noscript><p class="api-noscript">JavaScript is off. Preview plan comparisons are unavailable; no purchasing flow is offered on this page.</p></noscript>
+    </div>
+  </section>
+
+  <section class="api-boundary wrap" aria-labelledby="boundary-title">
+    <div><p class="api-eyebrow">Contract boundary</p><h2 id="boundary-title">Holder risk is one signal, not a safety guarantee.</h2></div>
+    <div class="api-boundary__grid"><article><h3>Covered by this preview</h3><ul><li>Holder concentration</li><li>Linked wallet groups</li><li>Fresh-wallet participation</li><li>Observed sniper participation</li></ul></article><article class="api-boundary__excluded"><h3>Not covered by this score</h3><ul><li>Owner privileges</li><li>Token taxes</li><li>Honeypot behavior</li><li>Mint or upgrade authority</li></ul></article></div>
+  </section>
+</main>
+</body></html>

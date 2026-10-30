@@ -105,6 +105,19 @@ from foxscanner.rewards import service as rs
 from foxscanner.rewards.store import RewardsStore
 from foxscanner.scan import detect, early, engine, market
 
+TEMPLATE_DIR = os.path.join(FRONTEND_DIR, "templates")
+SITE_TEMPLATES = ("site-head.html", "site-header.html", "site-footer.html", "site-scripts.html")
+PAGE_META = {
+    "index.html": {"entry": "home", "active": "home", "style": "home", "title": "FoxScanner · Spot the rug before it hits", "description": "FoxScanner reads every transfer of a fresh memecoin and tells you who really holds it: linked wallets, snipers, fresh wallets and how hard the price could fall. BNB Chain first, four.meme, Flap and Genius.fun supported.", "i18n": True},
+    "about.html": {"entry": "about", "active": "about", "style": "about", "components": ("signal-panel", "evidence-graph"), "title": "About · FoxScanner", "description": "FoxScanner reads a fresh BNB memecoin and shows who holds it: linked wallets, snipers, fresh wallets, and how hard the price could fall.", "i18n": True},
+    "api.html": {"entry": "api", "active": "api", "style": "api", "components": ("signal-panel", "code-explorer"), "title": "API · FoxScanner", "description": "Real-time holder risk for your app. BNB Chain tokens, one score, the risks behind it.", "i18n": True},
+    "radar.html": {"entry": "radar", "active": "radar", "style": "radar", "title": "Launch Radar · FoxScanner", "description": "Fresh memecoins that came out clean in our scans.", "i18n": True},
+    "tokens.html": {"entry": "tokens", "active": "tokens", "style": "tokens", "title": "Token Pulse · FoxScanner", "description": "A live BNB Chain view of recently checked and newly created tokens.", "i18n": True},
+    "token-management.html": {"entry": "token-management", "active": "token_management", "style": "token-management", "components": ("signal-panel", "action-rail", "evidence-graph"), "title": "Token Management · FoxScanner", "description": "Everything you can do to a token page: check the score, get a verified badge, pin a creator message, claim a .token domain, and update token info.", "i18n": True},
+    # Replay retains its independent visual system, but shares asset versioning and an external entry point.
+    "replay.html": {"entry": "replay", "title": "Rug Replay · FoxScanner", "description": "Tokens FoxScanner marked high risk, and what their market cap did after the scan.", "isolated": True},
+}
+
 CACHE_TTL = 600            # секунд: кэш результата по токену
 MAX_CONCURRENT = 3         # одновременных сканов по умолчанию (env MAX_CONCURRENT)
 JOB_TTL = 3600             # секунд: старые задачи удаляются из памяти
@@ -124,6 +137,7 @@ STATIC_TYPES = {
 }
 STATIC_IMMUTABLE = "public, max-age=31536000, immutable"   # запрос с ?v=<хэш содержимого>
 STATIC_CACHE = "public, max-age=300"                      # без ?v= — короткий кэш
+STATIC_MODULE_CACHE = "no-cache"                          # ESM imports are relative and not content-versioned
 ASSET_REF = re.compile(rb'(/static/[A-Za-z0-9_./-]+)\?v=[A-Za-z0-9]*')
 _ASSET_V = {}              # (путь, mtime_ns, size) -> первые 12 знаков sha256 содержимого
 
@@ -828,6 +842,76 @@ def versioned(body):
     return ASSET_REF.sub(lambda m: m.group(1) + b"?v=" + asset_version(m.group(1)[8:].decode()).encode(), body)
 
 
+def _read_template(name):
+    with open(os.path.join(TEMPLATE_DIR, name), encoding="utf-8") as f:
+        return f.read()
+
+
+def render_site_page(path):
+    """Render a page body through the shared frontend shell.
+
+    Page content remains static HTML. The server owns the repeated head, navigation,
+    footer, and page entry script so a cross-site UI change has one source of truth.
+    """
+    name = os.path.basename(path)
+    meta = PAGE_META.get(name)
+    with open(path, encoding="utf-8") as f:
+        source = f.read()
+    if not meta:
+        return source.encode()
+
+    body_match = re.search(r"<body\b[^>]*>(.*)</body>", source, re.IGNORECASE | re.DOTALL)
+    if not body_match:
+        return source.encode()
+    content = body_match.group(1)
+    # The source pages retain their old shell until each page is independently
+    # migrated. Strip it at render time so templates are the active site chrome.
+    if not meta.get("isolated"):
+        content = re.sub(r'<header\b[^>]*class=["\'][^"\']*\btop\b[^"\']*["\'][^>]*>.*?</header>\s*', "", content, count=1, flags=re.IGNORECASE | re.DOTALL)
+        content = re.sub(r"<footer\b[^>]*>.*?</footer>\s*", "", content, count=1, flags=re.IGNORECASE | re.DOTALL)
+    while True:
+        trimmed = re.sub(r"\s*<script\b[^>]*>.*?</script>\s*$", "", content, count=1, flags=re.IGNORECASE | re.DOTALL)
+        if trimmed == content:
+            break
+        content = trimmed
+
+    page_styles = ""
+    if meta.get("isolated"):
+        style = re.search(r"<style\b[^>]*>.*?</style>", source, re.IGNORECASE | re.DOTALL)
+        page_styles = style.group(0) if style else ""
+    elif meta.get("style"):
+        styles = [f"components/{name}" for name in meta.get("components", ())]
+        styles.append(f'pages/{meta["style"]}')
+        page_styles = "\n".join(
+            f'<link rel="stylesheet" href="/static/css/{style}.css?v=">' for style in styles
+        )
+    values = {
+        "{{title}}": meta["title"],
+        "{{title_i18n}}": f' data-i18n="{meta["title"]}"' if meta.get("i18n") else "",
+        "{{description}}": meta["description"],
+        "{{page_styles}}": page_styles,
+        "{{body_class}}": "replay-page" if meta.get("isolated") else "",
+        "{{entry}}": meta["entry"],
+        "{{replay_cta}}": (
+            '<a class="hero-btn hero-btn-side" href="/replay" data-i18n="Rug Replay">Rug Replay</a>'
+            if replay.enabled() else ""
+        ),
+    }
+    for page in ("home", "tokens", "radar", "token_management", "api", "about"):
+        values[f"{{{{{page}_active}}}}"] = ' class="on" aria-current="page"' if meta.get("active") == page else ""
+
+    def apply(template):
+        for old, new in values.items():
+            template = template.replace(old, new)
+        return template
+
+    head = apply(_read_template("site-head.html"))
+    header = "" if meta.get("isolated") else apply(_read_template("site-header.html"))
+    footer = "" if meta.get("isolated") else apply(_read_template("site-footer.html"))
+    scripts = apply(_read_template("site-scripts.html"))
+    return (head + header + apply(content) + footer + scripts).encode()
+
+
 class H(BaseHTTPRequestHandler):
     def _send(self, code, body, ctype="application/json", cache="no-store", headers=None):
         b = body if isinstance(body, bytes) else json.dumps(body).encode()
@@ -849,11 +933,23 @@ class H(BaseHTTPRequestHandler):
             st = os.stat(path)
         except FileNotFoundError:
             return self._send(200, b"<h1>FoxScanner</h1>", "text/html; charset=utf-8")
-        key = (path, st.st_mtime_ns, st.st_size)
+        # Include template mtimes in the cache key so a shared-shell edit is
+        # visible immediately without touching every page file.
+        template_stats = tuple(
+            os.stat(os.path.join(TEMPLATE_DIR, template))
+            for template in SITE_TEMPLATES
+        )
+        template_state = tuple(
+            (template_stat.st_mtime_ns, template_stat.st_size)
+            for template_stat in template_stats
+        )
+        page_mtime = max(
+            [st.st_mtime, *(template_stat.st_mtime for template_stat in template_stats)]
+        )
+        key = (path, st.st_mtime_ns, st.st_size, template_state)
         page = _PAGE.get(key)
         if page is None:
-            with open(path, "rb") as f:
-                page = (f.read(), formatdate(st.st_mtime, usegmt=True))
+            page = (render_site_page(path), formatdate(page_mtime, usegmt=True))
             _PAGE.clear()
             _PAGE[key] = page
         body, modified = page
@@ -864,7 +960,7 @@ class H(BaseHTTPRequestHandler):
             fresh = any(t.strip().removeprefix("W/") in (etag, "*") for t in inm.split(","))
         else:
             try:
-                fresh = ims is not None and int(st.st_mtime) <= parsedate_to_datetime(ims).timestamp()
+                fresh = ims is not None and int(page_mtime) <= parsedate_to_datetime(ims).timestamp()
             except (TypeError, ValueError):
                 fresh = False
         self.send_response(304 if fresh else 200)
@@ -1166,8 +1262,10 @@ class H(BaseHTTPRequestHandler):
                 return self._send(404, {"error": "not found"})
             with open(path, "rb") as f:
                 body = f.read()
-            cache = STATIC_IMMUTABLE if parse_qs(u.query).get("v") else STATIC_CACHE
-            return self._send(200, body, STATIC_TYPES[os.path.splitext(path)[1].lower()], cache,
+            extension = os.path.splitext(path)[1].lower()
+            versioned_asset = bool(parse_qs(u.query).get("v"))
+            cache = STATIC_IMMUTABLE if versioned_asset else STATIC_MODULE_CACHE if extension == ".js" else STATIC_CACHE
+            return self._send(200, body, STATIC_TYPES[extension], cache,
                               {"x-content-type-options": "nosniff"})
         if u.path in ("/", "/index.html"):
             return self._send_page(os.path.join(FRONTEND_DIR, "index.html"))
@@ -1246,16 +1344,25 @@ def start_replay_checker():
     return replay.Checker(replay.db_path(), cfg).start()
 
 
+def browser_url(host, port):
+    """Return a browser-usable URL for the configured listen address."""
+    browser_host = "localhost" if host in ("0.0.0.0", "::") else host
+    if ":" in browser_host and not browser_host.startswith("["):
+        browser_host = f"[{browser_host}]"
+    return f"http://{browser_host}:{port}"
+
+
 def main():
     port = int(os.environ.get("PORT", 8000))
-    print(f"FoxScanner on http://0.0.0.0:{port}", flush=True)
+    host = os.environ.get("HOST", "0.0.0.0")
+    print(f"FoxScanner on {browser_url(host, port)} (listening on {host}:{port})", flush=True)
     print(memguard.status_line(0), flush=True)
     memguard.start_monitor(scan_stats)
     start_draw_scheduler()
     start_rewards_scheduler()
     start_alerts_rechecker()
     start_replay_checker()
-    ThreadingHTTPServer(("0.0.0.0", port), H).serve_forever()
+    ThreadingHTTPServer((host, port), H).serve_forever()
 
 
 if __name__ == "__main__":

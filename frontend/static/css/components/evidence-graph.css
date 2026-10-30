@@ -1,0 +1,5 @@
+.evidence-graph{position:relative;isolation:isolate}
+.evidence-graph img{width:100%;height:auto}
+.evidence-graph[data-signal-animation]{opacity:.76;transform:translateY(10px);transition:opacity .55s ease,transform .55s ease}
+.evidence-graph[data-signal-animation].is-visible,.evidence-graph[data-signal-animation].is-static{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.evidence-graph[data-signal-animation]{opacity:1;transform:none}}

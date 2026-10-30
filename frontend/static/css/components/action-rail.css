@@ -1,0 +1,5 @@
+.action-rail{position:relative;display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.action-rail::before{content:"";position:absolute;left:18px;top:20px;bottom:20px;width:1px;background:linear-gradient(var(--y),var(--line))}
+.action-rail li{position:relative;display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:start;min-width:0}
+.action-rail .rail-index{position:relative;z-index:1;display:grid;place-items:center;width:36px;height:36px;border:1px solid var(--line);border-radius:50%;background:var(--bg);color:var(--y);font:800 11px/1 var(--head)}
+.action-rail .rail-copy{padding:8px 0 16px}

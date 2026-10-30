@@ -1,0 +1,78 @@
+schema_version: 1
+batch: manage-api-about-refactor
+status: completed_with_deferred_optional_media
+source_plan: MANAGE_API_ABOUT_REFACTOR_PLAN.md
+implemented_requirements:
+  - REQ-101
+  - REQ-102
+  - REQ-103
+  - REQ-104
+  - REQ-105
+  - REQ-106
+  - REQ-107
+  - REQ-108
+  - REQ-109
+  - REQ-110
+  - REQ-111
+completed_tasks:
+  - T001
+  - T002
+  - T003
+  - T004
+  - T005
+  - T006
+  - T007
+  - T008
+  - T009
+  - T010
+  - T011
+  - T012
+  - T013
+  - T014
+  - T015
+  - T016
+  - T017
+  - T018
+  - T019
+  - T020
+  - T021
+  - T022
+  - T023
+  - T024
+  - T025
+  - T026
+  - T029
+  - T030
+  - T031
+  - T032
+  - T033
+deferred_tasks:
+  - id: T027
+    reason: The optional methodology video was not justified after SVG review; the local SVG is smaller, accessible, deterministic, and motion-safe.
+  - id: T028
+    reason: The three refactored pages use lightweight local SVGs instead of loading the large mascot raster, so new AVIF/WebP variants are not required for their initial render.
+implementation_summary:
+  - Rebuilt Manage as an address-driven owner lifecycle with a persistent evidence preview, mobile accordion, explicit preview actions, and verification boundaries.
+  - Rebuilt API as a request-to-verdict developer lab with keyboard tabs, response states, copy controls, endpoint contracts, integration patterns, and non-transactional preview pricing.
+  - Rebuilt About as a methodology narrative covering evidence flow, scan boundaries, scoring independence, data-source roles, and contact intents.
+  - Added shared responsive navigation, signal animation, disclosure, copy, code-explorer, page-style loading, deterministic fixtures, and local SVG illustrations.
+verification:
+  automated:
+    command: C:/Users/cheng/AppData/Local/Programs/Python/Python314/python.exe -m unittest test_frontend test_server -v
+    working_directory: backend/tests
+    result: 29 passed
+  browser:
+    routes:
+      - /token-management
+      - /api
+      - /about
+    viewports: [390, 768, 1024, 1440]
+    result: zero horizontal overflow; one H1 and one page stylesheet per route; no page errors
+    interactions:
+      - mobile navigation state
+      - Manage validation, preview state, deep-link synchronization, and mobile accordion
+      - API code tabs, copy target labeling, and preview plan selector
+      - About reduced-motion fallback and theme control availability
+rollback:
+  - Revert the three page HTML files, page/component CSS and JS modules, SVG assets, shared header/nav changes, and PAGE_META style/component entries together.
+  - Preserve the existing routes and API endpoints; this batch does not change their external contracts.

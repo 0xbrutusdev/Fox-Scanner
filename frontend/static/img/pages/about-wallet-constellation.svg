@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 720" role="img" aria-labelledby="title desc">
+  <title id="title">Wallet evidence constellation</title><desc id="desc">Transfer paths connect launch, wallet, and cluster nodes before resolving into a holder-risk verdict.</desc>
+  <rect width="960" height="720" rx="38" fill="#0a0b09"/>
+  <g fill="none" stroke="#2d2e29" stroke-width="2"><path d="M115 356L290 185 474 315 679 136 846 345 688 566 472 484 270 586z"/><path d="M115 356l359-41 214 251M290 185l182 299 374-139M679 136L270 586" stroke-dasharray="8 9"/></g>
+  <g fill="#ffd800"><circle cx="115" cy="356" r="15"/><circle cx="290" cy="185" r="12"/><circle cx="474" cy="315" r="18"/><circle cx="679" cy="136" r="11"/><circle cx="846" cy="345" r="14"/><circle cx="688" cy="566" r="12"/><circle cx="472" cy="484" r="16"/><circle cx="270" cy="586" r="10"/></g>
+  <g fill="#11120f" stroke="#ffd800" stroke-width="3"><circle cx="474" cy="315" r="86"/><circle cx="688" cy="566" r="66"/></g>
+  <g font-family="Inter,system-ui" text-anchor="middle"><text x="474" y="305" fill="#ffd800" font-size="18" font-weight="800">CLUSTER 04</text><text x="474" y="332" fill="#9b9b91" font-size="13">41% linked supply</text><text x="688" y="560" fill="#ef4444" font-size="28" font-weight="900">82</text><text x="688" y="584" fill="#f5f5f5" font-size="12" font-weight="700">VERDICT</text><g fill="#8e8e8e" font-size="12"><text x="115" y="392">LAUNCH</text><text x="290" y="158">WALLET A</text><text x="679" y="108">WALLET B</text><text x="846" y="380">WALLET C</text><text x="270" y="620">FRESH</text></g></g>
+  <path d="M64 55h220" stroke="#ffd800" stroke-width="3"/><text x="64" y="91" fill="#f5f5f5" font-family="ui-monospace,monospace" font-size="16">EVIDENCE GRAPH / STATIC EXAMPLE</text>
+</svg>

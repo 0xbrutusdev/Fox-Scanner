@@ -293,9 +293,9 @@ class TestServerFeed(unittest.TestCase):
         with open(os.path.join(FRONTEND_DIR, "static", "js", "api.js"), encoding="utf-8") as f:
             src = f.read()
         self.assertIn("const NO_STORE = {cache: 'no-store'};", src)
-        self.assertIn("fetch('/api/recent?limit=12', NO_STORE)", src)
+        self.assertIn("recent: () => getJSON('/api/recent?limit=12')", src)
         self.assertIn("const r = await fetch(url, NO_STORE);", src)       # getJSON: events, result, chart, early, ...
-        self.assertEqual(src.count("fetch("), 3)                          # getJSON, POST /api/scan, лента
+        self.assertEqual(src.count("fetch("), 2)                          # getJSON and POST /api/scan
         self.assertIn("cache: 'no-store'});", src)                        # POST /api/scan
 
 

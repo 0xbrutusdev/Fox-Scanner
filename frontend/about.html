@@ -1,124 +1,219 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title data-i18n="About · FoxScanner">About · FoxScanner</title>
-<meta name="description" content="FoxScanner reads a fresh BNB memecoin and shows who holds it: linked wallets, snipers, fresh wallets, and how hard the price could fall.">
-<meta name="theme-color" content="#0B0B0B">
-<script>(function(){try{if(localStorage.getItem('fs.theme')==='light')document.documentElement.setAttribute('data-theme','light')}catch(e){}})();</script>
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="icon" href="/favicon.png" type="image/png">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="preload" href="/static/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/static/fonts/orbitron-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/static/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/static/css/app.css?v=">
-</head>
-<body>
-<header class="top">
-  <div class="wrap">
-    <a class="brand" href="/" aria-label="FoxScanner home"><img src="/static/img/logo.png?v=" alt="" width="36" height="36"><b>FOX<span>SCANNER</span></b></a>
-    <nav class="nav" aria-label="Main">
-      <a href="/" data-i18n="Home">Home</a>
-      <a href="/tokens" data-i18n="Tokens">Tokens</a>
-      <a href="/radar" data-i18n="Radar">Radar</a>
-      <a href="/token-management" data-i18n="Manage">Manage</a>
-      <a href="/api" data-i18n="API">API</a>
-      <a href="/about" class="on" aria-current="page" data-i18n="About">About</a>
-    </nav>
-    <div class="top-actions">
-      <div class="wallet">
-        <button type="button" class="wallet-btn" data-wallet aria-expanded="false">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18"/><circle cx="16.5" cy="14.5" r="1" fill="currentColor" stroke="none"/></g></svg>
-          <span data-wallet-label data-i18n="Connect Wallet">Connect Wallet</span>
-        </button>
-        <div class="wallet-menu" data-wallet-menu hidden role="menu">
-          <button type="button" data-disconnect role="menuitem" data-i18n="Disconnect">Disconnect</button>
-        </div>
-      </div>
-      <button type="button" class="icon-btn" data-theme-toggle aria-pressed="false" aria-label="Light mode">
-        <svg class="ico-sun" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/></g></svg>
-        <svg class="ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M20 14.5A8 8 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z"/></svg>
-      </button>
-      <div class="lang">
-        <button type="button" class="lang-btn" data-lang-toggle aria-haspopup="listbox" aria-expanded="false" data-i18n-aria="Language" aria-label="Language">
-          <span data-lang-code>EN</span>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6"/></svg>
-        </button>
-        <ul class="lang-menu" role="listbox" hidden>
-          <li role="none"><button type="button" role="option" data-lang="en">English</button></li>
-          <li role="none"><button type="button" role="option" data-lang="zh">中文(简体)</button></li>
-          <li role="none"><button type="button" role="option" data-lang="ja">日本語</button></li>
-        </ul>
+<!-- Shared site chrome is rendered by backend/foxscanner/server.py::render_site_page. -->
+<html lang="en"><body>
+<main id="main-content">
+  <article class="signal-about" data-about-page>
+    <div class="signal-about__status" aria-label="Page status">
+      <div class="wrap">
+        <span class="signal-about__status-mark" aria-hidden="true"></span>
+        <span data-i18n="Evidence, not vibes">Evidence, not vibes</span>
+        <span aria-hidden="true">·</span>
+        <span data-i18n="Methodology overview — not a live scan">Methodology overview — not a live scan</span>
       </div>
     </div>
-  </div>
-</header>
 
-<main>
-  <section class="about">
-    <div class="wrap">
-      <p class="about-kicker">BNB Chain</p>
-      <h1 data-i18n="About FoxScanner">About FoxScanner</h1>
-      <p class="about-lead" data-i18n="FoxScanner reads a fresh BNB memecoin and shows who holds it: linked wallets, snipers, fresh wallets, and how hard the price could fall.">FoxScanner reads a fresh BNB memecoin and shows who holds it: linked wallets, snipers, fresh wallets, and how hard the price could fall.</p>
-      <div class="about-cols">
-        <article>
-          <h2 data-i18n="Origins">Origins</h2>
-          <p data-i18n="Built for tokens that launch on BNB Chain and move before anyone has time to read the wallets. Paste an address, and the fox reads the transfers.">Built for tokens that launch on BNB Chain and move before anyone has time to read the wallets. Paste an address, and the fox reads the transfers.</p>
-        </article>
-        <article>
-          <h2 data-i18n="Mission">Mission</h2>
-          <p data-i18n="Collect the launch, the transfers, and the holder wallets, then turn them into one verdict. four.meme, Flap, and Genius.fun go through the same check.">Collect the launch, the transfers, and the holder wallets, then turn them into one verdict. four.meme, Flap, and Genius.fun go through the same check.</p>
-        </article>
-        <article>
-          <h2 data-i18n="Commitment">Commitment</h2>
-          <p data-i18n="Every token is scored the same way. The verdict is the holder data. It is not adjusted for a project or a payment.">Every token is scored the same way. The verdict is the holder data. It is not adjusted for a project or a payment.</p>
-        </article>
+    <header class="signal-about__hero wrap">
+      <div class="signal-about__hero-copy" data-signal-reveal>
+        <p class="signal-about__eyebrow" data-i18n="FoxScanner Signal Room">FoxScanner Signal Room</p>
+        <h1 data-i18n="A risk verdict should show its work.">A risk verdict should show its work.</h1>
+        <p class="signal-about__lede" data-i18n="FoxScanner follows the holder picture behind a newly launched BNB Chain token: where supply moved, which wallets appear related, and how concentrated the result is.">FoxScanner follows the holder picture behind a newly launched BNB Chain token: where supply moved, which wallets appear related, and how concentrated the result is.</p>
+        <aside class="signal-about__scope-note" aria-label="Current product scope">
+          <span class="signal-about__scope-label" data-i18n="Current scope">Current scope</span>
+          <p data-i18n="This is a holder-risk signal, not a comprehensive smart-contract security audit or a promise about future price behavior.">This is a holder-risk signal, not a comprehensive smart-contract security audit or a promise about future price behavior.</p>
+        </aside>
+        <nav class="signal-about__jump" aria-label="About page sections">
+          <a href="#methodology" data-i18n="Follow the evidence">Follow the evidence</a>
+          <a href="#scope" data-i18n="Review scan boundaries">Review scan boundaries</a>
+        </nav>
       </div>
-      <div class="about-split">
-        <div class="about-fox">
-          <img src="/static/img/mascot-hero.png?v=" alt="" width="858" height="637">
+
+      <figure class="signal-about__hero-visual" data-signal-graph data-signal-reveal>
+        <div class="signal-about__visual-frame">
+          <img class="signal-about__constellation" src="/static/img/pages/about-wallet-constellation.svg?v=" width="960" height="720" alt="Example evidence graph: launch transaction paths resolve into related wallet clusters and a holder-risk verdict.">
         </div>
-        <div class="about-prose">
-          <p class="about-kicker" data-i18n="How a scan works">How a scan works</p>
-          <h2 data-i18n="One score. Every token.">One score. Every token.</h2>
-          <p data-i18n="Linked wallets, snipers, fresh wallets, and how concentrated the supply is. That is the check. Contract owner, mint, honeypot, and tax sit outside this scan.">Linked wallets, snipers, fresh wallets, and how concentrated the supply is. That is the check. Contract owner, mint, honeypot, and tax sit outside this scan.</p>
-        </div>
-      </div>
-      <div class="about-block">
-        <p class="about-kicker" data-i18n="Ecosystem">Ecosystem</p>
-        <h2 data-i18n="Launchpads and market data">Launchpads and market data</h2>
-        <ul class="about-sources">
-          <li>four.meme</li>
-          <li>Flap</li>
-          <li>Genius.fun</li>
-          <li>GeckoTerminal</li>
-          <li>DexScreener</li>
-          <li>BNB Chain</li>
-        </ul>
-      </div>
-      <div class="about-block">
-        <p class="about-kicker" data-i18n="Get in touch">Get in touch</p>
-        <p data-i18n="Questions about a scan, a launchpad, or the feed?">Questions about a scan, a launchpad, or the feed?</p>
-        <a class="about-x" href="https://x.com/0x_Punisher" target="_blank" rel="noopener" data-i18n="Reach out on X">Reach out on X</a>
-      </div>
+        <figcaption>
+          <span data-i18n="Illustrative methodology">Illustrative methodology</span>
+          <span data-i18n="Static example — no live wallet data">Static example — no live wallet data</span>
+        </figcaption>
+      </figure>
+    </header>
+
+    <div class="signal-about__ribbon wrap" aria-label="Evidence states" data-signal-reveal>
+      <span><b>01</b><span data-i18n="Transaction">Transaction</span></span>
+      <i aria-hidden="true">→</i>
+      <span><b>02</b><span data-i18n="Wallet">Wallet</span></span>
+      <i aria-hidden="true">→</i>
+      <span><b>03</b><span data-i18n="Cluster">Cluster</span></span>
+      <i aria-hidden="true">→</i>
+      <span><b>04</b><span data-i18n="Verdict">Verdict</span></span>
     </div>
-  </section>
+
+    <section class="signal-about__section wrap" id="methodology" aria-labelledby="methodology-title">
+      <div class="signal-about__section-head" data-signal-reveal>
+        <p class="signal-about__eyebrow" data-i18n="How the scan works">How the scan works</p>
+        <h2 id="methodology-title" data-i18n="Evidence moves forward. Assumptions do not.">Evidence moves forward. Assumptions do not.</h2>
+        <p data-i18n="Four deterministic stages turn on-chain holder evidence into the risk band shown on a token report.">Four deterministic stages turn on-chain holder evidence into the risk band shown on a token report.</p>
+      </div>
+
+      <ol class="signal-about__trail">
+        <li data-signal-reveal>
+          <span class="signal-about__step-index" aria-hidden="true">01</span>
+          <div>
+            <p class="signal-about__step-state" data-i18n="Launch context">Launch context</p>
+            <h3 data-i18n="Locate the starting point">Locate the starting point</h3>
+            <p data-i18n="Identify the supported launch source and earliest relevant transfers available to the scan.">Identify the supported launch source and earliest relevant transfers available to the scan.</p>
+          </div>
+          <p class="signal-about__output"><span data-i18n="Report output">Report output</span><strong data-i18n="Launch source and timing context">Launch source and timing context</strong></p>
+        </li>
+        <li data-signal-reveal>
+          <span class="signal-about__step-index" aria-hidden="true">02</span>
+          <div>
+            <p class="signal-about__step-state" data-i18n="Transfer trail">Transfer trail</p>
+            <h3 data-i18n="Trace where supply moved">Trace where supply moved</h3>
+            <p data-i18n="Read token transfers from launch into the wallets that make up the current holder picture.">Read token transfers from launch into the wallets that make up the current holder picture.</p>
+          </div>
+          <p class="signal-about__output"><span data-i18n="Report output">Report output</span><strong data-i18n="Snipers, fresh wallets, and concentration">Snipers, fresh wallets, and concentration</strong></p>
+        </li>
+        <li data-signal-reveal>
+          <span class="signal-about__step-index" aria-hidden="true">03</span>
+          <div>
+            <p class="signal-about__step-state" data-i18n="Wallet relationships">Wallet relationships</p>
+            <h3 data-i18n="Group connected behavior">Group connected behavior</h3>
+            <p data-i18n="Use observable transfer relationships to surface wallets that may act as one holder group.">Use observable transfer relationships to surface wallets that may act as one holder group.</p>
+          </div>
+          <p class="signal-about__output"><span data-i18n="Report output">Report output</span><strong data-i18n="Linked-wallet clusters and combined share">Linked-wallet clusters and combined share</strong></p>
+        </li>
+        <li data-signal-reveal>
+          <span class="signal-about__step-index" aria-hidden="true">04</span>
+          <div>
+            <p class="signal-about__step-state" data-i18n="Holder-risk verdict">Holder-risk verdict</p>
+            <h3 data-i18n="Resolve the evidence">Resolve the evidence</h3>
+            <p data-i18n="Apply the same holder-risk rules to the available evidence and keep unavailable fields visibly unknown.">Apply the same holder-risk rules to the available evidence and keep unavailable fields visibly unknown.</p>
+          </div>
+          <p class="signal-about__output"><span data-i18n="Report output">Report output</span><strong data-i18n="Risk band, score, and contributing signals">Risk band, score, and contributing signals</strong></p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="signal-about__section signal-about__scope wrap" id="scope" aria-labelledby="scope-title">
+      <div class="signal-about__section-head" data-signal-reveal>
+        <p class="signal-about__eyebrow" data-i18n="Scan boundaries">Scan boundaries</p>
+        <h2 id="scope-title" data-i18n="Know exactly what the verdict covers.">Know exactly what the verdict covers.</h2>
+        <p data-i18n="A clean holder picture does not clear risks that sit outside holder and transfer analysis.">A clean holder picture does not clear risks that sit outside holder and transfer analysis.</p>
+      </div>
+
+      <div class="signal-about__scope-grid">
+        <article class="signal-about__boundary signal-about__boundary--check" data-signal-reveal>
+          <div class="signal-about__boundary-head">
+            <span aria-hidden="true">✓</span>
+            <div>
+              <p data-i18n="Included in this signal">Included in this signal</p>
+              <h3 data-i18n="What we check">What we check</h3>
+            </div>
+          </div>
+          <ul>
+            <li><strong data-i18n="Linked wallets">Linked wallets</strong><span data-i18n="Observable transfer relationships between holders.">Observable transfer relationships between holders.</span></li>
+            <li><strong data-i18n="Sniper activity">Sniper activity</strong><span data-i18n="Early acquisition patterns visible to the scan.">Early acquisition patterns visible to the scan.</span></li>
+            <li><strong data-i18n="Fresh wallets">Fresh wallets</strong><span data-i18n="Wallet age and activity context where available.">Wallet age and activity context where available.</span></li>
+            <li><strong data-i18n="Supply concentration">Supply concentration</strong><span data-i18n="Holder share, including related-wallet groupings.">Holder share, including related-wallet groupings.</span></li>
+          </ul>
+        </article>
+
+        <article class="signal-about__boundary signal-about__boundary--exclude" data-signal-reveal>
+          <div class="signal-about__boundary-head">
+            <span aria-hidden="true">—</span>
+            <div>
+              <p data-i18n="Outside the current signal">Outside the current signal</p>
+              <h3 data-i18n="What we do not check">What we do not check</h3>
+            </div>
+          </div>
+          <ul>
+            <li><strong data-i18n="Contract ownership">Contract ownership</strong><span data-i18n="Owner privileges and administrative controls.">Owner privileges and administrative controls.</span></li>
+            <li><strong data-i18n="Mint permissions">Mint permissions</strong><span data-i18n="Whether supply can be expanded by contract logic.">Whether supply can be expanded by contract logic.</span></li>
+            <li><strong data-i18n="Honeypot behavior">Honeypot behavior</strong><span data-i18n="Whether buyers can sell under every contract condition.">Whether buyers can sell under every contract condition.</span></li>
+            <li><strong data-i18n="Transfer taxes">Transfer taxes</strong><span data-i18n="Buy, sell, or dynamic fee behavior.">Buy, sell, or dynamic fee behavior.</span></li>
+          </ul>
+        </article>
+      </div>
+      <p class="signal-about__boundary-warning" role="note" data-signal-reveal><strong data-i18n="Use the verdict as one input.">Use the verdict as one input.</strong> <span data-i18n="Review contract-level risks separately before making a trading decision.">Review contract-level risks separately before making a trading decision.</span></p>
+    </section>
+
+    <section class="signal-about__section signal-about__principles wrap" aria-labelledby="principles-title">
+      <div class="signal-about__section-head" data-signal-reveal>
+        <p class="signal-about__eyebrow" data-i18n="Scoring principles">Scoring principles</p>
+        <h2 id="principles-title" data-i18n="Rules before reputation.">Rules before reputation.</h2>
+        <p data-i18n="The holder-risk verdict is designed to be reproducible, independent, and explicit about missing evidence.">The holder-risk verdict is designed to be reproducible, independent, and explicit about missing evidence.</p>
+      </div>
+      <div class="signal-about__principle-grid">
+        <article data-signal-reveal>
+          <span>01</span>
+          <h3 data-i18n="Same inputs. Same rules.">Same inputs. Same rules.</h3>
+          <p data-i18n="Supported tokens pass through the same holder-risk method. Project identity does not change the rules.">Supported tokens pass through the same holder-risk method. Project identity does not change the rules.</p>
+        </article>
+        <article data-signal-reveal>
+          <span>02</span>
+          <h3 data-i18n="Payment cannot change the verdict.">Payment cannot change the verdict.</h3>
+          <p data-i18n="Commercial relationships, verification, or paid token-page features do not improve the holder-risk score.">Commercial relationships, verification, or paid token-page features do not improve the holder-risk score.</p>
+        </article>
+        <article data-signal-reveal>
+          <span>03</span>
+          <h3 data-i18n="Unknown stays unknown.">Unknown stays unknown.</h3>
+          <p data-i18n="Unavailable or incomplete evidence is labeled as such instead of being treated as favorable.">Unavailable or incomplete evidence is labeled as such instead of being treated as favorable.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="signal-about__section signal-about__sources wrap" aria-labelledby="sources-title">
+      <div class="signal-about__section-head" data-signal-reveal>
+        <p class="signal-about__eyebrow" data-i18n="Evidence sources">Evidence sources</p>
+        <h2 id="sources-title" data-i18n="Each source has a job.">Each source has a job.</h2>
+        <p data-i18n="Source availability varies by token. Names below describe data roles and supported contexts, not endorsements or partnerships.">Source availability varies by token. Names below describe data roles and supported contexts, not endorsements or partnerships.</p>
+      </div>
+      <div class="signal-about__source-flow">
+        <article data-signal-reveal>
+          <p data-i18n="Launch context">Launch context</p>
+          <h3>four.meme · Flap · Genius.fun</h3>
+          <span data-i18n="Identify supported launch origin and early context when available.">Identify supported launch origin and early context when available.</span>
+        </article>
+        <i aria-hidden="true">→</i>
+        <article data-signal-reveal>
+          <p data-i18n="On-chain evidence">On-chain evidence</p>
+          <h3>BNB Chain</h3>
+          <span data-i18n="Read transfers, holders, and observable wallet relationships.">Read transfers, holders, and observable wallet relationships.</span>
+        </article>
+        <i aria-hidden="true">→</i>
+        <article data-signal-reveal>
+          <p data-i18n="Market context">Market context</p>
+          <h3>GeckoTerminal · DexScreener</h3>
+          <span data-i18n="Add market and pool context where a matching source is available.">Add market and pool context where a matching source is available.</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="signal-about__section signal-about__contact wrap" aria-labelledby="contact-title">
+      <div class="signal-about__section-head" data-signal-reveal>
+        <p class="signal-about__eyebrow" data-i18n="Contact and accountability">Contact and accountability</p>
+        <h2 id="contact-title" data-i18n="Route the signal to the right conversation.">Route the signal to the right conversation.</h2>
+        <p data-i18n="FoxScanner currently handles these conversations through X. Choose the intent so the request is clear before you leave the site.">FoxScanner currently handles these conversations through X. Choose the intent so the request is clear before you leave the site.</p>
+      </div>
+      <div class="signal-about__contact-grid">
+        <a href="https://x.com/0x_Punisher" target="_blank" rel="noopener" data-signal-reveal>
+          <span data-i18n="Product support">Product support</span>
+          <strong data-i18n="Ask about a scan or product behavior">Ask about a scan or product behavior</strong>
+          <small data-i18n="Opens FoxScanner on X">Opens FoxScanner on X</small>
+        </a>
+        <a href="https://x.com/0x_Punisher" target="_blank" rel="noopener" data-signal-reveal>
+          <span data-i18n="Data correction">Data correction</span>
+          <strong data-i18n="Report evidence that appears incomplete or wrong">Report evidence that appears incomplete or wrong</strong>
+          <small data-i18n="Opens FoxScanner on X">Opens FoxScanner on X</small>
+        </a>
+        <a href="https://x.com/0x_Punisher" target="_blank" rel="noopener" data-signal-reveal>
+          <span data-i18n="Partnerships">Partnerships</span>
+          <strong data-i18n="Discuss launchpad, feed, or integration work">Discuss launchpad, feed, or integration work</strong>
+          <small data-i18n="Opens FoxScanner on X">Opens FoxScanner on X</small>
+        </a>
+      </div>
+    </section>
+  </article>
 </main>
-
-<footer>
-  <div class="wrap foot">
-    <div class="foot-left">
-      <p class="foot-follow"><span data-i18n="Follow us:">Follow us:</span>
-      <a href="https://x.com/0x_Punisher" target="_blank" rel="noopener" aria-label="FoxScanner on X"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14.7 10.3 22.4 2h-1.8l-6.7 7.2L8.6 2H2l8.1 11.1L2 22h1.8l7.1-7.6L15.4 22H22l-7.3-11.7Zm-2.5 2.7-.8-1.1L4.6 3.3h2.8l5.3 7 .8 1.1 6.9 9.3h-2.8l-5.4-7.7Z"/></svg></a>
-      </p>
-    </div>
-    <p class="foot-copy" data-i18n="2026 © FoxScanner. All rights reserved.">2026 © FoxScanner. All rights reserved.</p>
-  </div>
-</footer>
-
-<script src="/static/js/api.js?v="></script>
-<script src="/static/js/app.js?v="></script>
-</body>
-</html>
+</body></html>

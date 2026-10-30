@@ -66,6 +66,11 @@ class TestServer(unittest.TestCase):
         code, d, _ = self.request("/health")
         self.assertEqual((code, d), (200, {"ok": True}))
 
+    def test_browser_url_uses_localhost_for_wildcard_bind(self):
+        self.assertEqual(server.browser_url("0.0.0.0", 8000), "http://localhost:8000")
+        self.assertEqual(server.browser_url("::", 8000), "http://localhost:8000")
+        self.assertEqual(server.browser_url("127.0.0.1", 9000), "http://127.0.0.1:9000")
+
     def test_config_solana_flag(self):
         for value, on in (("true", True), ("false", False)):
             with mock.patch.dict(os.environ, {"SOLANA_ENABLED": value}):
@@ -272,6 +277,9 @@ class TestStatic(unittest.TestCase):
         code, body, h = self.get("/static/css/app.css")
         self.assertEqual((code, body, h["content-type"]), (200, b"body{}", "text/css; charset=utf-8"))
         self.assertEqual((h["cache-control"], h["x-content-type-options"]), ("public, max-age=300", "nosniff"))
+        code, _, h = self.get("/static/js/app.js")
+        self.assertEqual((code, h["content-type"], h["cache-control"]),
+                         (200, "text/javascript; charset=utf-8", "no-cache"))
         code, _, h = self.get("/static/js/app.js?v=abc123")
         self.assertEqual((code, h["content-type"], h["cache-control"]),
                          (200, "text/javascript; charset=utf-8", "public, max-age=31536000, immutable"))
