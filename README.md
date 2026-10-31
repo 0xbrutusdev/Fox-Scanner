@@ -16,8 +16,6 @@ Multichain meme token checker. BNB Chain (four.meme) first; Solana and Robinhood
 ![runtime deps](https://img.shields.io/badge/runtime_deps-0-FFD800?style=flat-square\&labelColor=0B0B0B)
 [![license](https://img.shields.io/badge/license-MIT-2A2A2A?style=flat-square\&labelColor=0B0B0B)](LICENSE)
 
-![FoxScanner](frontend/static/img/mascot-banner.png)
-
 </div>
 
 ## What is FoxScanner?
