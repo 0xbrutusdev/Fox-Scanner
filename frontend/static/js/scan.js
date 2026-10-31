@@ -125,7 +125,15 @@
         this.line('operator ' + w + esc(e.detail), 'bad');
         break;
       case 'done':
-        this.setStep(STEPS.length - 1);
+        if (e.limited) {
+          this.steps.querySelectorAll('.step').forEach(el => {
+            el.classList.toggle('ok', el.dataset.step === 'launch' || el.dataset.step === 'done');
+            el.classList.remove('on');
+          });
+          this.bar.style.width = '100%';
+        } else {
+          this.setStep(STEPS.length - 1);
+        }
         this.line('✓ ' + esc(e.headline || e.detail || 'done'), 'good');
         break;
       default:

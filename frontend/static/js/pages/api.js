@@ -42,7 +42,7 @@ function renderPlan(root, planId) {
   boundary.textContent = "Preview only — no checkout or active account is available from this page.";
   const access = document.createElement("a");
   access.className = "btn ghost";
-  access.href = "https://x.com/0x_Punisher";
+  access.href = "https://x.com/0xzkleo";
   access.target = "_blank";
   access.rel = "noopener noreferrer";
   access.textContent = "Request API access on X";

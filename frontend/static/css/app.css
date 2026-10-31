@@ -204,7 +204,7 @@ html[data-theme="light"] .watermark span{color:rgba(90,73,38,.22);text-shadow:no
 .trend-mc b{font-weight:700;color:var(--soft)}
 .trend-empty{margin:0;padding:18px 16px;color:var(--muted);font-size:14px}
 
-.ticker{padding:34px 0 20px}
+.ticker{position:relative;z-index:1;padding:34px 0 20px}
 .ticker-label{display:flex;align-items:center;gap:10px;margin:0 0 14px;font:700 27px/1 var(--font-display);letter-spacing:0;text-transform:none;color:var(--hero)}
 .ticker-label svg{width:27px;height:27px;color:var(--y);flex:none}
 .marquee{min-width:0;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)}

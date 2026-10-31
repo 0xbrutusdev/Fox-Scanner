@@ -1,6 +1,9 @@
 .env
 .env*
 !.env.example
+node_modules/
+.wrangler/
+cloudflare/public/
 __pycache__/
 .DS_Store
 *_out.txt

@@ -15,19 +15,10 @@
 <main>
   <section class="hero home-terminal" id="top">
     <div class="wrap stage">
-      <div class="home-copy">
-        <p class="home-eyebrow"><span class="home-eyebrow-dot"></span><span data-i18n="BNB holder intelligence">BNB holder intelligence</span></p>
-        <h1 data-i18n="See who really holds the token before you trade.">See who really holds the token before you trade.</h1>
-        <p class="home-lede" data-i18n="Trace holder relationships, launch wallets, and concentration signals behind fresh BNB tokens.">Trace holder relationships, launch wallets, and concentration signals behind fresh BNB tokens.</p>
-      </div>
+      <h1 class="home-title" data-i18n="Check BNB token for rug risk">Check BNB token for rug risk</h1>
       <div class="hero-art home-hero-art" aria-label="FoxTrace evidence preview">
-        <div class="watermark"><span class="lh-1 fw-bold flex-shrink-0" data-text="RUG"></span><span class="lh-1 fw-bold flex-shrink-0" data-text="CHECK"></span></div>
+        <div class="watermark"><span class="lh-1 fw-bold flex-shrink-0" data-text="FOX"></span><span class="lh-1 fw-bold flex-shrink-0" data-text="SCAN"></span></div>
         <img src="/static/img/mascot-hero.png?v=" alt="" width="858" height="637" fetchpriority="high">
-        <div class="home-foxtrace" data-home-foxtrace aria-hidden="true">
-          <span class="trace-ring trace-ring-a"></span><span class="trace-ring trace-ring-b"></span>
-          <i class="trace-node trace-node-a"></i><i class="trace-node trace-node-b"></i><i class="trace-node trace-node-c"></i>
-          <span class="trace-beam"></span>
-        </div>
       </div>
       <div class="finder">
         <form class="search" id="scan-form" data-scan-form autocomplete="off">
@@ -40,27 +31,10 @@
       </div>
       <div class="hero-actions">
         <button class="hero-btn hero-btn-check" type="submit" form="scan-form" data-go><span data-i18n="Check">Check</span></button>
-        <button class="hero-btn hero-btn-side" type="button" data-home-demo data-i18n="See the evidence">See the evidence</button>
+        <a class="hero-btn hero-btn-side" href="/token-management" data-i18n="Manage">Manage</a>
         {{replay_cta}}
       </div>
       <p class="form-msg" data-form-msg role="status"></p>
-      <aside class="home-demo" data-home-demo-panel hidden>
-        <div class="home-demo-head"><span data-i18n="FoxTrace preview">FoxTrace preview</span><button type="button" data-home-demo-close aria-label="Close">×</button></div>
-        <p data-i18n="A scan follows the evidence trail instead of guessing from a token name.">A scan follows the evidence trail instead of guessing from a token name.</p>
-        <ul class="home-proof-list">
-          <li><span class="home-proof-icon">01</span><span><b data-i18n="Holder relationships">Holder relationships</b><small data-i18n="Find linked wallets and operator clusters.">Find linked wallets and operator clusters.</small></span></li>
-          <li><span class="home-proof-icon">02</span><span><b data-i18n="Fresh-wallet pressure">Fresh-wallet pressure</b><small data-i18n="See how recently funded wallets entered.">See how recently funded wallets entered.</small></span></li>
-          <li><span class="home-proof-icon">03</span><span><b data-i18n="Concentration">Concentration</b><small data-i18n="Read who can move the supply before you trade.">Read who can move the supply before you trade.</small></span></li>
-        </ul>
-      </aside>
-    </div>
-  </section>
-
-  <section class="home-proof" aria-label="FoxScanner evidence signals">
-    <div class="wrap home-proof-grid">
-      <article><span>01</span><h2 data-i18n="Trace the wallets">Trace the wallets</h2><p data-i18n="Linked wallets and operator clusters are surfaced as evidence, not hidden behind a single score.">Linked wallets and operator clusters are surfaced as evidence, not hidden behind a single score.</p></article>
-      <article><span>02</span><h2 data-i18n="Read the pressure">Read the pressure</h2><p data-i18n="Fresh entries, snipers, and concentration signals show where future sell pressure can come from.">Fresh entries, snipers, and concentration signals show where future sell pressure can come from.</p></article>
-      <article><span>03</span><h2 data-i18n="Trade with context">Trade with context</h2><p data-i18n="CLEAN means no disqualifying evidence was detected—not that a token is guaranteed safe.">CLEAN means no disqualifying evidence was detected—not that a token is guaranteed safe.</p></article>
     </div>
   </section>
 

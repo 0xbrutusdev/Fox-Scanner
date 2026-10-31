@@ -100,6 +100,9 @@ class TestPage(unittest.TestCase):
         home = read("index.html")
         self.assertEqual(home.count("data-go"), 1)
         self.assertIn('class="search-go" aria-hidden="true"', home)
+        self.assertIn('<h1 class="home-title" data-i18n="Check BNB token for rug risk">', home)
+        self.assertIn('href="/token-management" data-i18n="Manage"', home)
+        self.assertNotIn("data-home-demo", home)
 
     def test_mobile_refactor_keeps_copy_controls_and_compact_header(self):
         tokens_css = read("static", "css", "pages", "tokens.css")
@@ -123,7 +126,10 @@ class TestPage(unittest.TestCase):
         self.assertIn(".home-terminal .hero-actions .hero-btn", home_css)
         self.assertIn("height:44px", home_css)
         self.assertIn(".tokens-page .ranges button { min-width:44px; min-height:44px; }", tokens_css)
-        self.assertIn("data-token-state-copy", read("tokens.html"))
+        tokens_html = read("tokens.html")
+        self.assertIn('data-i18n="Recently Verified"', tokens_html)
+        self.assertNotIn("data-token-state-copy", tokens_html)
+        self.assertNotIn("Token Pulse", tokens_html)
         self.assertIn("Checks are unavailable.", tokens_js)
         self.assertIn('tabindex="0" data-ca=', tokens_js)
         self.assertIn("onRowKeydown", tokens_js)
